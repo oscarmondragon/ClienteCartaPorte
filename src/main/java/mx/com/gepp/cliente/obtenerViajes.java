@@ -5,6 +5,9 @@
  */
 package mx.com.gepp.cliente;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileOutputStream;
 
 import java.util.Base64;
@@ -16,11 +19,20 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipFile;
@@ -29,10 +41,12 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import java.util.zip.ZipEntry;
+import static javafx.scene.input.KeyCode.T;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import jdk.nashorn.internal.parser.JSONParser;
 
 import mx.com.gepp.beans.TripsResponse;
 import mx.com.gepp.beans.RenderTabla;
@@ -41,6 +55,13 @@ import mx.com.gepp.utilities.Comprimir;
 import mx.com.gepp.utilities.Encriptador;
 import mx.com.gepp.utilities.Constantes;
 import mx.com.gepp.utilities.Descomprimir;
+import mx.com.gepp.utilities.Pojo;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
+import org.slf4j.LoggerFactory;
+
 
 /**
  *
@@ -51,6 +72,7 @@ public class obtenerViajes extends javax.swing.JFrame {
     //botones de tabla ver viajes
     JButton botonVer = new JButton("Ver JSON");
     JButton botonCargar = new JButton("Cargar");
+    
     
     public static int columna,fila;
     
@@ -121,6 +143,7 @@ public class obtenerViajes extends javax.swing.JFrame {
         botonDescomprimir = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         jMenu1.setText("jMenu1");
 
@@ -165,6 +188,13 @@ public class obtenerViajes extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
         jLabel1.setText("VIAJES");
 
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -172,21 +202,29 @@ public class obtenerViajes extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn1)
-                        .addGap(18, 18, 18)
-                        .addComponent(botonDescomprimir)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btn1)
+                                .addGap(18, 18, 18)
+                                .addComponent(botonDescomprimir)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(149, 149, 149))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn1)
@@ -323,6 +361,43 @@ public class obtenerViajes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tablaViajesMouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        // parsing file "JSONExample.json"
+        
+//        try {
+//    // create object mapper instance
+//    ObjectMapper mapper = new ObjectMapper();
+//
+//    // convert JSON string to Book object
+//    Pojo pojo = mapper.readValue(Paths.get("viaje_249069188398290324.json").toFile(), Pojo.class);
+//
+//    // print book
+//    System.out.println(pojo);
+//
+//} catch (Exception ex) {
+//    ex.printStackTrace();
+//}
+
+        
+        
+        
+        
+        
+        ObjectMapper  mapper = new ObjectMapper();
+        try {
+            Map<?, ?> map = mapper.readValue(Paths.get("viaje_3971006112621667630.json").toFile(), Map.class);
+             for (Map.Entry<?, ?> entry : map.entrySet()) {
+        System.out.println(entry.getKey() + "=" + entry.getValue());
+    }
+        } catch (IOException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+           
+       
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -366,6 +441,7 @@ public class obtenerViajes extends javax.swing.JFrame {
     private javax.swing.JButton botonDescomprimir;
     private javax.swing.JButton btn1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
