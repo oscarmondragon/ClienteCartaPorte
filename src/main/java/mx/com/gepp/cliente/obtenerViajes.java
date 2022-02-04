@@ -62,23 +62,21 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import org.slf4j.LoggerFactory;
 
-
 /**
  *
  * @author dspace
  */
 public class obtenerViajes extends javax.swing.JFrame {
-    
+
     //botones de tabla ver viajes
     JButton botonVer = new JButton("Ver JSON");
     JButton botonCargar = new JButton("Cargar");
-    
-    
-    public static int columna,fila;
-    
+
+    public static int columna, fila;
+
     public obtenerViajes() {
         initComponents();
-        
+
     }
 
     public void MostrarTabla() {
@@ -272,7 +270,7 @@ public class obtenerViajes extends javax.swing.JFrame {
         // TODO add your handling code here:
         botonVer.setName("btnVer");
         botonCargar.setName("btnCargar");
-        
+
         String urlRestService = Constantes.URL_REST_SERVICE;
         String passUser = Constantes.USER_PASS_GEPP;
 
@@ -336,27 +334,53 @@ public class obtenerViajes extends javax.swing.JFrame {
 
     private void tablaViajesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaViajesMouseClicked
         // TODO add your handling code here:
-        columna =tablaViajes.getColumnModel().getColumnIndexAtX(evt.getX());
-        fila = evt.getY()/tablaViajes.getRowHeight();
-        
-        if(columna<=tablaViajes.getColumnCount() && columna >= 0 && fila <= tablaViajes.getRowCount() && fila >= 0){
+        columna = tablaViajes.getColumnModel().getColumnIndexAtX(evt.getX());
+        fila = evt.getY() / tablaViajes.getRowHeight();
+
+        DetallesViaje datos = new DetallesViaje();
+
+        datos.setLocationRelativeTo(null);
+        datos.setVisible(true);
+
+        if (columna <= tablaViajes.getColumnCount() && columna >= 0 && fila <= tablaViajes.getRowCount() && fila >= 0) {
             Object objeto = tablaViajes.getValueAt(fila, columna);
-            if(objeto instanceof JButton){
-              ((JButton) objeto).doClick();
-              JButton botones = (JButton) objeto;
-              if(botones.getName().equals("btnVer")){
-                 // JOptionPane.showMessageDialog(null, "se preisono ver");
-                  DetallesViaje datos = new DetallesViaje();
-                  datos.setLocationRelativeTo(null);
-                  datos.setVisible(true);
-              } else
-              if(botones.getName().equals("btnCargar")){
-                  //JOptionPane.showMessageDialog(null, "se preisono cargar");
-                  CargarDocumentos cargar = new CargarDocumentos();
-                  cargar.setLocationRelativeTo(null);
-                  cargar.setVisible(true);
-              } 
-              
+            if (objeto instanceof JButton) {
+                ((JButton) objeto).doClick();
+                JButton botones = (JButton) objeto;
+                if (botones.getName().equals("btnVer")) {
+                    // JOptionPane.showMessageDialog(null, "se preisono ver");
+                    //Obtenemos el nombre del json de la primera columna de la tabla
+                    int filaSeleccionada = tablaViajes.getSelectedRow();
+                    if (filaSeleccionada >= 0) {
+                        String datosFila[] = new String[3];
+                        datosFila[0] = tablaViajes.getValueAt(filaSeleccionada, 0).toString();
+
+                        DetallesViaje.tituloJson.setText(datosFila[0]);
+                        
+                        //Abrir Json y convertir en objeto
+                        ObjectMapper mapper = new ObjectMapper();
+                        try {
+                            Map<?, ?> map = mapper.readValue(Paths.get("archivoSalida/"+datosFila[0]).toFile(), Map.class);
+                            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                                System.out.println(entry.getKey() + "=" + entry.getValue());
+                                
+                                DetallesViaje.vistaDatos.append(entry.getKey() + "=" + entry.getValue());
+                                DetallesViaje.vistaDatos.append(System.getProperty("line.separator")); // Esto para el salto de línea 
+                                
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
+
+                } else if (botones.getName().equals("btnCargar")) {
+                    //JOptionPane.showMessageDialog(null, "se preisono cargar");
+                    CargarDocumentos cargar = new CargarDocumentos();
+                    cargar.setLocationRelativeTo(null);
+                    cargar.setVisible(true);
+                }
+
             }
         }
     }//GEN-LAST:event_tablaViajesMouseClicked
@@ -364,7 +388,7 @@ public class obtenerViajes extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         // parsing file "JSONExample.json"
-        
+
 //        try {
 //    // create object mapper instance
 //    ObjectMapper mapper = new ObjectMapper();
@@ -378,24 +402,17 @@ public class obtenerViajes extends javax.swing.JFrame {
 //} catch (Exception ex) {
 //    ex.printStackTrace();
 //}
-
-        
-        
-        
-        
-        
-        ObjectMapper  mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            Map<?, ?> map = mapper.readValue(Paths.get("viaje_3971006112621667630.json").toFile(), Map.class);
-             for (Map.Entry<?, ?> entry : map.entrySet()) {
-        System.out.println(entry.getKey() + "=" + entry.getValue());
-    }
+            Map<?, ?> map = mapper.readValue(Paths.get("viaje_249069188398290324.json").toFile(), Map.class);
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + "=" + entry.getValue());
+            }
         } catch (IOException ex) {
             Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-           
-       
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -446,6 +463,6 @@ public class obtenerViajes extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tablaViajes;
+    public static javax.swing.JTable tablaViajes;
     // End of variables declaration//GEN-END:variables
 }

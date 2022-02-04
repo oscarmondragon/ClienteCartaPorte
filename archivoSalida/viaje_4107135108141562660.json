@@ -1,0 +1,59 @@
+[
+        {
+            
+            "FolioGEPP":"1509",
+            
+            "FechaGeneracion":"2022-01-18T11:44:46",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["S6100005745M"]},"UbicacionesGEPP":["DE:S59:CEDIS CHAPALA BEPUSA","OR:S61:PLANTA IXTLAHUACAN BEPUSA"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":19,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR308804"
+            
+            ,"RFCRemitenteDestinatario":"URE180429TM6"
+            ,"FechaHoraSalidaLlegada":"2022-01-18T11:54:14"
+            ,"Domicilio":{
+            "Estado":"JAL","Pais":"MEX","CodigoPostal":"45850"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE308602"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-18T12:31:40"
+            ,"DistanciaRecorrida": 19
+            ,"Domicilio":{
+            "Estado":"JAL","Pais":"MEX","CodigoPostal":"45900"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "11734.2",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "11734.2",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"13",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"299"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"50202301",
+            "Descripcion":"Agua",
+            "Cantidad":"1120",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja"
+            ,"PesoEnKg":"11435.2"
+            
+            
+            
+            
+        }]}
+            }
+        }]

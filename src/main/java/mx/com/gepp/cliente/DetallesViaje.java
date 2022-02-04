@@ -10,12 +10,17 @@ package mx.com.gepp.cliente;
  * @author oscarmondragon
  */
 public class DetallesViaje extends javax.swing.JFrame {
+    
+    //variable para leer nombre de json
+    public static String nombreJson;
 
     /**
      * Creates new form DetallesViaje
      */
     public DetallesViaje() {
         initComponents();
+        
+       
     }
 
     /**
@@ -28,27 +33,45 @@ public class DetallesViaje extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        vistaDatos = new javax.swing.JTextArea();
+        tituloJson = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
         jLabel1.setText("Detalles del viaje");
 
+        vistaDatos.setColumns(20);
+        vistaDatos.setRows(5);
+        jScrollPane1.setViewportView(vistaDatos);
+
+        tituloJson.setText("Identificador del viaje");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(jLabel1)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(122, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tituloJson, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(138, 138, 138))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tituloJson)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
         );
 
         pack();
@@ -91,5 +114,8 @@ public class DetallesViaje extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    public static javax.swing.JLabel tituloJson;
+    public static javax.swing.JTextArea vistaDatos;
     // End of variables declaration//GEN-END:variables
 }

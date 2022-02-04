@@ -1,0 +1,65 @@
+[
+        {
+            
+            "FolioGEPP":"1325",
+            
+            "FechaGeneracion":"2022-01-05T18:17:31",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["T2100005955M","T2100005956M","T2100005957M","T2100005958M"]},"UbicacionesGEPP":["DE:Q01:CEDIS JARDINES BEPUSA","DE:Q07:CEDIS ROJO GOMEZ BEPUSA","OR:T21:PLANTA IZTACALCO BEPUSA"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":20,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR107401"
+            
+            ,"RFCRemitenteDestinatario":"URE180429TM6"
+            ,"FechaHoraSalidaLlegada":"2022-01-05T18:27:18"
+            ,"Domicilio":{
+            "Estado":"DIF","Pais":"MEX","CodigoPostal":"08800"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE105202"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-05T19:07:37"
+            ,"DistanciaRecorrida": 10
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"55430"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE105902"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-05T18:43:08"
+            ,"DistanciaRecorrida": 10
+            ,"Domicilio":{
+            "Estado":"DIF","Pais":"MEX","CodigoPostal":"09300"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "16324.8",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "16324.8",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"24",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"552"
+            
+            
+            
+        },{
+            "BienesTransp":"50202306",
+            "Descripcion":"Refrescos",
+            "Cantidad":"960",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"15772.8"
+            
+            
+            
+        }]}
+            }
+        }]
