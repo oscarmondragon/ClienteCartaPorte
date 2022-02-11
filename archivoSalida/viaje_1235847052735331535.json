@@ -1,0 +1,56 @@
+[
+        {
+            
+            "FolioGEPP":"39603",
+            "FechaGeneracion":"2022-01-13T10:23:39",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["Q1600000651M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":100,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR405002"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-13T10:33:39"
+            ,"Domicilio":{
+            "Estado":"PUE","Pais":"MEX","CodigoPostal":"73177"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE411502"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-13T18:28:51"
+            ,"DistanciaRecorrida": 100
+            ,"Domicilio":{
+            "Estado":"PUE","Pais":"MEX","CodigoPostal":"73300"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "30848",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "30848",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"50202306",
+            "Descripcion":"Refrescos",
+            "Cantidad":"1200",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"30204"
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"28",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"644"
+            
+            
+            
+        }]}
+            }
+        }]

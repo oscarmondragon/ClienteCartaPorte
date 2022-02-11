@@ -1,0 +1,80 @@
+[
+        {
+            "OC":"268077",
+            "FolioGEPP":"66286",
+            "FechaGeneracion":"2022-02-02T04:15:11",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100089912_M"]},"UbicacionesGEPP":["DE:T26:PLANTA MERIDA BEPUSA","OR:641:PROPLASA BODEGA CENTRAL"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":1350,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-02T04:25:11"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE206301"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-02-02T22:08:11"
+            ,"DistanciaRecorrida": 1350
+            ,"Domicilio":{
+            "Estado":"YUC","Pais":"MEX","CodigoPostal":"97300"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "21483.584",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "21483.584",
+            "NumTotalMercancias":4,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"2823",
+            "ClaveUnidad":"KGM",
+            "Unidad":"Kilogramo"
+            ,"PesoEnKg":"2823"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"433638",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"10810.064"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"57",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"1311"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"31141701",
+            "Descripcion":"Moldeados plásticos por inyección de aire",
+            "Cantidad":"124800",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"6539.52"
+            
+            
+            
+            
+        }]}
+            }
+        }]

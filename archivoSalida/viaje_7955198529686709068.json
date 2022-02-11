@@ -1,0 +1,66 @@
+[
+        {
+            "OC":"242983",
+            "FolioGEPP":"38654",
+            "FechaGeneracion":"2022-01-12T19:58:08",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100089261_M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":1350,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-12T20:08:08"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE206301"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-13T13:51:08"
+            ,"DistanciaRecorrida": 1350
+            ,"Domicilio":{
+            "Estado":"YUC","Pais":"MEX","CodigoPostal":"97300"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "20378.094",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "20378.094",
+            "NumTotalMercancias":3,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"226572",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"6432.496"
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"60",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"1380"
+            
+            
+            
+        },{
+            "BienesTransp":"31141701",
+            "Descripcion":"Moldeados plásticos por inyección de aire",
+            "Cantidad":"583728",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"12565.598"
+            
+            
+            
+        }]}
+            }
+        }]

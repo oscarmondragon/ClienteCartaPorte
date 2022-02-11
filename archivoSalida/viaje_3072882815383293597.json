@@ -1,0 +1,66 @@
+[
+        {
+            
+            "FolioGEPP":"39052",
+            "FechaGeneracion":"2022-01-13T01:23:01",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100089268_M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":1182,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-13T01:33:01"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE207201"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-13T17:09:01"
+            ,"DistanciaRecorrida": 1182
+            ,"Domicilio":{
+            "Estado":"CAM","Pais":"MEX","CodigoPostal":"24097"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "2240.432",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "2240.432",
+            "NumTotalMercancias":3,
+            "Mercancia":[{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"11",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"253"
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"914",
+            "ClaveUnidad":"KGM",
+            "Unidad":"Kilogramo",
+            "PesoEnKg":"914"
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"136510",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"1073.432"
+            
+            
+            
+        }]}
+            }
+        }]

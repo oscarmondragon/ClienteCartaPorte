@@ -1,0 +1,46 @@
+[
+        {
+            
+            "FolioGEPP":"26628",
+            "FechaGeneracion":"2022-01-05T08:43:53",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["T2800005420M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":842,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR607201"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-05T08:53:53"
+            ,"Domicilio":{
+            "Estado":"CHH","Pais":"MEX","CodigoPostal":"31136"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE507501"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-06T12:57:15"
+            ,"DistanciaRecorrida": 842
+            ,"Domicilio":{
+            "Estado":"NLE","Pais":"MEX","CodigoPostal":"66603"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "26790.4",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "26790.4",
+            "NumTotalMercancias":1,
+            "Mercancia":[{
+            "BienesTransp":"50202300",
+            "Descripcion":"Bebidas no alcohólicas",
+            "Cantidad":"2912",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"26790.4"
+            
+            
+            
+        }]}
+            }
+        }]

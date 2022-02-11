@@ -1,0 +1,46 @@
+[
+        {
+            
+            "FolioGEPP":"34951",
+            "FechaGeneracion":"2022-01-10T17:37:32",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["R7400000101M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":100,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR407802"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-10T17:47:32"
+            ,"Domicilio":{
+            "Estado":"OAX","Pais":"MEX","CodigoPostal":"71605"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE406801"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-11T01:42:44"
+            ,"DistanciaRecorrida": 100
+            ,"Domicilio":{
+            "Estado":"GRO","Pais":"MEX","CodigoPostal":"39810"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "3588",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "3588",
+            "NumTotalMercancias":1,
+            "Mercancia":[{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"156",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"3588"
+            
+            
+            
+        }]}
+            }
+        }]

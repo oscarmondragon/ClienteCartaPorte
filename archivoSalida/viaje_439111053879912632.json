@@ -1,0 +1,69 @@
+[
+        {
+            "OC":"263017",
+            "FolioGEPP":"59418",
+            "FechaGeneracion":"2022-01-27T09:47:27",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100089486_M"]},"UbicacionesGEPP":["DE:616:PLANTA LA PAZ BEPUSA","OR:641:PROPLASA BODEGA CENTRAL"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":1649,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-27T09:57:27"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE609401"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-28T11:52:39"
+            ,"DistanciaRecorrida": 1649
+            ,"Domicilio":{
+            "Estado":"BCS","Pais":"MEX","CodigoPostal":"23050"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "19139.506",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "19139.506",
+            "NumTotalMercancias":3,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"56",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"943.247"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"31141701",
+            "Descripcion":"Moldeados plásticos por inyección de aire",
+            "Cantidad":"526560",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"16908.259"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"56",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"1288"
+            
+            
+            
+            
+        }]}
+            }
+        }]

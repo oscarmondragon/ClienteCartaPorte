@@ -1,0 +1,76 @@
+[
+        {
+            
+            "FolioGEPP":"25772",
+            "FechaGeneracion":"2022-01-04T18:24:22",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["Q2600001174M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":41,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR405802"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-04T18:34:22"
+            ,"Domicilio":{
+            "Estado":"MOR","Pais":"MEX","CodigoPostal":"62743"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE406001"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-04T19:56:27"
+            ,"DistanciaRecorrida": 41
+            ,"Domicilio":{
+            "Estado":"MOR","Pais":"MEX","CodigoPostal":"62570"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "12118.46",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "12118.46",
+            "NumTotalMercancias":4,
+            "Mercancia":[{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"14",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"322"
+            
+            
+            
+        },{
+            "BienesTransp":"24122003",
+            "Descripcion":"Botellas de cristal",
+            "Cantidad":"64",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"152.32"
+            
+            
+            
+        },{
+            "BienesTransp":"50202306",
+            "Descripcion":"Refrescos",
+            "Cantidad":"745",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"10817.34"
+            
+            
+            
+        },{
+            "BienesTransp":"50202301",
+            "Descripcion":"Agua",
+            "Cantidad":"40",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"826.8"
+            
+            
+            
+        }]}
+            }
+        }]

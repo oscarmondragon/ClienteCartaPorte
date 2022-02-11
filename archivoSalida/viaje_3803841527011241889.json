@@ -1,0 +1,76 @@
+[
+        {
+            
+            "FolioGEPP":"43747",
+            "FechaGeneracion":"2022-01-15T17:33:54",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100089335_M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":942,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-15T17:43:54"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE512401"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-16T05:00:42"
+            ,"DistanciaRecorrida": 942
+            ,"Domicilio":{
+            "Estado":"DUR","Pais":"MEX","CodigoPostal":"35070"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "18723.684",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "18723.684",
+            "NumTotalMercancias":4,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"1192880",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"9833.726"
+            
+            
+            
+        },{
+            "BienesTransp":"31141701",
+            "Descripcion":"Moldeados plásticos por inyección de aire",
+            "Cantidad":"236448",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"6607.958"
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"55",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"1265"
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"1017",
+            "ClaveUnidad":"KGM",
+            "Unidad":"Kilogramo",
+            "PesoEnKg":"1017"
+            
+            
+            
+        }]}
+            }
+        }]

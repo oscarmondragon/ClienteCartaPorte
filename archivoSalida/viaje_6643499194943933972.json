@@ -1,0 +1,57 @@
+[
+        {
+            
+            "FolioGEPP":"22904",
+            "FechaGeneracion":"2022-01-01T08:06:37",
+            "UsoCFDI": "03-Gastos"
+        },{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":66.4,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR209202"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-01T08:16:37"
+            ,"Domicilio":{
+            "Estado":"TAB","Pais":"MEX","CodigoPostal":"86523"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE209101"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-01T10:29:06"
+            ,"DistanciaRecorrida": 66.4
+            ,"Domicilio":{
+            "Estado":"TAB","Pais":"MEX","CodigoPostal":"86280"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "666.75",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "666.75",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"24102004",
+            "Descripcion":"Estanterías para almacenaje",
+            "Cantidad":"1",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"150"
+            
+            
+            
+        },{
+            "BienesTransp":"50202301",
+            "Descripcion":"Agua",
+            "Cantidad":"25",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"516.75"
+            
+            
+            
+        }]}
+            }
+        }]

@@ -1,0 +1,67 @@
+[
+        {
+            
+            "FolioGEPP":"25406",
+            "FechaGeneracion":"2022-01-04T13:51:03",
+            "UsoCFDI": "03-Gastos"
+        },{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":49.8,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-04T14:01:03"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE107401"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-04T15:21:03"
+            ,"DistanciaRecorrida": 49.8
+            ,"Domicilio":{
+            "Estado":"DIF","Pais":"MEX","CodigoPostal":"08800"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "21990.846",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "21990.846",
+            "NumTotalMercancias":3,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"241980",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"10339.182"
+            
+            
+            
+        },{
+            "BienesTransp":"31141701",
+            "Descripcion":"Moldeados plásticos por inyección de aire",
+            "Cantidad":"187200",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"10271.664"
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"60",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"1380"
+            
+            
+            
+        }]}
+            }
+        }]

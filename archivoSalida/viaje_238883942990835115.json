@@ -1,0 +1,58 @@
+[
+        {
+            
+            "FolioGEPP":"69695",
+            "FechaGeneracion":"2022-02-04T11:10:34",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["T2600008550_M"]},"UbicacionesGEPP":["DE:Z91:BODEGA PROPLASA BEPUSA","OR:T26:PLANTA MERIDA BEPUSA"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":1350,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR206301"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-04T11:20:34"
+            ,"Domicilio":{
+            "Estado":"YUC","Pais":"MEX","CodigoPostal":"97300"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE021902"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-02-05T05:03:34"
+            ,"DistanciaRecorrida": 1350
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "4564.488",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "4564.488",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"14",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"322"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"640",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"4242.488"
+            
+            
+            
+            
+        }]}
+            }
+        }]

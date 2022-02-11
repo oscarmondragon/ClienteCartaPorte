@@ -1,0 +1,66 @@
+[
+        {
+            
+            "FolioGEPP":"37897",
+            "FechaGeneracion":"2022-01-12T11:48:45",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["R6700000353M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":5,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR407102"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-12T11:58:45"
+            ,"Domicilio":{
+            "Estado":"OAX","Pais":"MEX","CodigoPostal":"68090"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE408003"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-12T12:28:45"
+            ,"DistanciaRecorrida": 5
+            ,"Domicilio":{
+            "Estado":"OAX","Pais":"MEX","CodigoPostal":"68039"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "2610.59",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "2610.59",
+            "NumTotalMercancias":3,
+            "Mercancia":[{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"8",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"184"
+            
+            
+            
+        },{
+            "BienesTransp":"24122003",
+            "Descripcion":"Botellas de cristal",
+            "Cantidad":"468",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"1908.72"
+            
+            
+            
+        },{
+            "BienesTransp":"24122000",
+            "Descripcion":"Botellas",
+            "Cantidad":"215",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"517.87"
+            
+            
+            
+        }]}
+            }
+        }]

@@ -1,0 +1,76 @@
+[
+        {
+            
+            "FolioGEPP":"34680",
+            "FechaGeneracion":"2022-01-10T13:57:35",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["R0400000623M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":190,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR509202"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-10T14:07:35"
+            ,"Domicilio":{
+            "Estado":"COA","Pais":"MEX","CodigoPostal":"25643"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE507501"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-10T20:27:45"
+            ,"DistanciaRecorrida": 190
+            ,"Domicilio":{
+            "Estado":"NLE","Pais":"MEX","CodigoPostal":"66603"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "2863.65",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "2863.65",
+            "NumTotalMercancias":4,
+            "Mercancia":[{
+            "BienesTransp":"50202306",
+            "Descripcion":"Refrescos",
+            "Cantidad":"45",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"571.05"
+            
+            
+            
+        },{
+            "BienesTransp":"24122000",
+            "Descripcion":"Botellas",
+            "Cantidad":"40",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"29.6"
+            
+            
+            
+        },{
+            "BienesTransp":"24102004",
+            "Descripcion":"Estanterías para almacenaje",
+            "Cantidad":"1",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"150"
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"91",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"2113"
+            
+            
+            
+        }]}
+            }
+        }]

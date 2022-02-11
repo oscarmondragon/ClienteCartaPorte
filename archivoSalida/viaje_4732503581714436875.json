@@ -1,0 +1,66 @@
+[
+        {
+            
+            "FolioGEPP":"41605",
+            "FechaGeneracion":"2022-01-14T12:40:43",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["Q9500000321M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":213,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR508402"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-14T12:50:43"
+            ,"Domicilio":{
+            "Estado":"TAM","Pais":"MEX","CodigoPostal":"88756"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE507501"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-14T19:56:57"
+            ,"DistanciaRecorrida": 213
+            ,"Domicilio":{
+            "Estado":"NLE","Pais":"MEX","CodigoPostal":"66603"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "12701",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "12701",
+            "NumTotalMercancias":3,
+            "Mercancia":[{
+            "BienesTransp":"50202306",
+            "Descripcion":"Refrescos",
+            "Cantidad":"450",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"7515"
+            
+            
+            
+        },{
+            "BienesTransp":"50202300",
+            "Descripcion":"Bebidas no alcohólicas",
+            "Cantidad":"200",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"260"
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"212",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"4926"
+            
+            
+            
+        }]}
+            }
+        }]

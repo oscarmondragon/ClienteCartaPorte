@@ -1,0 +1,106 @@
+[
+        {
+            
+            "FolioGEPP":"29901",
+            "FechaGeneracion":"2022-01-07T04:07:48",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["1025721","T2700026939M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":112,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR507501"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-07T04:17:47"
+            ,"Domicilio":{
+            "Estado":"NLE","Pais":"MEX","CodigoPostal":"66603"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE509102"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-07T08:02:25"
+            ,"DistanciaRecorrida": 112
+            ,"Domicilio":{
+            "Estado":"COA","Pais":"MEX","CodigoPostal":"25100"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "44335.12",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "44335.12",
+            "NumTotalMercancias":7,
+            "Mercancia":[{
+            "BienesTransp":"24122000",
+            "Descripcion":"Botellas",
+            "Cantidad":"720",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"532.8"
+            
+            
+            
+        },{
+            "BienesTransp":"24102004",
+            "Descripcion":"Estanterías para almacenaje",
+            "Cantidad":"18",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"2700"
+            
+            
+            
+        },{
+            "BienesTransp":"50202306",
+            "Descripcion":"Refrescos",
+            "Cantidad":"1754",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"19895.02"
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"30",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"700"
+            
+            
+            
+        },{
+            "BienesTransp":"50202301",
+            "Descripcion":"Agua",
+            "Cantidad":"720",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"14882.4"
+            
+            
+            
+        },{
+            "BienesTransp":"50202300",
+            "Descripcion":"Bebidas no alcohólicas",
+            "Cantidad":"112",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"1030.4"
+            
+            
+            
+        },{
+            "BienesTransp":"50202301",
+            "Descripcion":"Agua",
+            "Cantidad":"450",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"4594.5"
+            
+            
+            
+        }]}
+            }
+        }]

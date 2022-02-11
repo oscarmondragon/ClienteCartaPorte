@@ -1,0 +1,46 @@
+[
+        {
+            
+            "FolioGEPP":"49369",
+            "FechaGeneracion":"2022-01-19T21:05:33",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["R8100000142M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":154,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR207902"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-19T21:15:33"
+            ,"Domicilio":{
+            "Estado":"CHP","Pais":"MEX","CodigoPostal":"29950"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE208101"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-20T02:23:43"
+            ,"DistanciaRecorrida": 154
+            ,"Domicilio":{
+            "Estado":"CHP","Pais":"MEX","CodigoPostal":"29169"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "214.17",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "214.17",
+            "NumTotalMercancias":1,
+            "Mercancia":[{
+            "BienesTransp":"50131700",
+            "Descripcion":"Productos de leche y mantequilla",
+            "Cantidad":"33",
+            "ClaveUnidad":"XBX",
+            "Unidad":"Caja",
+            "PesoEnKg":"214.17"
+            
+            
+            
+        }]}
+            }
+        }]

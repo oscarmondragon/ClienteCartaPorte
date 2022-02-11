@@ -1,0 +1,47 @@
+[
+        {
+            
+            "FolioGEPP":"66606",
+            "FechaGeneracion":"2022-02-02T10:47:52",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["61600001450_M"]},"UbicacionesGEPP":["DE:Z91:BODEGA PROPLASA BEPUSA","OR:616:PLANTA LA PAZ BEPUSA"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":100,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR609401"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-02T10:57:52"
+            ,"Domicilio":{
+            "Estado":"BCS","Pais":"MEX","CodigoPostal":"23050"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE021902"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-02-02T18:53:04"
+            ,"DistanciaRecorrida": 100
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "4376.175",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "4376.175",
+            "NumTotalMercancias":1,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"842",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"4376.175"
+            
+            
+            
+            
+        }]}
+            }
+        }]
