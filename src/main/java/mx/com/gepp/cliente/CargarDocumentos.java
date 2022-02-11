@@ -6,18 +6,33 @@
 package mx.com.gepp.cliente;
 
 import java.awt.Component;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import static javafx.scene.input.DataFormat.FILES;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import mx.com.gepp.cliente.CargarDocumentos;
+import mx.com.gepp.utilities.Comprimir;
 import mx.com.gepp.utilities.Constantes;
-
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import mx.com.gepp.utilities.Encriptador;
 /**
  *
  * @author dspace
@@ -122,6 +137,11 @@ public class CargarDocumentos extends javax.swing.JFrame {
 
         btn_enviar.setText("Enviar");
         btn_enviar.setEnabled(false);
+        btn_enviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_enviarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -217,7 +237,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_selecionarArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarArchivosActionPerformed
-        // TODO add your handling code here:
+
         JFileChooser selectorArchivos = new JFileChooser("./");
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("Archivos de texto", "pdf", "xml");
         selectorArchivos.setFileFilter(fnef);
@@ -228,26 +248,73 @@ public class CargarDocumentos extends javax.swing.JFrame {
             File[] archivos = selectorArchivos.getSelectedFiles();
             archivosSeleccionados.addAll(Arrays.asList(archivos));
 
-          //  JOptionPane.showMessageDialog(CargarDocumentos, String.format("Se han agregado %d archivos.", archivos.length, "Informacion", JOptionPane.INFORMATION_MESSAGE));
-            
+            //  JOptionPane.showMessageDialog(CargarDocumentos, String.format("Se han agregado %d archivos.", archivos.length, "Informacion", JOptionPane.INFORMATION_MESSAGE));
             DefaultTableModel model = (DefaultTableModel) tbl_archivos.getModel();
-            
-            for(File file: archivos){
+
+            for (File file : archivos) {
                 String tamagnio = "";
-                if(file.length()< 1_000_000){
-                    tamagnio = String.format("%.2fKB", file.length()/1024.0);
+                if (file.length() < 1_000_000) {
+                    tamagnio = String.format("%.2fKB", file.length() / 1024.0);
                 } else {
-                     tamagnio = String.format("%.2fMB", file.length() / 1024.0 / 1024.0);
+                    tamagnio = String.format("%.2fMB", file.length() / 1024.0 / 1024.0);
                 }
-               
-                model.addRow(new Object[]{file.getName(),file.getParent(), tamagnio});
+
+                model.addRow(new Object[]{file.getName(), file.getParent(), tamagnio});
             }
-           if(!archivosSeleccionados.isEmpty()){
-               btn_enviar.setEnabled(true);
-           }
+
         }
-        
+
+        if (!archivosSeleccionados.isEmpty()) {
+            btn_enviar.setEnabled(true);
+        }
+
+
     }//GEN-LAST:event_btn_selecionarArchivosActionPerformed
+
+    private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
+        // TODO add your handling code here:
+      //  Comprimir crearZip = new Comprimir();
+        Encriptador encoder = new Encriptador();
+        String passUser = Constantes.USER_PASS_GEPP;
+      
+    
+       
+		//Conversion de archivo zip a Base64
+                
+                Comprimir zip = new Comprimir();
+                String nombreZip =  text_idViaje.getText()+".zip";
+                zip.comprimir(archivosSeleccionados, nombreZip);
+		
+		
+
+// convert the zip file to the base64 encoded string
+		//String encodedData = convertZipFileToBaseEncodeString();
+		//System.out.println("encodedData > " + encodedData);
+                 //>Integramos el archivo
+		String encodedBase64 = null;
+		String archivoEncriptado = null;
+		
+                
+		try {
+			File originalFile = new File(nombreZip);
+            try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
+                byte[] bytes = new byte[(int) originalFile.length()];
+                fileInputStreamReader.read(bytes);
+                encodedBase64 = new String(Base64.getEncoder().encode(bytes));
+            }
+                    System.out.println("Se convirtio a base64");
+		} catch(Exception e) {
+			System.out.println("Ocurrió un error al convertir a Base64.");
+		}
+		
+		//Encriptacion de archivo
+        try {
+        	archivoEncriptado = new String(encoder.encriptar(encodedBase64, passUser));
+                System.out.println("Se encrypto");
+        } catch(Exception e) {
+        	System.out.println("Ocurrió un error al encriptar el archivo.");
+        }
+    }//GEN-LAST:event_btn_enviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,10 +360,10 @@ public class CargarDocumentos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
+    public static javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_archivos;
-    private javax.swing.JLabel text_idViaje;
+    public static javax.swing.JLabel text_idViaje;
     private javax.swing.JTextField txt_password;
     private javax.swing.JTextField txt_proveedor;
     private javax.swing.JTextField txt_url;
