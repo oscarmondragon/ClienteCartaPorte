@@ -28,7 +28,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +71,12 @@ import org.slf4j.LoggerFactory;
  */
 public class obtenerViajes extends javax.swing.JFrame {
 
+    //obtener dia de hoy
+    SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+    Calendar calendar = Calendar.getInstance();
+    Date dateObj = calendar.getTime();
+    String formattedDate = dtf.format(dateObj);
+
     //botones de tabla ver viajes
     JButton botonVer = new JButton("Ver JSON");
     JButton botonCargar = new JButton("Cargar");
@@ -79,13 +88,15 @@ public class obtenerViajes extends javax.swing.JFrame {
 
     }
 
-    public void MostrarTabla() {
+    public void MostrarTabla(String nombreCarpeta) {
 
-        DefaultTableModel modeloViajes = new DefaultTableModel(){
+        DefaultTableModel modeloViajes = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
         };
-        String[] columnas = {"ID Viaje", "Ver datos", "Cargar documentos"};
+        String[] columnas = {"FolioGEPP", "Fecha Generación ", "Ver datos", "Cargar documentos"};
 
         modeloViajes.setColumnIdentifiers(columnas);
         this.tablaViajes.setDefaultRenderer(Object.class, new RenderTabla());
@@ -94,36 +105,193 @@ public class obtenerViajes extends javax.swing.JFrame {
 
         this.tablaViajes.setRowHeight(40);
 
-        Object[] datos = new Object[3];
+        Object[] datos = new Object[4];
 
+        File carpeta = new File(nombreCarpeta);
+        String[] listado = carpeta.list();
+        if (listado == null || listado.length == 0) {
+            System.out.println("No hay elementos dentro de la carpeta actual");
+            return;
+        } else {
+            for (int i = 0; i < 1; i++) {
+                JSONParser parser = new JSONParser();
         try {
+            JSONArray a = (JSONArray) parser.parse(new FileReader(nombreCarpeta + "/" + listado[i]));
 
-            File viajesDisponibles = new File("archivoSalida.zip");
-            ZipFile zip = new ZipFile(viajesDisponibles);
+            JSONObject cabecera = (JSONObject) a.get(0);
 
-            Enumeration<?> listado = zip.entries();
-            ZipEntry ze;
-            String nombreArchivo;
-            long tamagnio;
-            long tamagnioComprimido;
+            String folioGEPP = (String) cabecera.get("FolioGEPP");
+            String fechaGeneracion = (String) cabecera.get("FechaGeneracion");
+            String usoCfdi = (String) cabecera.get("UsoCFDI");
 
-            while (listado.hasMoreElements()) {
-                ze = (ZipEntry) listado.nextElement();
-                nombreArchivo = ze.getName();
-                System.out.println("BYtes:" + ze.toString());
-                tamagnio = ze.getSize();
-                tamagnioComprimido = ze.getCompressedSize();
-                datos[0] = nombreArchivo;
-                datos[1] = botonVer;
-                datos[2] = botonCargar;
+            JSONObject documentosGepp = (JSONObject) cabecera.get("DocumentosGEPP");
+            JSONArray docsGepp = (JSONArray) documentosGepp.get("DocsGEPP");
 
+            JSONArray ubicacionesGepp = (JSONArray) cabecera.get("UbicacionesGEPP");
+
+            System.out.println(folioGEPP);
+            System.out.println(fechaGeneracion);
+            System.out.println(usoCfdi);
+
+            if (docsGepp == null) {
+
+            } else {
+                Iterator<String> iterator = docsGepp.iterator();
+                while (iterator.hasNext()) {
+                    System.out.println(iterator.next());
+                }
+
+            }
+
+            if (ubicacionesGepp == null) {
+
+            } else {
+                Iterator<String> iteratorUbicaciones = ubicacionesGepp.iterator();
+                while (iteratorUbicaciones.hasNext()) {
+                    System.out.println(iteratorUbicaciones.next());
+                }
+            }
+
+            JSONObject carta = (JSONObject) a.get(1);
+
+            JSONObject cartaPorte = (JSONObject) carta.get("CartaPorte");
+
+            String version = (String) cartaPorte.get("Version");
+            String transpInternac = (String) cartaPorte.get("TranspInternac");
+            Long totalDistRec = (Long) cartaPorte.get("TotalDistRec");
+
+            System.out.println(version);
+            System.out.println(transpInternac);
+            System.out.println(totalDistRec);
+
+            JSONObject ubicaciones = (JSONObject) cartaPorte.get("Ubicaciones");
+            JSONArray ubicacionesArray = (JSONArray) ubicaciones.get("Ubicacion");
+
+            //UBICACION origen
+            JSONObject origen = (JSONObject) ubicacionesArray.get(0);
+
+            String tipoUbicacion = (String) origen.get("TipoUbicacion");
+            String idUbicacion = (String) origen.get("IDUbicacion");
+            String rfcRemitenteDestinatario = (String) origen.get("RFCRemitenteDestinatario");
+            String fechaHoraSalidaLlegada = (String) origen.get("FechaHoraSalidaLlegada");
+            JSONObject domicilioOrigen = (JSONObject) origen.get("Domicilio");
+
+            //UBICACION destino
+            JSONObject destino = (JSONObject) ubicacionesArray.get(1);
+            String tipoUbicacionDestino = (String) destino.get("TipoUbicacion");
+            String idUbicacionDestino = (String) destino.get("IDUbicacion");
+            String rfcRemitenteDestinatarioDestino = (String) destino.get("RFCRemitenteDestinatario");
+            String fechaHoraSalidaLlegadaDestino = (String) destino.get("FechaHoraSalidaLlegada");
+            Long distanciaDestino = (Long) destino.get("DistanciaRecorrida");
+
+            JSONObject domicilioDestino = (JSONObject) destino.get("Domicilio");
+
+            System.out.println(tipoUbicacion);
+            System.out.println(idUbicacion);
+
+            System.out.println(rfcRemitenteDestinatario);
+
+            System.out.println(fechaHoraSalidaLlegada);
+
+            System.out.println(domicilioOrigen.get("Estado"));
+            System.out.println(domicilioOrigen.get("Pais"));
+            System.out.println(domicilioOrigen.get("CodigoPostal"));
+
+            System.out.println(tipoUbicacionDestino);
+            System.out.println(idUbicacionDestino);
+
+            System.out.println(rfcRemitenteDestinatarioDestino);
+
+            System.out.println(fechaHoraSalidaLlegadaDestino);
+            System.out.println(distanciaDestino);
+
+            System.out.println(domicilioDestino.get("Estado"));
+            System.out.println(domicilioDestino.get("Pais"));
+            System.out.println(domicilioDestino.get("CodigoPostal"));
+
+            //mercancias
+            System.out.println("MERCANCIAS");
+
+            JSONObject mercancias = (JSONObject) cartaPorte.get("Mercancias");
+            String pesoBrutoTotal = (String) mercancias.get("PesoBrutoTotal");
+            String unidadPeso = (String) mercancias.get("UnidadPeso");
+            String pesoNetoTotal = (String) mercancias.get("PesoNetoTotal");
+            Long numTotalMercancias = (Long) mercancias.get("NumTotalMercancias");
+
+            System.out.println(pesoBrutoTotal);
+
+            System.out.println(unidadPeso);
+
+            System.out.println(pesoNetoTotal);
+            System.out.println(numTotalMercancias);
+
+            JSONArray mercanciasArray = (JSONArray) mercancias.get("Mercancia");
+
+            for (int j = 0; j < mercanciasArray.size(); j++) {
+                JSONObject mercanciaObjeto = (JSONObject) mercanciasArray.get(j);
+                String bienesTransp = mercanciaObjeto.get("BienesTransp").toString();
+                String descripcion = mercanciaObjeto.get("Descripcion").toString();
+                String cantidad = mercanciaObjeto.get("Cantidad").toString();
+                String claveUnidad = mercanciaObjeto.get("ClaveUnidad").toString();
+                String unidad = mercanciaObjeto.get("Unidad").toString();
+                String pesoEnKg = mercanciaObjeto.get("PesoEnKg").toString();
+
+                System.out.println("Mercancia NUm: " + (j + 1));
+                System.out.println(bienesTransp);
+                System.out.println(descripcion);
+                System.out.println(cantidad);
+                System.out.println(claveUnidad);
+                System.out.println(unidad);
+                System.out.println(pesoEnKg);
+
+            }
+            
+             //Cargar datos a la tabla
+                datos[0] = folioGEPP;
+                datos[1] = fechaGeneracion;
+                datos[2] = botonVer;
+                datos[3] = botonCargar;
                 modeloViajes.addRow(datos);
 
-                //  System.out.printf("Nombre: %s - Tamaño: %d - Tamaño comprimido: %d\n", nombreArchivo, tamagnio, tamagnioComprimido);   
-            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+               
+            }
+        }
+//        try {
+//
+//            File viajesDisponibles = new File(nombreZip);
+//            ZipFile zip = new ZipFile(viajesDisponibles);
+//
+//            Enumeration<?> listado = zip.entries();
+//            ZipEntry ze;
+//            String nombreArchivo;
+//            long tamagnio;
+//            long tamagnioComprimido;
+//
+//            while (listado.hasMoreElements()) {
+//                ze = (ZipEntry) listado.nextElement();
+//                nombreArchivo = ze.getName();
+//                System.out.println("BYtes:" + ze.toString());
+//                tamagnio = ze.getSize();
+//                tamagnioComprimido = ze.getCompressedSize();
+//                datos[0] = nombreArchivo;
+//                datos[1] = botonVer;
+//                datos[2] = botonCargar;
+//
+//                modeloViajes.addRow(datos);
+//
+//                //  System.out.printf("Nombre: %s - Tamaño: %d - Tamaño comprimido: %d\n", nombreArchivo, tamagnio, tamagnioComprimido);   
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 
@@ -137,18 +305,82 @@ public class obtenerViajes extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
+        jLabel2 = new javax.swing.JLabel();
+        panelEncabezado = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        panelBotones = new javax.swing.JPanel();
+        btn_consultarViajes = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaViajes = new javax.swing.JTable();
-        btn1 = new javax.swing.JButton();
-        botonDescomprimir = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuConsultar = new javax.swing.JMenu();
+        menuDescargar = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        menuEditarConstantes = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
+        jLabel2.setText("jLabel2");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panelEncabezado.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("CONSULTA DE VIAJES DISPONIBLES");
+
+        javax.swing.GroupLayout panelEncabezadoLayout = new javax.swing.GroupLayout(panelEncabezado);
+        panelEncabezado.setLayout(panelEncabezadoLayout);
+        panelEncabezadoLayout.setHorizontalGroup(
+            panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEncabezadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelEncabezadoLayout.setVerticalGroup(
+            panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEncabezadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        btn_consultarViajes.setText("Cargar tabla");
+        btn_consultarViajes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_consultarViajesActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Prueba abrir json");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
+        panelBotones.setLayout(panelBotonesLayout);
+        panelBotonesLayout.setHorizontalGroup(
+            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(btn_consultarViajes)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        panelBotonesLayout.setVerticalGroup(
+            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_consultarViajes)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)))
+        );
 
         tablaViajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,217 +397,81 @@ public class obtenerViajes extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaViajes);
 
-        btn1.setText("Consultar");
-        btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1ActionPerformed(evt);
-            }
-        });
-
-        botonDescomprimir.setText("Descomprimir");
-        botonDescomprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonDescomprimirActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Comprimir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
-        jLabel1.setText("VIAJES");
-
-        jButton2.setText("Prueba abrir json");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn1)
-                                .addGap(18, 18, 18)
-                                .addComponent(botonDescomprimir)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(43, 43, 43))))
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn1)
-                    .addComponent(botonDescomprimir)
-                    .addComponent(jButton1))
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        menuConsultar.setText("Consultar");
+
+        menuDescargar.setText("Descargar viajes");
+        menuDescargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDescargarActionPerformed(evt);
+            }
+        });
+        menuConsultar.add(menuDescargar);
+
+        jMenuBar1.add(menuConsultar);
+
+        jMenu3.setText("Editar");
+
+        menuEditarConstantes.setText("Constantes");
+        menuEditarConstantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEditarConstantesActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuEditarConstantes);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(panelEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 62, Short.MAX_VALUE))
+                .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-
-        Comprimir crearZip = new Comprimir();
-
-        //  crearZip.comprimir("Actividades Oscar 48.xlsx", "zipCreado.zip");
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void botonDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDescomprimirActionPerformed
-        // TODO add your handling code here:
-        Descomprimir leerZip = new Descomprimir();
-        leerZip.unZip("archivoSalida.zip", "archivoSalida");
-    }//GEN-LAST:event_botonDescomprimirActionPerformed
-
-    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+    private void btn_consultarViajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultarViajesActionPerformed
         // TODO add your handling code here:
         botonVer.setName("btnVer");
         botonCargar.setName("btnCargar");
-
-        String urlRestService = Constantes.URL_REST_SERVICE;
-        String passUser = Constantes.USER_PASS_GEPP;
-
-        ClientConfig clientConfig = new DefaultClientConfig();
-        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-        Client client = Client.create(clientConfig);
-
-        WebResource webResource = client.resource(urlRestService);
-        ClientResponse response = webResource.path("/verViajes")
-                .queryParam("wsUser", Constantes.USER_GEPP)
-                .queryParam("numProveedor", Constantes.NUMERO_PROVEEDOR)
-                .get(ClientResponse.class);
-
-        System.out.println("Estatus respuesta: " + response.getStatus());
-        System.out.println("");
-
-        TripsResponse output = response.getEntity(TripsResponse.class);
-
-        // dato1.setText("Código Error: " + output.getCodigoError() + "\nMensaje Error: " + output.getMensajeError() + "\nzipBase64: " + output.getZipBase64());
-        System.out.println("Código Error: " + output.getCodigoError());
-        System.out.println("Mensaje Error: " + output.getMensajeError());
-        System.out.println("zipBase64: " + output.getZipBase64());
-
-        if (output.getZipBase64() != null) {
-            try {
-                //Desencriptacion de archivo
-                String archivoDesencriptado = (new Encriptador()).desencriptar(output.getZipBase64(), passUser);
-
-                //Obtener los bytes desde base 64
-                byte[] bytes = Base64.getDecoder().decode(archivoDesencriptado);
-
-                //Escribir archivo
-                try {
-                    FileOutputStream fos = new FileOutputStream("archivoSalida.zip");
-                    fos.write(bytes);
-                    fos.close();
-                    System.out.println("Archivo creado exitosamente.");
-
-                    //Mostra en la tabla los nombres de los json que contiene el  ZIP
-                    MostrarTabla();
-                } catch (Exception e) {
-                    System.out.println("Ocurrió un error al grabar el archivo.");
-                }
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvalidKeyException ex) {
-                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoSuchPaddingException ex) {
-                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalBlockSizeException ex) {
-                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (BadPaddingException ex) {
-                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.out.println("No hay archivo zipBase64 para trabajar.");
-        }
-    }//GEN-LAST:event_btn1ActionPerformed
-
-    private void tablaViajesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaViajesMouseClicked
-        // TODO add your handling code here:
-        columna = tablaViajes.getColumnModel().getColumnIndexAtX(evt.getX());
-        fila = evt.getY() / tablaViajes.getRowHeight();
-
-        if (columna <= tablaViajes.getColumnCount() && columna >= 0 && fila <= tablaViajes.getRowCount() && fila >= 0) {
-            Object objeto = tablaViajes.getValueAt(fila, columna);
-            if (objeto instanceof JButton) {
-                ((JButton) objeto).doClick();
-                JButton botones = (JButton) objeto;
-
-                String datosFila[] = new String[3];
-                int filaSeleccionada = tablaViajes.getSelectedRow();
-                datosFila[0] = tablaViajes.getValueAt(filaSeleccionada, 0).toString();
-
-                if (botones.getName().equals("btnVer")) {
-                    // JOptionPane.showMessageDialog(null, "se preisono ver");
-                    //Obtenemos el nombre del json de la primera columna de la tabla
-                    DetallesViaje datos = new DetallesViaje();
-                    datos.setLocationRelativeTo(null);
-                    datos.setVisible(true);
-                    
-                    if (filaSeleccionada >= 0) {
-
-                        DetallesViaje.tituloJson.setText(datosFila[0]);
-
-                    }
-
-                } else if (botones.getName().equals("btnCargar")) {
-                    //JOptionPane.showMessageDialog(null, "se preisono cargar");
-                    CargarDocumentos cargar = new CargarDocumentos();
-                    cargar.setLocationRelativeTo(null);
-                    cargar.setVisible(true);
-                    if (filaSeleccionada >= 0) {
-                    CargarDocumentos.text_idViaje.setText(datosFila[0]);
-                    }
-                }
-
-            }
-        }
-    }//GEN-LAST:event_tablaViajesMouseClicked
+        Descomprimir descompresorArchivo = new Descomprimir();
+        String nombreZip = "C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip";
+        String nombreCarpeta = "C:\\\\ProgramaGEPP/viajes/viajes_" + formattedDate;
+        descompresorArchivo.unZip(nombreZip, nombreCarpeta);
+        MostrarTabla(nombreCarpeta);
+    }//GEN-LAST:event_btn_consultarViajesActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -519,9 +615,120 @@ public class obtenerViajes extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tablaViajesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaViajesMouseClicked
+        // TODO add your handling code here:
+        columna = tablaViajes.getColumnModel().getColumnIndexAtX(evt.getX());
+        fila = evt.getY() / tablaViajes.getRowHeight();
+
+        if (columna <= tablaViajes.getColumnCount() && columna >= 0 && fila <= tablaViajes.getRowCount() && fila >= 0) {
+            Object objeto = tablaViajes.getValueAt(fila, columna);
+            if (objeto instanceof JButton) {
+                ((JButton) objeto).doClick();
+                JButton botones = (JButton) objeto;
+
+                String datosFila[] = new String[3];
+                int filaSeleccionada = tablaViajes.getSelectedRow();
+                datosFila[0] = tablaViajes.getValueAt(filaSeleccionada, 0).toString();
+
+                if (botones.getName().equals("btnVer")) {
+                    // JOptionPane.showMessageDialog(null, "se preisono ver");
+                    //Obtenemos el nombre del json de la primera columna de la tabla
+                    DetallesViaje datos = new DetallesViaje();
+                    datos.setLocationRelativeTo(null);
+                    datos.setVisible(true);
+
+                    if (filaSeleccionada >= 0) {
+
+                        DetallesViaje.tituloJson.setText(datosFila[0]);
+
+                    }
+
+                } else if (botones.getName().equals("btnCargar")) {
+                    //JOptionPane.showMessageDialog(null, "se preisono cargar");
+                    CargarDocumentos cargar = new CargarDocumentos();
+                    cargar.setLocationRelativeTo(null);
+                    cargar.setVisible(true);
+                    if (filaSeleccionada >= 0) {
+                        CargarDocumentos.text_idViaje.setText(datosFila[0]);
+                    }
+                }
+
+            }
+        }
+    }//GEN-LAST:event_tablaViajesMouseClicked
+
+    private void menuDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDescargarActionPerformed
+        // TODO add your handling code here:      
+        botonVer.setName("btnVer");
+        botonCargar.setName("btnCargar");
+
+        String urlRestService = Constantes.URL_REST_SERVICE;
+        String passUser = Constantes.USER_PASS_GEPP;
+
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+        Client client = Client.create(clientConfig);
+
+        WebResource webResource = client.resource(urlRestService);
+        ClientResponse response = webResource.path("/verViajes")
+                .queryParam("wsUser", Constantes.USER_GEPP)
+                .queryParam("numProveedor", Constantes.NUMERO_PROVEEDOR)
+                .get(ClientResponse.class);
+
+        System.out.println("Estatus respuesta: " + response.getStatus());
+        System.out.println("");
+
+        TripsResponse output = response.getEntity(TripsResponse.class);
+
+        // dato1.setText("Código Error: " + output.getCodigoError() + "\nMensaje Error: " + output.getMensajeError() + "\nzipBase64: " + output.getZipBase64());
+        System.out.println("Código Error: " + output.getCodigoError());
+        System.out.println("Mensaje Error: " + output.getMensajeError());
+        System.out.println("zipBase64: " + output.getZipBase64());
+
+        if (output.getZipBase64() != null) {
+            try {
+                //Desencriptacion de archivo
+                String archivoDesencriptado = (new Encriptador()).desencriptar(output.getZipBase64(), passUser);
+
+                //Obtener los bytes desde base 64
+                byte[] bytes = Base64.getDecoder().decode(archivoDesencriptado);
+
+                //Escribir archivo
+                try {
+                    FileOutputStream fos = new FileOutputStream("C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip");
+                    fos.write(bytes);
+                    fos.close();
+                    System.out.println("Archivo creado exitosamente.");
+                    JOptionPane.showMessageDialog(null, "Descarga completada.");
+                    //Mostra en la
+                    //  MostrarTabla();
+                } catch (Exception e) {
+                    System.out.println("Ocurrió un error al grabar el archivo.");
+                    JOptionPane.showMessageDialog(null, "Erro al crear el archivo ZIP");
+                }
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidKeyException ex) {
+                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchPaddingException ex) {
+                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalBlockSizeException ex) {
+                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (BadPaddingException ex) {
+                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("No hay archivo zipBase64 para trabajar.");
+        }
+    }//GEN-LAST:event_menuDescargarActionPerformed
+
+    private void menuEditarConstantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarConstantesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuEditarConstantesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -563,14 +770,20 @@ public class obtenerViajes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonDescomprimir;
-    private javax.swing.JButton btn1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_consultarViajes;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenu menuConsultar;
+    private javax.swing.JMenuItem menuDescargar;
+    private javax.swing.JMenuItem menuEditarConstantes;
+    private javax.swing.JPanel panelBotones;
+    private javax.swing.JPanel panelEncabezado;
     public static javax.swing.JTable tablaViajes;
     // End of variables declaration//GEN-END:variables
 }

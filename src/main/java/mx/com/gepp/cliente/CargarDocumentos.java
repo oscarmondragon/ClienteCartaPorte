@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import static javafx.scene.input.DataFormat.FILES;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,6 +32,7 @@ import mx.com.gepp.utilities.Constantes;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import mx.com.gepp.utilities.Encriptador;
+
 /**
  *
  * @author dspace
@@ -79,8 +79,11 @@ public class CargarDocumentos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_archivos = new javax.swing.JTable();
         btn_enviar = new javax.swing.JButton();
+        btn_regresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         text_idViaje.setText("Identificador del Viaje");
 
@@ -133,6 +136,11 @@ public class CargarDocumentos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbl_archivos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_archivosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_archivos);
 
         btn_enviar.setText("Enviar");
@@ -143,47 +151,55 @@ public class CargarDocumentos extends javax.swing.JFrame {
             }
         });
 
+        btn_regresar.setText("Regresar");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(77, 77, 77))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(text_idViaje)
-                        .addGap(173, 173, 173))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(37, 37, 37)
+                                .addComponent(btn_selecionarArchivos))
+                            .addComponent(jLabel5))
+                        .addGap(0, 307, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
                     .addComponent(txt_url)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(94, 94, 94)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(text_idViaje))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_enviar)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addGap(37, 37, 37)
-                                    .addComponent(btn_selecionarArchivos))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5)))
-                        .addGap(0, 3, Short.MAX_VALUE)))
+                            .addComponent(jLabel4))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_regresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_enviar)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(139, 139, 139))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,11 +226,13 @@ public class CargarDocumentos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(btn_selecionarArchivos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_enviar)
-                .addGap(240, 240, 240))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_enviar)
+                    .addComponent(btn_regresar))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -229,12 +247,70 @@ public class CargarDocumentos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
+        // TODO add your handling code here:
+        //  Comprimir crearZip = new Comprimir();
+        Encriptador encoder = new Encriptador();
+        String passUser = Constantes.USER_PASS_GEPP;
+
+        //Conversion de archivo zip a Base64
+        Comprimir zip = new Comprimir();
+        String nombreZip ="C:\\\\ProgramaGEPP/CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+        zip.comprimir(archivosSeleccionados, nombreZip);
+
+        // convert the zip file to the base64 encoded string
+        //String encodedData = convertZipFileToBaseEncodeString();
+        //System.out.println("encodedData > " + encodedData);
+        //>Integramos el archivo
+        String encodedBase64 = null;
+        String archivoEncriptado = null;
+
+        try {
+            File originalFile = new File(nombreZip);
+            try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
+                byte[] bytes = new byte[(int) originalFile.length()];
+                fileInputStreamReader.read(bytes);
+                encodedBase64 = new String(Base64.getEncoder().encode(bytes));
+            }
+            System.out.println("Se convirtio a base64");
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error al convertir a Base64.");
+        }
+        //Encriptacion de archivo
+        try {
+            archivoEncriptado = new String(encoder.encriptar(encodedBase64, passUser));
+            System.out.println("Se encrypto");
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error al encriptar el archivo.");
+        }
+
+        archivosSeleccionados.clear();
+        this.dispose();
+    }//GEN-LAST:event_btn_enviarActionPerformed
+
+    private void tbl_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_archivosMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            DefaultTableModel m = (DefaultTableModel) tbl_archivos.getModel();
+            int filaSeleccionada = tbl_archivos.getSelectedRow();
+
+            //Borrar archivo de la lista
+            archivosSeleccionados.remove(filaSeleccionada);
+            if (archivosSeleccionados.isEmpty()) {
+                btn_enviar.setEnabled(false);
+            }
+            //BORRAR LA FILA
+            // JOptionPane.showMessageDialog(rootPane, "Se elimino fila: " + tbl_archivos.getSelectedRow());
+            m.removeRow(filaSeleccionada);
+
+        }
+    }//GEN-LAST:event_tbl_archivosMouseClicked
 
     private void btn_selecionarArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarArchivosActionPerformed
 
@@ -267,54 +343,13 @@ public class CargarDocumentos extends javax.swing.JFrame {
         if (!archivosSeleccionados.isEmpty()) {
             btn_enviar.setEnabled(true);
         }
-
-
     }//GEN-LAST:event_btn_selecionarArchivosActionPerformed
 
-    private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
         // TODO add your handling code here:
-      //  Comprimir crearZip = new Comprimir();
-        Encriptador encoder = new Encriptador();
-        String passUser = Constantes.USER_PASS_GEPP;
-      
-    
-       
-		//Conversion de archivo zip a Base64
-                
-                Comprimir zip = new Comprimir();
-                String nombreZip =  text_idViaje.getText()+".zip";
-                zip.comprimir(archivosSeleccionados, nombreZip);
-		
-		
 
-// convert the zip file to the base64 encoded string
-		//String encodedData = convertZipFileToBaseEncodeString();
-		//System.out.println("encodedData > " + encodedData);
-                 //>Integramos el archivo
-		String encodedBase64 = null;
-		String archivoEncriptado = null;
-		
-                
-		try {
-			File originalFile = new File(nombreZip);
-            try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
-                byte[] bytes = new byte[(int) originalFile.length()];
-                fileInputStreamReader.read(bytes);
-                encodedBase64 = new String(Base64.getEncoder().encode(bytes));
-            }
-                    System.out.println("Se convirtio a base64");
-		} catch(Exception e) {
-			System.out.println("Ocurrió un error al convertir a Base64.");
-		}
-		
-		//Encriptacion de archivo
-        try {
-        	archivoEncriptado = new String(encoder.encriptar(encodedBase64, passUser));
-                System.out.println("Se encrypto");
-        } catch(Exception e) {
-        	System.out.println("Ocurrió un error al encriptar el archivo.");
-        }
-    }//GEN-LAST:event_btn_enviarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_regresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,6 +388,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_enviar;
+    private javax.swing.JButton btn_regresar;
     private javax.swing.JButton btn_selecionarArchivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -360,7 +396,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    public static javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_archivos;
     public static javax.swing.JLabel text_idViaje;
