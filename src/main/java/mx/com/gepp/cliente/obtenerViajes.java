@@ -81,6 +81,10 @@ public class obtenerViajes extends javax.swing.JFrame {
     JButton botonVer = new JButton("Ver JSON");
     JButton botonCargar = new JButton("Cargar");
 
+    //Nombre de carpeta y zip
+    String nombreZip = "viajes_" + formattedDate + ".zip";
+    String nombreCarpeta = "viajes_" + formattedDate;
+
     public static int columna, fila;
 
     public obtenerViajes() {
@@ -113,185 +117,29 @@ public class obtenerViajes extends javax.swing.JFrame {
             System.out.println("No hay elementos dentro de la carpeta actual");
             return;
         } else {
-            for (int i = 0; i < 1; i++) {
+            for (String listado1 : listado) {
                 JSONParser parser = new JSONParser();
-        try {
-            JSONArray a = (JSONArray) parser.parse(new FileReader(nombreCarpeta + "/" + listado[i]));
-
-            JSONObject cabecera = (JSONObject) a.get(0);
-
-            String folioGEPP = (String) cabecera.get("FolioGEPP");
-            String fechaGeneracion = (String) cabecera.get("FechaGeneracion");
-            String usoCfdi = (String) cabecera.get("UsoCFDI");
-
-            JSONObject documentosGepp = (JSONObject) cabecera.get("DocumentosGEPP");
-            JSONArray docsGepp = (JSONArray) documentosGepp.get("DocsGEPP");
-
-            JSONArray ubicacionesGepp = (JSONArray) cabecera.get("UbicacionesGEPP");
-
-            System.out.println(folioGEPP);
-            System.out.println(fechaGeneracion);
-            System.out.println(usoCfdi);
-
-            if (docsGepp == null) {
-
-            } else {
-                Iterator<String> iterator = docsGepp.iterator();
-                while (iterator.hasNext()) {
-                    System.out.println(iterator.next());
-                }
-
-            }
-
-            if (ubicacionesGepp == null) {
-
-            } else {
-                Iterator<String> iteratorUbicaciones = ubicacionesGepp.iterator();
-                while (iteratorUbicaciones.hasNext()) {
-                    System.out.println(iteratorUbicaciones.next());
+                try {
+                    JSONArray a = (JSONArray) parser.parse(new FileReader(nombreCarpeta + "/" + listado1));
+                    JSONObject cabecera = (JSONObject) a.get(0);
+                    String folioGEPP = (String) cabecera.get("FolioGEPP");
+                    String fechaGeneracion = (String) cabecera.get("FechaGeneracion");
+                   
+                    //Cargar datos a la tabla
+                    datos[0] = folioGEPP;
+                    datos[1] = fechaGeneracion;
+                    datos[2] = botonVer;
+                    datos[3] = botonCargar;
+                    modeloViajes.addRow(datos);
+                }catch (FileNotFoundException ex) {
+                    Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+                }catch (IOException ex) {
+                    Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+                }catch (ParseException ex) {
+                    Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
-            JSONObject carta = (JSONObject) a.get(1);
-
-            JSONObject cartaPorte = (JSONObject) carta.get("CartaPorte");
-
-            String version = (String) cartaPorte.get("Version");
-            String transpInternac = (String) cartaPorte.get("TranspInternac");
-            Long totalDistRec = (Long) cartaPorte.get("TotalDistRec");
-
-            System.out.println(version);
-            System.out.println(transpInternac);
-            System.out.println(totalDistRec);
-
-            JSONObject ubicaciones = (JSONObject) cartaPorte.get("Ubicaciones");
-            JSONArray ubicacionesArray = (JSONArray) ubicaciones.get("Ubicacion");
-
-            //UBICACION origen
-            JSONObject origen = (JSONObject) ubicacionesArray.get(0);
-
-            String tipoUbicacion = (String) origen.get("TipoUbicacion");
-            String idUbicacion = (String) origen.get("IDUbicacion");
-            String rfcRemitenteDestinatario = (String) origen.get("RFCRemitenteDestinatario");
-            String fechaHoraSalidaLlegada = (String) origen.get("FechaHoraSalidaLlegada");
-            JSONObject domicilioOrigen = (JSONObject) origen.get("Domicilio");
-
-            //UBICACION destino
-            JSONObject destino = (JSONObject) ubicacionesArray.get(1);
-            String tipoUbicacionDestino = (String) destino.get("TipoUbicacion");
-            String idUbicacionDestino = (String) destino.get("IDUbicacion");
-            String rfcRemitenteDestinatarioDestino = (String) destino.get("RFCRemitenteDestinatario");
-            String fechaHoraSalidaLlegadaDestino = (String) destino.get("FechaHoraSalidaLlegada");
-            Long distanciaDestino = (Long) destino.get("DistanciaRecorrida");
-
-            JSONObject domicilioDestino = (JSONObject) destino.get("Domicilio");
-
-            System.out.println(tipoUbicacion);
-            System.out.println(idUbicacion);
-
-            System.out.println(rfcRemitenteDestinatario);
-
-            System.out.println(fechaHoraSalidaLlegada);
-
-            System.out.println(domicilioOrigen.get("Estado"));
-            System.out.println(domicilioOrigen.get("Pais"));
-            System.out.println(domicilioOrigen.get("CodigoPostal"));
-
-            System.out.println(tipoUbicacionDestino);
-            System.out.println(idUbicacionDestino);
-
-            System.out.println(rfcRemitenteDestinatarioDestino);
-
-            System.out.println(fechaHoraSalidaLlegadaDestino);
-            System.out.println(distanciaDestino);
-
-            System.out.println(domicilioDestino.get("Estado"));
-            System.out.println(domicilioDestino.get("Pais"));
-            System.out.println(domicilioDestino.get("CodigoPostal"));
-
-            //mercancias
-            System.out.println("MERCANCIAS");
-
-            JSONObject mercancias = (JSONObject) cartaPorte.get("Mercancias");
-            String pesoBrutoTotal = (String) mercancias.get("PesoBrutoTotal");
-            String unidadPeso = (String) mercancias.get("UnidadPeso");
-            String pesoNetoTotal = (String) mercancias.get("PesoNetoTotal");
-            Long numTotalMercancias = (Long) mercancias.get("NumTotalMercancias");
-
-            System.out.println(pesoBrutoTotal);
-
-            System.out.println(unidadPeso);
-
-            System.out.println(pesoNetoTotal);
-            System.out.println(numTotalMercancias);
-
-            JSONArray mercanciasArray = (JSONArray) mercancias.get("Mercancia");
-
-            for (int j = 0; j < mercanciasArray.size(); j++) {
-                JSONObject mercanciaObjeto = (JSONObject) mercanciasArray.get(j);
-                String bienesTransp = mercanciaObjeto.get("BienesTransp").toString();
-                String descripcion = mercanciaObjeto.get("Descripcion").toString();
-                String cantidad = mercanciaObjeto.get("Cantidad").toString();
-                String claveUnidad = mercanciaObjeto.get("ClaveUnidad").toString();
-                String unidad = mercanciaObjeto.get("Unidad").toString();
-                String pesoEnKg = mercanciaObjeto.get("PesoEnKg").toString();
-
-                System.out.println("Mercancia NUm: " + (j + 1));
-                System.out.println(bienesTransp);
-                System.out.println(descripcion);
-                System.out.println(cantidad);
-                System.out.println(claveUnidad);
-                System.out.println(unidad);
-                System.out.println(pesoEnKg);
-
-            }
-            
-             //Cargar datos a la tabla
-                datos[0] = folioGEPP;
-                datos[1] = fechaGeneracion;
-                datos[2] = botonVer;
-                datos[3] = botonCargar;
-                modeloViajes.addRow(datos);
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-               
-            }
-        }
-//        try {
-//
-//            File viajesDisponibles = new File(nombreZip);
-//            ZipFile zip = new ZipFile(viajesDisponibles);
-//
-//            Enumeration<?> listado = zip.entries();
-//            ZipEntry ze;
-//            String nombreArchivo;
-//            long tamagnio;
-//            long tamagnioComprimido;
-//
-//            while (listado.hasMoreElements()) {
-//                ze = (ZipEntry) listado.nextElement();
-//                nombreArchivo = ze.getName();
-//                System.out.println("BYtes:" + ze.toString());
-//                tamagnio = ze.getSize();
-//                tamagnioComprimido = ze.getCompressedSize();
-//                datos[0] = nombreArchivo;
-//                datos[1] = botonVer;
-//                datos[2] = botonCargar;
-//
-//                modeloViajes.addRow(datos);
-//
-//                //  System.out.printf("Nombre: %s - Tamaño: %d - Tamaño comprimido: %d\n", nombreArchivo, tamagnio, tamagnioComprimido);   
-//            }
-//        } catch (IOException ex) {
-//            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
     }
 
@@ -467,8 +315,9 @@ public class obtenerViajes extends javax.swing.JFrame {
         botonVer.setName("btnVer");
         botonCargar.setName("btnCargar");
         Descomprimir descompresorArchivo = new Descomprimir();
-        String nombreZip = "C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip";
-        String nombreCarpeta = "C:\\\\ProgramaGEPP/viajes/viajes_" + formattedDate;
+        // String nombreZip = "C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip";
+        // String nombreCarpeta = "C:\\\\ProgramaGEPP/viajes/viajes_" + formattedDate;
+
         descompresorArchivo.unZip(nombreZip, nombreCarpeta);
         MostrarTabla(nombreCarpeta);
     }//GEN-LAST:event_btn_consultarViajesActionPerformed
@@ -640,8 +489,11 @@ public class obtenerViajes extends javax.swing.JFrame {
                     datos.setVisible(true);
 
                     if (filaSeleccionada >= 0) {
-
+                        
+                         File carpeta = new File(nombreCarpeta);
+                         String[] listado = carpeta.list();
                         DetallesViaje.tituloJson.setText(datosFila[0]);
+                        verDetalles(nombreCarpeta + "/" + listado [filaSeleccionada]);
 
                     }
 
@@ -697,7 +549,9 @@ public class obtenerViajes extends javax.swing.JFrame {
 
                 //Escribir archivo
                 try {
-                    FileOutputStream fos = new FileOutputStream("C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip");
+                    //FileOutputStream fos = new FileOutputStream("C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip");
+                    FileOutputStream fos = new FileOutputStream("viajes_" + formattedDate + ".zip");
+
                     fos.write(bytes);
                     fos.close();
                     System.out.println("Archivo creado exitosamente.");
@@ -729,6 +583,152 @@ public class obtenerViajes extends javax.swing.JFrame {
     private void menuEditarConstantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarConstantesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuEditarConstantesActionPerformed
+
+    public static void verDetalles(String rutaJson) {
+
+        JSONParser parser = new JSONParser();
+        try {
+            JSONArray a = (JSONArray) parser.parse(new FileReader(rutaJson));
+
+            JSONObject cabecera = (JSONObject) a.get(0);
+
+            String folioGEPP = (String) cabecera.get("FolioGEPP");
+            String fechaGeneracion = (String) cabecera.get("FechaGeneracion");
+            String usoCfdi = (String) cabecera.get("UsoCFDI");
+
+            JSONObject documentosGepp = (JSONObject) cabecera.get("DocumentosGEPP");
+            JSONArray docsGepp = (JSONArray) documentosGepp.get("DocsGEPP");
+
+            JSONArray ubicacionesGepp = (JSONArray) cabecera.get("UbicacionesGEPP");
+
+            System.out.println(folioGEPP);
+            DetallesViaje.vistaDatos.setText(folioGEPP);
+            
+            System.out.println(fechaGeneracion);
+            System.out.println(usoCfdi);
+
+            if (docsGepp == null) {
+
+            } else {
+                Iterator<String> iterator = docsGepp.iterator();
+                while (iterator.hasNext()) {
+                    System.out.println(iterator.next());
+                }
+
+            }
+
+            if (ubicacionesGepp == null) {
+
+            } else {
+                Iterator<String> iteratorUbicaciones = ubicacionesGepp.iterator();
+                while (iteratorUbicaciones.hasNext()) {
+                    System.out.println(iteratorUbicaciones.next());
+                }
+            }
+
+            JSONObject carta = (JSONObject) a.get(1);
+
+            JSONObject cartaPorte = (JSONObject) carta.get("CartaPorte");
+
+            String version = (String) cartaPorte.get("Version");
+            String transpInternac = (String) cartaPorte.get("TranspInternac");
+            Long totalDistRec = (Long) cartaPorte.get("TotalDistRec");
+
+            System.out.println(version);
+            System.out.println(transpInternac);
+            System.out.println(totalDistRec);
+
+            JSONObject ubicaciones = (JSONObject) cartaPorte.get("Ubicaciones");
+            JSONArray ubicacionesArray = (JSONArray) ubicaciones.get("Ubicacion");
+
+            //UBICACION origen
+            JSONObject origen = (JSONObject) ubicacionesArray.get(0);
+
+            String tipoUbicacion = (String) origen.get("TipoUbicacion");
+            String idUbicacion = (String) origen.get("IDUbicacion");
+            String rfcRemitenteDestinatario = (String) origen.get("RFCRemitenteDestinatario");
+            String fechaHoraSalidaLlegada = (String) origen.get("FechaHoraSalidaLlegada");
+            JSONObject domicilioOrigen = (JSONObject) origen.get("Domicilio");
+
+            //UBICACION destino
+            JSONObject destino = (JSONObject) ubicacionesArray.get(1);
+            String tipoUbicacionDestino = (String) destino.get("TipoUbicacion");
+            String idUbicacionDestino = (String) destino.get("IDUbicacion");
+            String rfcRemitenteDestinatarioDestino = (String) destino.get("RFCRemitenteDestinatario");
+            String fechaHoraSalidaLlegadaDestino = (String) destino.get("FechaHoraSalidaLlegada");
+            Long distanciaDestino = (Long) destino.get("DistanciaRecorrida");
+
+            JSONObject domicilioDestino = (JSONObject) destino.get("Domicilio");
+
+            System.out.println(tipoUbicacion);
+            System.out.println(idUbicacion);
+
+            System.out.println(rfcRemitenteDestinatario);
+
+            System.out.println(fechaHoraSalidaLlegada);
+
+            System.out.println(domicilioOrigen.get("Estado"));
+            System.out.println(domicilioOrigen.get("Pais"));
+            System.out.println(domicilioOrigen.get("CodigoPostal"));
+
+            System.out.println(tipoUbicacionDestino);
+            System.out.println(idUbicacionDestino);
+
+            System.out.println(rfcRemitenteDestinatarioDestino);
+
+            System.out.println(fechaHoraSalidaLlegadaDestino);
+            System.out.println(distanciaDestino);
+
+            System.out.println(domicilioDestino.get("Estado"));
+            System.out.println(domicilioDestino.get("Pais"));
+            System.out.println(domicilioDestino.get("CodigoPostal"));
+
+            //mercancias
+            System.out.println("MERCANCIAS");
+
+            JSONObject mercancias = (JSONObject) cartaPorte.get("Mercancias");
+            String pesoBrutoTotal = (String) mercancias.get("PesoBrutoTotal");
+            String unidadPeso = (String) mercancias.get("UnidadPeso");
+            String pesoNetoTotal = (String) mercancias.get("PesoNetoTotal");
+            Long numTotalMercancias = (Long) mercancias.get("NumTotalMercancias");
+
+            System.out.println(pesoBrutoTotal);
+
+            System.out.println(unidadPeso);
+
+            System.out.println(pesoNetoTotal);
+            System.out.println(numTotalMercancias);
+
+            JSONArray mercanciasArray = (JSONArray) mercancias.get("Mercancia");
+
+            for (int i = 0; i < mercanciasArray.size(); i++) {
+                JSONObject mercanciaObjeto = (JSONObject) mercanciasArray.get(i);
+                String bienesTransp = mercanciaObjeto.get("BienesTransp").toString();
+                String descripcion = mercanciaObjeto.get("Descripcion").toString();
+                String cantidad = mercanciaObjeto.get("Cantidad").toString();
+                String claveUnidad = mercanciaObjeto.get("ClaveUnidad").toString();
+                String unidad = mercanciaObjeto.get("Unidad").toString();
+                String pesoEnKg = mercanciaObjeto.get("PesoEnKg").toString();
+
+                System.out.println("Mercancia NUm: " + (i + 1));
+                System.out.println(bienesTransp);
+                System.out.println(descripcion);
+                System.out.println(cantidad);
+                System.out.println(claveUnidad);
+                System.out.println(unidad);
+                System.out.println(pesoEnKg);
+
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     /**
      * @param args the command line arguments

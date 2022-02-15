@@ -80,6 +80,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
         tbl_archivos = new javax.swing.JTable();
         btn_enviar = new javax.swing.JButton();
         btn_regresar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -158,6 +159,8 @@ public class CargarDocumentos extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Folio GEPP:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -182,9 +185,8 @@ public class CargarDocumentos extends javax.swing.JFrame {
                         .addGap(94, 94, 94)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(text_idViaje))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))))
@@ -198,7 +200,13 @@ public class CargarDocumentos extends javax.swing.JFrame {
                         .addComponent(btn_enviar)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(text_idViaje)
+                                .addGap(9, 9, 9))
+                            .addComponent(jLabel1))
                         .addGap(139, 139, 139))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -207,7 +215,9 @@ public class CargarDocumentos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(text_idViaje)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(text_idViaje)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -255,43 +265,54 @@ public class CargarDocumentos extends javax.swing.JFrame {
 
     private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
         // TODO add your handling code here:
-        //  Comprimir crearZip = new Comprimir();
-        Encriptador encoder = new Encriptador();
-        String passUser = Constantes.USER_PASS_GEPP;
 
-        //Conversion de archivo zip a Base64
-        Comprimir zip = new Comprimir();
-        String nombreZip ="C:\\\\ProgramaGEPP/CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
-        zip.comprimir(archivosSeleccionados, nombreZip);
+        int response = JOptionPane.showConfirmDialog(this, "¿Esta seguro de enviarlo?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        // convert the zip file to the base64 encoded string
-        //String encodedData = convertZipFileToBaseEncodeString();
-        //System.out.println("encodedData > " + encodedData);
-        //>Integramos el archivo
-        String encodedBase64 = null;
-        String archivoEncriptado = null;
+        if (response == JOptionPane.YES_OPTION) {
+            Encriptador encoder = new Encriptador();
+            String passUser = Constantes.USER_PASS_GEPP;
 
-        try {
-            File originalFile = new File(nombreZip);
-            try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
-                byte[] bytes = new byte[(int) originalFile.length()];
-                fileInputStreamReader.read(bytes);
-                encodedBase64 = new String(Base64.getEncoder().encode(bytes));
+            //Conversion de archivo zip a Base64
+            Comprimir zip = new Comprimir();
+            // String nombreZip ="C:\\\\ProgramaGEPP/CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+            String nombreZip = "CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+
+            zip.comprimir(archivosSeleccionados, nombreZip);
+
+            // convert the zip file to the base64 encoded string
+            //String encodedData = convertZipFileToBaseEncodeString();
+            //System.out.println("encodedData > " + encodedData);
+            //>Integramos el archivo
+            String encodedBase64 = null;
+            String archivoEncriptado = null;
+
+            try {
+                File originalFile = new File(nombreZip);
+                try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
+                    byte[] bytes = new byte[(int) originalFile.length()];
+                    fileInputStreamReader.read(bytes);
+                    encodedBase64 = new String(Base64.getEncoder().encode(bytes));
+                }
+                System.out.println("Se convirtio a base64");
+            } catch (Exception e) {
+                System.out.println("Ocurrió un error al convertir a Base64.");
             }
-            System.out.println("Se convirtio a base64");
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error al convertir a Base64.");
-        }
-        //Encriptacion de archivo
-        try {
-            archivoEncriptado = new String(encoder.encriptar(encodedBase64, passUser));
-            System.out.println("Se encrypto");
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error al encriptar el archivo.");
+            //Encriptacion de archivo
+            try {
+                archivoEncriptado = new String(encoder.encriptar(encodedBase64, passUser));
+                System.out.println("Se encrypto");
+            } catch (Exception e) {
+                System.out.println("Ocurrió un error al encriptar el archivo.");
+            }
+            JOptionPane.showMessageDialog(null, "Se ha enviado.");
+            archivosSeleccionados.clear();
+            this.dispose();
+        } else  if(response== JOptionPane.NO_OPTION){
+            
+        } else if(response == JOptionPane.CLOSED_OPTION){
+            
         }
 
-        archivosSeleccionados.clear();
-        this.dispose();
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void tbl_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_archivosMouseClicked
@@ -396,7 +417,8 @@ public class CargarDocumentos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel7;
+    public static javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_archivos;
     public static javax.swing.JLabel text_idViaje;
