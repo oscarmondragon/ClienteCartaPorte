@@ -36,6 +36,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipFile;
@@ -72,18 +73,20 @@ import org.slf4j.LoggerFactory;
 public class obtenerViajes extends javax.swing.JFrame {
 
     //obtener dia de hoy
-    SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
-    Calendar calendar = Calendar.getInstance();
-    Date dateObj = calendar.getTime();
-    String formattedDate = dtf.format(dateObj);
+//    SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+//    Calendar calendar = Calendar.getInstance();
+//    Date dateObj = calendar.getTime();
+//    String formattedDate = dtf.format(dateObj);
 
     //botones de tabla ver viajes
     JButton botonVer = new JButton("Ver JSON");
     JButton botonCargar = new JButton("Cargar");
 
     //Nombre de carpeta y zip
-    String nombreZip = "viajes_" + formattedDate + ".zip";
-    String nombreCarpeta = "viajes_" + formattedDate;
+   // String nombreZip = "viajes_" + formattedDate + ".zip";
+    //String nombreCarpeta = "viajes_" + formattedDate;
+     String nombreZip = "viajes.zip";
+    String nombreCarpeta = "viajes";
 
     public static int columna, fila;
 
@@ -100,7 +103,7 @@ public class obtenerViajes extends javax.swing.JFrame {
                 return false;
             }
         };
-        String[] columnas = {"FolioGEPP", "Fecha Generación ", "Ver datos", "Cargar documentos"};
+        String[] columnas = {"FolioGEPP", "Fecha Generación", "Estado", "Ver datos", "Cargar documentos"};
 
         modeloViajes.setColumnIdentifiers(columnas);
         this.tablaViajes.setDefaultRenderer(Object.class, new RenderTabla());
@@ -109,7 +112,7 @@ public class obtenerViajes extends javax.swing.JFrame {
 
         this.tablaViajes.setRowHeight(40);
 
-        Object[] datos = new Object[4];
+        Object[] datos = new Object[5];
 
         File carpeta = new File(nombreCarpeta);
         String[] listado = carpeta.list();
@@ -124,18 +127,58 @@ public class obtenerViajes extends javax.swing.JFrame {
                     JSONObject cabecera = (JSONObject) a.get(0);
                     String folioGEPP = (String) cabecera.get("FolioGEPP");
                     String fechaGeneracion = (String) cabecera.get("FechaGeneracion");
-                   
+
+                    //Leer archivo foliosGEPP para determinar los que ya han enviado documentos
+                    Scanner entrada = null;
+                    String linea;
+                    int numeroDeLinea = 1;
+                    boolean contiene = false;
+                    Scanner sc = new Scanner(System.in);
+
+                    try {
+
+                        //creamos un objeto File asociado al fichero seleccionado
+                        File f = new File("foliosGEPP.txt");
+                        //creamos un Scanner para leer el fichero
+                        entrada = new Scanner(f);
+
+                        while (entrada.hasNext()) { //mientras no se llegue al final del fichero
+                            linea = entrada.nextLine();  //se lee una línea
+                            if (linea.contains(folioGEPP)) {   //si la línea contiene el texto buscado se muestra por pantalla         
+                                System.out.println("Linea " + numeroDeLinea + ": " + linea);
+                                contiene = true;
+                                datos[2] = "Enviado";
+                            }
+                            numeroDeLinea++; //se incrementa el contador de líneas
+                        }
+                        if (!contiene) { //si el archivo no contienen el texto se muestra un mensaje indicándolo
+                            datos[2] = "Pendiente";
+                            System.out.println(folioGEPP + " no se ha encontrado en el archivo");
+                        }
+                    } catch (FileNotFoundException e) {
+                        System.out.println(e.toString());
+                    } catch (NullPointerException e) {
+                        System.out.println(e.toString() + "No ha seleccionado ningún archivo");
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    } finally {
+                        if (entrada != null) {
+                            entrada.close();
+                        }
+                    }
+
                     //Cargar datos a la tabla
                     datos[0] = folioGEPP;
                     datos[1] = fechaGeneracion;
-                    datos[2] = botonVer;
-                    datos[3] = botonCargar;
+                    
+                    datos[3] = botonVer;
+                    datos[4] = botonCargar;
                     modeloViajes.addRow(datos);
-                }catch (FileNotFoundException ex) {
+                } catch (FileNotFoundException ex) {
                     Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-                }catch (IOException ex) {
+                } catch (IOException ex) {
                     Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-                }catch (ParseException ex) {
+                } catch (ParseException ex) {
                     Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -489,11 +532,11 @@ public class obtenerViajes extends javax.swing.JFrame {
                     datos.setVisible(true);
 
                     if (filaSeleccionada >= 0) {
-                        
-                         File carpeta = new File(nombreCarpeta);
-                         String[] listado = carpeta.list();
+
+                        File carpeta = new File(nombreCarpeta);
+                        String[] listado = carpeta.list();
                         DetallesViaje.tituloJson.setText(datosFila[0]);
-                        verDetalles(nombreCarpeta + "/" + listado [filaSeleccionada]);
+                        verDetalles(nombreCarpeta + "/" + listado[filaSeleccionada]);
 
                     }
 
@@ -550,7 +593,7 @@ public class obtenerViajes extends javax.swing.JFrame {
                 //Escribir archivo
                 try {
                     //FileOutputStream fos = new FileOutputStream("C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip");
-                    FileOutputStream fos = new FileOutputStream("viajes_" + formattedDate + ".zip");
+                    FileOutputStream fos = new FileOutputStream("viajes.zip");
 
                     fos.write(bytes);
                     fos.close();
@@ -603,7 +646,7 @@ public class obtenerViajes extends javax.swing.JFrame {
 
             System.out.println(folioGEPP);
             DetallesViaje.vistaDatos.setText(folioGEPP);
-            
+
             System.out.println(fechaGeneracion);
             System.out.println(usoCfdi);
 

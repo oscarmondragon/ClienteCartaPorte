@@ -11,8 +11,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -268,49 +270,72 @@ public class CargarDocumentos extends javax.swing.JFrame {
 
         int response = JOptionPane.showConfirmDialog(this, "¿Esta seguro de enviarlo?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        if (response == JOptionPane.YES_OPTION) {
-            Encriptador encoder = new Encriptador();
-            String passUser = Constantes.USER_PASS_GEPP;
+        switch (response) {
+            case JOptionPane.YES_OPTION:
+                Encriptador encoder = new Encriptador();
+                String passUser = Constantes.USER_PASS_GEPP;
 
-            //Conversion de archivo zip a Base64
-            Comprimir zip = new Comprimir();
-            // String nombreZip ="C:\\\\ProgramaGEPP/CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
-            String nombreZip = "CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+                FileWriter fichero = null;
+                PrintWriter pw = null;
+                //Conversion de archivo zip a Base64
+                Comprimir zip = new Comprimir();
+                String nombreZip = "C:\\\\ProgramaGEPP/CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+                //String nombreZip = "CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+                zip.comprimir(archivosSeleccionados, nombreZip);
+                // convert the zip file to the base64 encoded string
+                //String encodedData = convertZipFileToBaseEncodeString();
+                //System.out.println("encodedData > " + encodedData);
+                //>Integramos el archivo
+                String encodedBase64 = null;
+                String archivoEncriptado = null;
+                try {
+                    File originalFile = new File(nombreZip);
+                    try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
+                        byte[] bytes = new byte[(int) originalFile.length()];
+                        fileInputStreamReader.read(bytes);
+                        encodedBase64 = new String(Base64.getEncoder().encode(bytes));
+                    }
+                    System.out.println("Se convirtio a base64");
+                } catch (IOException e) {
+                    System.out.println("Ocurrió un error al convertir a Base64.");
+                }   //Encriptacion de archivo
+                try {
+                    archivoEncriptado = new String(encoder.encriptar(encodedBase64, passUser));
+                    System.out.println("Se encrypto");
+                } catch (Exception e) {
+                    System.out.println("Ocurrió un error al encriptar el archivo.");
+                }   //Escribir folioGepp en archivo de texto
 
-            zip.comprimir(archivosSeleccionados, nombreZip);
+                try {
+                    fichero = new FileWriter("foliosGEPP.txt", true);
+                    pw = new PrintWriter(fichero);
+                    pw.println(text_idViaje.getText());
 
-            // convert the zip file to the base64 encoded string
-            //String encodedData = convertZipFileToBaseEncodeString();
-            //System.out.println("encodedData > " + encodedData);
-            //>Integramos el archivo
-            String encodedBase64 = null;
-            String archivoEncriptado = null;
-
-            try {
-                File originalFile = new File(nombreZip);
-                try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
-                    byte[] bytes = new byte[(int) originalFile.length()];
-                    fileInputStreamReader.read(bytes);
-                    encodedBase64 = new String(Base64.getEncoder().encode(bytes));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        // Nuevamente aprovechamos el finally para 
+                        // asegurarnos que se cierra el fichero.
+                        if (null != fichero) {
+                            fichero.close();
+                        }
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
                 }
-                System.out.println("Se convirtio a base64");
-            } catch (Exception e) {
-                System.out.println("Ocurrió un error al convertir a Base64.");
-            }
-            //Encriptacion de archivo
-            try {
-                archivoEncriptado = new String(encoder.encriptar(encodedBase64, passUser));
-                System.out.println("Se encrypto");
-            } catch (Exception e) {
-                System.out.println("Ocurrió un error al encriptar el archivo.");
-            }
-            JOptionPane.showMessageDialog(null, "Se ha enviado.");
-            archivosSeleccionados.clear();
-            this.dispose();
-        } else  if(response== JOptionPane.NO_OPTION){
-            
-        } else if(response == JOptionPane.CLOSED_OPTION){
-            
+
+                JOptionPane.showMessageDialog(null, "Se ha enviado.");
+                archivosSeleccionados.clear();
+                this.dispose();
+                break;
+
+            case JOptionPane.NO_OPTION:
+                break;
+            case JOptionPane.CLOSED_OPTION:
+                break;
+            default:
+                break;
         }
 
     }//GEN-LAST:event_btn_enviarActionPerformed
