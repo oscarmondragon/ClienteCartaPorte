@@ -1,0 +1,80 @@
+[
+        {
+            
+            "FolioGEPP":"75158",
+            "FechaGeneracion":"2022-02-08T23:52:32",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100090052_M"]},"UbicacionesGEPP":["DE:S88:PLANTA URUAPAN BEPUSA","OR:641:PROPLASA BODEGA CENTRAL"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":382,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-09T00:02:32"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE311501"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-02-09T05:04:56"
+            ,"DistanciaRecorrida": 382
+            ,"Domicilio":{
+            "Estado":"MIC","Pais":"MEX","CodigoPostal":"60170"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "14176.271",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "14176.271",
+            "NumTotalMercancias":4,
+            "Mercancia":[{
+            "BienesTransp":"31141701",
+            "Descripcion":"Moldeados plásticos por inyección de aire",
+            "Cantidad":"295200",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"7834.608"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"1281556",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"3575.663"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"1524",
+            "ClaveUnidad":"KGM",
+            "Unidad":"Kilogramo"
+            ,"PesoEnKg":"1524"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"54",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"1242"
+            
+            
+            
+            
+        }]}
+            }
+        }]

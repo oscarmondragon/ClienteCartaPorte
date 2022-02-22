@@ -1,0 +1,46 @@
+[
+        {
+            
+            "FolioGEPP":"32933",
+            "FechaGeneracion":"2022-01-08T19:31:51",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["R9300005254_M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":447,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR408101"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-08T19:41:51"
+            ,"Domicilio":{
+            "Estado":"VER","Pais":"MEX","CodigoPostal":"94277"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE021902"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-09T01:23:51"
+            ,"DistanciaRecorrida": 447
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "4142.488",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "4142.488",
+            "NumTotalMercancias":1,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"440",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"4142.488"
+            
+            
+            
+        }]}
+            }
+        }]

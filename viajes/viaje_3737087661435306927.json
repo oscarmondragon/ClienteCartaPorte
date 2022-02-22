@@ -1,0 +1,58 @@
+[
+        {
+            
+            "FolioGEPP":"78690",
+            "FechaGeneracion":"2022-02-11T08:35:23",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100090104_M"]},"UbicacionesGEPP":["DE:S79:PLANTA MORELIA BEPUSA","OR:641:PROPLASA BODEGA CENTRAL"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":283,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-11T08:45:23"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE308901"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-02-11T12:35:47"
+            ,"DistanciaRecorrida": 283
+            ,"Domicilio":{
+            "Estado":"MIC","Pais":"MEX","CodigoPostal":"58190"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "16966.548",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "16966.548",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"1837768",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"15678.548"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"56",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"1288"
+            
+            
+            
+            
+        }]}
+            }
+        }]

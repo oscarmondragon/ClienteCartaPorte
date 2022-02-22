@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -77,22 +78,28 @@ public class obtenerViajes extends javax.swing.JFrame {
 //    Calendar calendar = Calendar.getInstance();
 //    Date dateObj = calendar.getTime();
 //    String formattedDate = dtf.format(dateObj);
-
     //botones de tabla ver viajes
     JButton botonVer = new JButton("Ver JSON");
     JButton botonCargar = new JButton("Cargar");
 
     //Nombre de carpeta y zip
-   // String nombreZip = "viajes_" + formattedDate + ".zip";
+    // String nombreZip = "viajes_" + formattedDate + ".zip";
     //String nombreCarpeta = "viajes_" + formattedDate;
-     String nombreZip = "viajes.zip";
+    String nombreZip = "viajes.zip";
     String nombreCarpeta = "viajes";
 
     public static int columna, fila;
 
     public obtenerViajes() {
         initComponents();
+        botonVer.setName("btnVer");
+        botonCargar.setName("btnCargar");
+        Descomprimir descompresorArchivo = new Descomprimir();
+        // String nombreZip = "C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip";
+        // String nombreCarpeta = "C:\\\\ProgramaGEPP/viajes/viajes_" + formattedDate;
 
+        descompresorArchivo.unZip(nombreZip, nombreCarpeta);
+        MostrarTabla(nombreCarpeta);
     }
 
     public void MostrarTabla(String nombreCarpeta) {
@@ -170,7 +177,7 @@ public class obtenerViajes extends javax.swing.JFrame {
                     //Cargar datos a la tabla
                     datos[0] = folioGEPP;
                     datos[1] = fechaGeneracion;
-                    
+
                     datos[3] = botonVer;
                     datos[4] = botonCargar;
                     modeloViajes.addRow(datos);
@@ -217,7 +224,8 @@ public class obtenerViajes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelEncabezado.setBackground(new java.awt.Color(153, 153, 153));
+        panelEncabezado.setBackground(new java.awt.Color(204, 204, 204));
+        panelEncabezado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("CONSULTA DE VIAJES DISPONIBLES");
@@ -239,7 +247,7 @@ public class obtenerViajes extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        btn_consultarViajes.setText("Cargar tabla");
+        btn_consultarViajes.setText("Actualizar Tabla");
         btn_consultarViajes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_consultarViajesActionPerformed(evt);
@@ -266,11 +274,12 @@ public class obtenerViajes extends javax.swing.JFrame {
         );
         panelBotonesLayout.setVerticalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBotonesLayout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
+            .addGroup(panelBotonesLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_consultarViajes)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)))
+                    .addComponent(btn_consultarViajes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(2, 2, 2))
         );
 
         tablaViajes.setModel(new javax.swing.table.DefaultTableModel(
@@ -294,15 +303,14 @@ public class obtenerViajes extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 45, Short.MAX_VALUE))
         );
 
         menuConsultar.setText("Consultar");
@@ -600,7 +608,7 @@ public class obtenerViajes extends javax.swing.JFrame {
                     System.out.println("Archivo creado exitosamente.");
                     JOptionPane.showMessageDialog(null, "Descarga completada.");
                     //Mostra en la
-                    //  MostrarTabla();
+                    MostrarTabla(nombreCarpeta);
                 } catch (Exception e) {
                     System.out.println("Ocurrió un error al grabar el archivo.");
                     JOptionPane.showMessageDialog(null, "Erro al crear el archivo ZIP");
@@ -645,17 +653,21 @@ public class obtenerViajes extends javax.swing.JFrame {
             JSONArray ubicacionesGepp = (JSONArray) cabecera.get("UbicacionesGEPP");
 
             System.out.println(folioGEPP);
-            DetallesViaje.vistaDatos.setText(folioGEPP);
+            DetallesViaje.folioGEPP_text.setText(folioGEPP);
+            DetallesViaje.fechaGen_text.setText(fechaGeneracion);
+            DetallesViaje.usoCFDI_text.setText(usoCfdi);
 
             System.out.println(fechaGeneracion);
             System.out.println(usoCfdi);
+            //   DetallesViaje.vistaDatos.append("DocumentosGEPP:");
 
             if (docsGepp == null) {
 
             } else {
-                Iterator<String> iterator = docsGepp.iterator();
-                while (iterator.hasNext()) {
-                    System.out.println(iterator.next());
+
+                for (Object string : docsGepp) {
+                    // System.out.println(string);
+                    DetallesViaje.docsGEPP_text.append(string.toString());
                 }
 
             }
@@ -681,6 +693,10 @@ public class obtenerViajes extends javax.swing.JFrame {
             System.out.println(transpInternac);
             System.out.println(totalDistRec);
 
+            DetallesViaje.version_text.setText(version);
+            DetallesViaje.traspInter_text.setText(transpInternac);
+            DetallesViaje.totalDist_text.setText(totalDistRec.toString());
+
             JSONObject ubicaciones = (JSONObject) cartaPorte.get("Ubicaciones");
             JSONArray ubicacionesArray = (JSONArray) ubicaciones.get("Ubicacion");
 
@@ -701,9 +717,14 @@ public class obtenerViajes extends javax.swing.JFrame {
             String fechaHoraSalidaLlegadaDestino = (String) destino.get("FechaHoraSalidaLlegada");
             Long distanciaDestino = (Long) destino.get("DistanciaRecorrida");
 
+            String estadoOrigen = domicilioOrigen.get("Estado").toString();
+            String paisOrigen = domicilioOrigen.get("Pais").toString();
+            String cpOrigen = domicilioOrigen.get("CodigoPostal").toString();
+
             JSONObject domicilioDestino = (JSONObject) destino.get("Domicilio");
 
             System.out.println(tipoUbicacion);
+
             System.out.println(idUbicacion);
 
             System.out.println(rfcRemitenteDestinatario);
@@ -713,6 +734,17 @@ public class obtenerViajes extends javax.swing.JFrame {
             System.out.println(domicilioOrigen.get("Estado"));
             System.out.println(domicilioOrigen.get("Pais"));
             System.out.println(domicilioOrigen.get("CodigoPostal"));
+
+            DetallesViaje.tipoUbi_text.setText(tipoUbicacion);
+            DetallesViaje.idUbi_text.setText(idUbicacion);
+            DetallesViaje.idUbi_text.setText(rfcRemitenteDestinatario);
+            DetallesViaje.fechaHora_text.setText(fechaHoraSalidaLlegada);
+
+            DetallesViaje.estado_text.setText(estadoOrigen);
+            DetallesViaje.pais_text.setText(paisOrigen);
+            DetallesViaje.cp_text.setText(cpOrigen);
+
+            DetallesViaje.estado_text.setText(estadoOrigen);
 
             System.out.println(tipoUbicacionDestino);
             System.out.println(idUbicacionDestino);

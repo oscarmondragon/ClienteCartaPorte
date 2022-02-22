@@ -1,0 +1,47 @@
+[
+        {
+            
+            "FolioGEPP":"66642",
+            "FechaGeneracion":"2022-02-02T11:09:51",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["T2700028194_M"]},"UbicacionesGEPP":["DE:T21:PLANTA IZTACALCO BEPUSA","OR:T27:PLANTA APODACA BEPUSA"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":938,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR507501"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-02T11:19:51"
+            ,"Domicilio":{
+            "Estado":"NLE","Pais":"MEX","CodigoPostal":"66603"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE107401"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-02-03T18:36:10"
+            ,"DistanciaRecorrida": 938
+            ,"Domicilio":{
+            "Estado":"DIF","Pais":"MEX","CodigoPostal":"08800"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "19.238",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "19.238",
+            "NumTotalMercancias":1,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"153900",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"19.238"
+            
+            
+            
+            
+        }]}
+            }
+        }]
