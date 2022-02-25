@@ -1,10 +1,28 @@
 package mx.com.gepp.utilities;
 
-public class Constantes {
-	public static final String URL_REST_SERVICE = "https://tr01.gepp.com/WSCartaPorte/rest/service";
-	
-	public static final String USER_GEPP = "GEPP_CP";
-	public static final String USER_PASS_GEPP = "a5.Jx_6kSPoyJxQ";
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mx.com.gepp.cliente.EditarConstantes;
+import mx.com.gepp.cliente.obtenerViajes;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-	public static final String NUMERO_PROVEEDOR = "30-03-0792";
+public class Constantes {
+
+    public static String URL_REST_SERVICE;
+    public static String USER_GEPP;
+    public static String USER_PASS_GEPP;
+    public static String NUMERO_PROVEEDOR;
+
+    public static void asignarConstantes(JSONObject constan) {
+
+        Constantes.URL_REST_SERVICE = constan.get("url").toString();
+        Constantes.USER_GEPP = constan.get("user").toString();
+        Constantes.USER_PASS_GEPP = constan.get("password").toString();
+        Constantes.NUMERO_PROVEEDOR = constan.get("numeroProveedor").toString();
+    }
 }

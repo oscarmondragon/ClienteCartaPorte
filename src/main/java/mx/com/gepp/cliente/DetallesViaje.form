@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
@@ -24,7 +24,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Component id="jScrollPane4" pref="938" max="32767" attributes="0"/>
+              <Component id="jScrollPane4" pref="1410" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Component id="panel_inicio" alignment="0" max="32767" attributes="0"/>
@@ -97,11 +97,17 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Cantarell" size="18" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Folio GEPP:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="tituloJson">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Cantarell" size="18" style="1"/>
+            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="66" red="0" type="rgb"/>
             </Property>
@@ -172,47 +178,44 @@
                           <EmptySpace min="46" pref="46" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <Component id="folioGEPP_text" min="-2" pref="112" max="-2" attributes="0"/>
+                                      <Component id="version_text" alignment="0" pref="141" max="32767" attributes="0"/>
+                                      <Component id="folioGEPP_text" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      <Component id="traspInter_text" min="-2" pref="149" max="-2" attributes="0"/>
                                       <Component id="fechaGen_text" min="-2" pref="138" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel11" min="-2" pref="149" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace type="separate" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="usoCFDI_text" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Component id="version_text" max="32767" attributes="0"/>
-                                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel11" min="-2" pref="149" max="-2" attributes="0"/>
-                                      <Component id="traspInter_text" min="-2" pref="149" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="totalDist_text" min="-2" pref="164" max="-2" attributes="0"/>
+                                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel12" max="32767" attributes="0"/>
-                              <Component id="totalDist_text" alignment="0" max="32767" attributes="0"/>
-                              <Component id="usoCFDI_text" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane2" min="-2" pref="254" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="455" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -230,20 +233,18 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane2" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="folioGEPP_text" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="fechaGen_text" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="usoCFDI_text" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="fechaGen_text" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="usoCFDI_text" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="folioGEPP_text" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="version_text" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="traspInter_text" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -263,6 +264,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="traspInter_text">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
@@ -273,6 +277,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="fechaGen_text">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
@@ -283,6 +290,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="usoCFDI_text">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
@@ -301,6 +311,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTextArea" name="docsGEPP_text">
                       <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
                         <Property name="columns" type="int" value="20"/>
                         <Property name="rows" type="int" value="5"/>
                       </Properties>
@@ -326,16 +337,25 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="folioGEPP_text">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="version_text">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="totalDist_text">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
@@ -356,24 +376,28 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="ubicacionDestino_panel" max="32767" attributes="0"/>
-                              <Component id="ubicacionOrigen_panel" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="ubicacionOrigen_panel" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="ubicacionDestino_panel" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="ubicacionOrigen_panel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="ubicacionDestino_panel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="ubicacionOrigen_panel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="ubicacionDestino_panel" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -383,7 +407,7 @@
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Ubicaci&#xf3;n"/>
+                        <TitledBorder title="Origen"/>
                       </Border>
                     </Property>
                   </Properties>
@@ -411,41 +435,57 @@
                                   <Component id="municipio_text" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="estado_text" min="-2" pref="148" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="233" max="-2" attributes="0"/>
-                                      <Component id="cp_text" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <Component id="cp_text" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="rfcUbi_text" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel34" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel38" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                                          <Component id="numExt_text" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="fechaHora_text" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
-                                          <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="colonia_text" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="pais_text" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jLabel37" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                                                  <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel34" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel38" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
                                               </Group>
+                                              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="numExt_text" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="rfcUbi_text" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="localidad_text" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                                                      <Component id="jLabel37" min="-2" pref="124" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="fechaHora_text" min="-2" pref="185" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="pais_text" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
+                                                  <Component id="colonia_text" min="-2" pref="185" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="distanciaRec_text" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
                                           <Component id="jLabel40" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel39" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                                          <Component id="localidad_text" alignment="0" pref="150" max="32767" attributes="0"/>
+                                          <Component id="distanciaRec_text" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -500,7 +540,7 @@
                                   <Component id="estado_text" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="pais_text" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="63" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -512,6 +552,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tipoUbi_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -522,6 +565,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="idUbi_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -532,6 +578,12 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="rfcUbi_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel31">
                       <Properties>
@@ -539,6 +591,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="fechaHora_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -549,6 +604,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="distanciaRec_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -559,6 +617,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="calle_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -569,6 +630,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="numExt_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -579,11 +643,17 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="colonia_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="localidad_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -594,21 +664,33 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="estado_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="municipio_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="pais_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="cp_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -639,7 +721,7 @@
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Ubicaci&#xf3;n"/>
+                        <TitledBorder title="Destino"/>
                       </Border>
                     </Property>
                   </Properties>
@@ -668,41 +750,44 @@
                               </Group>
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="estadoDestino_text" min="-2" pref="148" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="233" max="-2" attributes="0"/>
-                                      <Component id="cpDestino_text" min="-2" pref="124" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="rfcDestino_text" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel44" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel48" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                                          <Component id="numExtDes_text" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="estadoDestino_text" alignment="1" min="-2" pref="157" max="-2" attributes="0"/>
+                                  <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel44" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel48" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                                  <Component id="rfcDestino_text" min="-2" pref="157" max="-2" attributes="0"/>
+                                  <Component id="numExtDes_text" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel41" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="fechaHoraDestino_text" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
                                           <Component id="jLabel45" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="coloniaDestino_text" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="paisDestino_text" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jLabel47" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jLabel47" min="-2" pref="124" max="-2" attributes="0"/>
                                           </Group>
+                                          <Component id="fechaHoraDestino_text" min="-2" pref="185" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="localidadDestino_text" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
-                                          <Component id="jLabel42" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="distaRecDestino_text" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
-                                          <Component id="jLabel50" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel49" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="paisDestino_text" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
+                                          <Component id="coloniaDestino_text" min="-2" pref="185" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel42" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel50" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel49" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                                  <Component id="distaRecDestino_text" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="localidadDestino_text" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                      <Component id="cpDestino_text" min="-2" pref="157" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
@@ -768,6 +853,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tipoDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -778,6 +866,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="idDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -788,6 +879,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="rfcDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -798,6 +892,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="fechaHoraDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -808,6 +905,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="distaRecDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -818,6 +918,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="calleDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -828,6 +931,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="numExtDes_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -838,11 +944,17 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="coloniaDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="localidadDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -853,21 +965,33 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="estadoDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="municipioDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="paisDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="cpDestino_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                       </AuxValues>
@@ -950,18 +1074,12 @@
                                   <Component id="jLabel51" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="pesoBruto_text" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Component id="jLabel52" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="unidadPeso_text" min="-2" pref="125" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel52" min="-2" max="-2" attributes="0"/>
+                                  <Component id="unidadPeso_text" min="-2" pref="125" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel54" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="pesoNeto_text" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
@@ -971,7 +1089,7 @@
                                   <Component id="jLabel53" alignment="0" max="32767" attributes="0"/>
                                   <Component id="totalMercan_text" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="653" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1004,6 +1122,12 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="pesoBruto_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel52">
                       <Properties>
@@ -1011,6 +1135,12 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="pesoNeto_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel53">
                       <Properties>
@@ -1018,6 +1148,12 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="unidadPeso_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel54">
                       <Properties>
@@ -1025,6 +1161,12 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="totalMercan_text">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1042,8 +1184,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane3" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1051,25 +1192,37 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane3" min="-2" pref="203" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
                       <AuxValues>
                         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                       </AuxValues>
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTextArea" name="mercancias_text">
+                        <Component class="javax.swing.JTable" name="tbl_mercancias">
                           <Properties>
-                            <Property name="columns" type="int" value="20"/>
-                            <Property name="rows" type="int" value="5"/>
+                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="tbl_mercancias.setCellSelectionEnabled(true);">
+                              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;&#xa;    new Object [][] {&#xa;&#xa;    },&#xa;    new String [] {&#xa;        &quot;Bienes Trans&quot;, &quot;Descripci&#xf3;n&quot;, &quot;Cantidad&quot;, &quot;Clave Unidad&quot;, &quot;Unidad&quot;, &quot;Material Peligroso&quot;, &quot;Peso (KG)&quot;, &quot;Valor&quot;, &quot;Moneda&quot;, &quot;Fracci&#xf3;n Arancelaria&quot;, &quot;UUID Comercio Ext&quot;&#xa;    }&#xa;)&#xa;" type="code"/>
+                            </Property>
+                            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                              <TableColumnModel selectionModel="2"/>
+                            </Property>
+                            <Property name="columnSelectionAllowed" type="boolean" value="true"/>
+                            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                            </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tbl_mercancias = new javax.swing.JTable(){&#xa;public boolean isCellEditable(int rowIndex, int colIndex){&#xa;            return false;&#xa;    }&#xa;};"/>
+                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>

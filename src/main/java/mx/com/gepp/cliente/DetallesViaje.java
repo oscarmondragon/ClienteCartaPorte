@@ -15,7 +15,7 @@ public class DetallesViaje extends javax.swing.JFrame {
      */
     //variable para leer nombre de json
     public static String nombreJson;
-    
+
     public DetallesViaje() {
         initComponents();
     }
@@ -117,8 +117,8 @@ public class DetallesViaje extends javax.swing.JFrame {
         jLabel54 = new javax.swing.JLabel();
         totalMercan_text = new javax.swing.JTextField();
         mercancias_panel = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        mercancias_text = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_mercancias = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -128,8 +128,10 @@ public class DetallesViaje extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("DETALLES DEL VIAJE");
 
+        jLabel2.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
         jLabel2.setText("Folio GEPP:");
 
+        tituloJson.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
         tituloJson.setForeground(new java.awt.Color(0, 102, 204));
         tituloJson.setText("Identificador del viaje");
 
@@ -165,12 +167,19 @@ public class DetallesViaje extends javax.swing.JFrame {
 
         jLabel4.setText("Folio GEPP");
 
+        traspInter_text.setEditable(false);
+
         jLabel7.setText("Fecha Generación");
+
+        fechaGen_text.setEditable(false);
 
         jLabel8.setText("Uso CFDI");
 
+        usoCFDI_text.setEditable(false);
+
         jLabel10.setText("Documentos GEPP");
 
+        docsGEPP_text.setEditable(false);
         docsGEPP_text.setColumns(20);
         docsGEPP_text.setRows(5);
         jScrollPane2.setViewportView(docsGEPP_text);
@@ -181,6 +190,12 @@ public class DetallesViaje extends javax.swing.JFrame {
 
         jLabel12.setText("Total Distancia Recorrida");
 
+        folioGEPP_text.setEditable(false);
+
+        version_text.setEditable(false);
+
+        totalDist_text.setEditable(false);
+
         javax.swing.GroupLayout cabecera_panelLayout = new javax.swing.GroupLayout(cabecera_panel);
         cabecera_panel.setLayout(cabecera_panelLayout);
         cabecera_panelLayout.setHorizontalGroup(
@@ -189,36 +204,34 @@ public class DetallesViaje extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cabecera_panelLayout.createSequentialGroup()
-                        .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(folioGEPP_text, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(fechaGen_text, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(74, 74, 74))
-                    .addGroup(cabecera_panelLayout.createSequentialGroup()
                         .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(cabecera_panelLayout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(60, 60, 60))
-                            .addGroup(cabecera_panelLayout.createSequentialGroup()
-                                .addComponent(version_text)
-                                .addGap(49, 49, 49)))
-                        .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(traspInter_text, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4)
+                            .addComponent(version_text, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(folioGEPP_text))
+                        .addGap(49, 49, 49)
+                        .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(traspInter_text, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fechaGen_text, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel9))
+                .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cabecera_panelLayout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(usoCFDI_text, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(68, 68, 68))
+                    .addGroup(cabecera_panelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(totalDist_text, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(totalDist_text)
-                    .addComponent(usoCFDI_text))
-                .addGap(68, 68, 68)
                 .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(455, Short.MAX_VALUE))
         );
         cabecera_panelLayout.setVerticalGroup(
             cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,17 +246,16 @@ public class DetallesViaje extends javax.swing.JFrame {
                 .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(cabecera_panelLayout.createSequentialGroup()
-                        .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(folioGEPP_text, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(fechaGen_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(usoCFDI_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(31, 31, 31)
+                        .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fechaGen_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(usoCFDI_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(folioGEPP_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(cabecera_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(version_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(traspInter_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,25 +265,51 @@ public class DetallesViaje extends javax.swing.JFrame {
 
         ubicaciones_panel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "UBICACIONES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
-        ubicacionOrigen_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Ubicación"));
+        ubicacionOrigen_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Origen"));
 
         jLabel24.setText("Tipo");
 
+        tipoUbi_text.setEditable(false);
+
         jLabel25.setText("ID Ubicación");
+
+        idUbi_text.setEditable(false);
 
         jLabel26.setText("RFC");
 
+        rfcUbi_text.setEditable(false);
+
         jLabel31.setText("Fecha y hora");
+
+        fechaHora_text.setEditable(false);
 
         jLabel32.setText("Distancia recorrida");
 
+        distanciaRec_text.setEditable(false);
+
         jLabel33.setText("Calle");
+
+        calle_text.setEditable(false);
 
         jLabel34.setText("Numero Exterior");
 
+        numExt_text.setEditable(false);
+
         jLabel35.setText("Colonia");
 
+        colonia_text.setEditable(false);
+
+        localidad_text.setEditable(false);
+
         jLabel36.setText("Municipio");
+
+        estado_text.setEditable(false);
+
+        municipio_text.setEditable(false);
+
+        pais_text.setEditable(false);
+
+        cp_text.setEditable(false);
 
         jLabel37.setText("País");
 
@@ -301,36 +339,45 @@ public class DetallesViaje extends javax.swing.JFrame {
                     .addComponent(jLabel33)
                     .addComponent(municipio_text))
                 .addGap(34, 34, 34)
-                .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(ubicacionOrigen_panelLayout.createSequentialGroup()
                         .addComponent(estado_text, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(233, 233, 233)
-                        .addComponent(cp_text, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cp_text))
                     .addGroup(ubicacionOrigen_panelLayout.createSequentialGroup()
                         .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel26)
-                            .addComponent(rfcUbi_text)
-                            .addComponent(jLabel34)
-                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(numExt_text))
-                        .addGap(51, 51, 51)
-                        .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel31)
-                            .addComponent(fechaHora_text, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel35)
-                            .addComponent(colonia_text, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(ubicacionOrigen_panelLayout.createSequentialGroup()
-                                .addGap(3, 3, 3)
                                 .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pais_text)
-                                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(59, 59, 59)
+                                    .addComponent(jLabel26)
+                                    .addComponent(jLabel34)
+                                    .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(51, 51, 51))
+                            .addGroup(ubicacionOrigen_panelLayout.createSequentialGroup()
+                                .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(numExt_text, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rfcUbi_text))
+                                .addGap(27, 27, 27)))
                         .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(localidad_text, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(ubicacionOrigen_panelLayout.createSequentialGroup()
+                                .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel31)
+                                    .addComponent(jLabel35)
+                                    .addGroup(ubicacionOrigen_panelLayout.createSequentialGroup()
+                                        .addGap(3, 3, 3)
+                                        .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(fechaHora_text, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ubicacionOrigen_panelLayout.createSequentialGroup()
+                                .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(pais_text, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(colonia_text, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)))
+                        .addGroup(ubicacionOrigen_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel32)
-                            .addComponent(distanciaRec_text, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel40)
-                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(localidad_text, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(distanciaRec_text))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ubicacionOrigen_panelLayout.setVerticalGroup(
@@ -374,28 +421,54 @@ public class DetallesViaje extends javax.swing.JFrame {
                     .addComponent(cp_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(estado_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pais_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        ubicacionDestino_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Ubicación"));
+        ubicacionDestino_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Destino"));
 
         jLabel27.setText("Tipo");
 
+        tipoDestino_text.setEditable(false);
+
         jLabel28.setText("ID Ubicación");
+
+        idDestino_text.setEditable(false);
 
         jLabel29.setText("RFC");
 
+        rfcDestino_text.setEditable(false);
+
         jLabel41.setText("Fecha y hora");
+
+        fechaHoraDestino_text.setEditable(false);
 
         jLabel42.setText("Distancia recorrida");
 
+        distaRecDestino_text.setEditable(false);
+
         jLabel43.setText("Calle");
+
+        calleDestino_text.setEditable(false);
 
         jLabel44.setText("Numero Exterior");
 
+        numExtDes_text.setEditable(false);
+
         jLabel45.setText("Colonia");
 
+        coloniaDestino_text.setEditable(false);
+
+        localidadDestino_text.setEditable(false);
+
         jLabel46.setText("Municipio");
+
+        estadoDestino_text.setEditable(false);
+
+        municipioDestino_text.setEditable(false);
+
+        paisDestino_text.setEditable(false);
+
+        cpDestino_text.setEditable(false);
 
         jLabel47.setText("País");
 
@@ -426,35 +499,37 @@ public class DetallesViaje extends javax.swing.JFrame {
                     .addComponent(municipioDestino_text))
                 .addGap(34, 34, 34)
                 .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(estadoDestino_text, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rfcDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numExtDes_text, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ubicacionDestino_panelLayout.createSequentialGroup()
-                        .addComponent(estadoDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(233, 233, 233)
-                        .addComponent(cpDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(ubicacionDestino_panelLayout.createSequentialGroup()
-                        .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel29)
-                            .addComponent(rfcDestino_text)
-                            .addComponent(jLabel44)
-                            .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(numExtDes_text))
-                        .addGap(51, 51, 51)
-                        .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel41)
-                            .addComponent(fechaHoraDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel45)
-                            .addComponent(coloniaDestino_text, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(ubicacionDestino_panelLayout.createSequentialGroup()
                                 .addGap(3, 3, 3)
-                                .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(paisDestino_text)
-                                    .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(59, 59, 59)
-                        .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(localidadDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel42)
-                            .addComponent(distaRecDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel50)
-                            .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fechaHoraDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ubicacionDestino_panelLayout.createSequentialGroup()
+                        .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(paisDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(coloniaDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)))
+                .addGroup(ubicacionDestino_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel50)
+                    .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(distaRecDestino_text)
+                    .addComponent(localidadDestino_text)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ubicacionDestino_panelLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(cpDestino_text, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ubicacionDestino_panelLayout.setVerticalGroup(
@@ -505,21 +580,23 @@ public class DetallesViaje extends javax.swing.JFrame {
         ubicaciones_panel.setLayout(ubicaciones_panelLayout);
         ubicaciones_panelLayout.setHorizontalGroup(
             ubicaciones_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ubicaciones_panelLayout.createSequentialGroup()
+            .addGroup(ubicaciones_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ubicaciones_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ubicacionDestino_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ubicacionOrigen_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(6, 6, 6))
+                .addGroup(ubicaciones_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ubicaciones_panelLayout.createSequentialGroup()
+                        .addComponent(ubicacionOrigen_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))
+                    .addGroup(ubicaciones_panelLayout.createSequentialGroup()
+                        .addComponent(ubicacionDestino_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         ubicaciones_panelLayout.setVerticalGroup(
             ubicaciones_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ubicaciones_panelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ubicacionOrigen_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ubicacionDestino_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ubicacionDestino_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         panelMercancias.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "MERCANCIA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
@@ -528,11 +605,19 @@ public class DetallesViaje extends javax.swing.JFrame {
 
         jLabel51.setText("Peso Bruto Total");
 
+        pesoBruto_text.setEditable(false);
+
         jLabel52.setText("Unidad Peso");
+
+        pesoNeto_text.setEditable(false);
 
         jLabel53.setText("Numero total de marcancias");
 
+        unidadPeso_text.setEditable(false);
+
         jLabel54.setText("Peso Neto Total");
+
+        totalMercan_text.setEditable(false);
 
         javax.swing.GroupLayout datosGenerales_panelLayout = new javax.swing.GroupLayout(datosGenerales_panel);
         datosGenerales_panel.setLayout(datosGenerales_panelLayout);
@@ -543,15 +628,11 @@ public class DetallesViaje extends javax.swing.JFrame {
                 .addGroup(datosGenerales_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel51)
                     .addComponent(pesoBruto_text, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(datosGenerales_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(datosGenerales_panelLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel52)
-                        .addGap(75, 75, 75))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datosGenerales_panelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(unidadPeso_text, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                    .addComponent(jLabel52)
+                    .addComponent(unidadPeso_text, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(datosGenerales_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel54)
                     .addComponent(pesoNeto_text, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -559,7 +640,7 @@ public class DetallesViaje extends javax.swing.JFrame {
                 .addGroup(datosGenerales_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel53, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(totalMercan_text))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(653, Short.MAX_VALUE))
         );
         datosGenerales_panelLayout.setVerticalGroup(
             datosGenerales_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -581,91 +662,106 @@ public class DetallesViaje extends javax.swing.JFrame {
 
         mercancias_panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Mercancias"));
 
-        mercancias_text.setColumns(20);
-        mercancias_text.setRows(5);
-        jScrollPane3.setViewportView(mercancias_text);
+        tbl_mercancias = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        tbl_mercancias.setModel(new javax.swing.table.DefaultTableModel(
 
-        javax.swing.GroupLayout mercancias_panelLayout = new javax.swing.GroupLayout(mercancias_panel);
-        mercancias_panel.setLayout(mercancias_panelLayout);
-        mercancias_panelLayout.setHorizontalGroup(
-            mercancias_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mercancias_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3)
-                .addContainerGap())
-        );
-        mercancias_panelLayout.setVerticalGroup(
-            mercancias_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mercancias_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+            new Object [][] {
 
-        javax.swing.GroupLayout panelMercanciasLayout = new javax.swing.GroupLayout(panelMercancias);
-        panelMercancias.setLayout(panelMercanciasLayout);
-        panelMercanciasLayout.setHorizontalGroup(
-            panelMercanciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMercanciasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelMercanciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(datosGenerales_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mercancias_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        panelMercanciasLayout.setVerticalGroup(
-            panelMercanciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMercanciasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(datosGenerales_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            },
+            new String [] {
+                "Bienes Trans", "Descripción", "Cantidad", "Clave Unidad", "Unidad", "Material Peligroso", "Peso (KG)", "Valor", "Moneda", "Fracción Arancelaria", "UUID Comercio Ext"
+            }
+        )
+    );
+    tbl_mercancias.setCellSelectionEnabled(true);
+    tbl_mercancias.setColumnSelectionAllowed(true);
+    jScrollPane1.setViewportView(tbl_mercancias);
+    tbl_mercancias.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+    javax.swing.GroupLayout mercancias_panelLayout = new javax.swing.GroupLayout(mercancias_panel);
+    mercancias_panel.setLayout(mercancias_panelLayout);
+    mercancias_panelLayout.setHorizontalGroup(
+        mercancias_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(mercancias_panelLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jScrollPane1))
+    );
+    mercancias_panelLayout.setVerticalGroup(
+        mercancias_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(mercancias_panelLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
+    javax.swing.GroupLayout panelMercanciasLayout = new javax.swing.GroupLayout(panelMercancias);
+    panelMercancias.setLayout(panelMercanciasLayout);
+    panelMercanciasLayout.setHorizontalGroup(
+        panelMercanciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(panelMercanciasLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(panelMercanciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(datosGenerales_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mercancias_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+            .addContainerGap())
+    );
+    panelMercanciasLayout.setVerticalGroup(
+        panelMercanciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(panelMercanciasLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(datosGenerales_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(mercancias_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cabecera_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ubicaciones_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelMercancias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cabecera_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ubicaciones_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(cabecera_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ubicaciones_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelMercancias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+            .addContainerGap())
+    );
+    jPanel1Layout.setVerticalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(cabecera_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
+            .addComponent(ubicaciones_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(30, 30, 30)
+            .addComponent(panelMercancias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
 
-        jScrollPane4.setViewportView(jPanel1);
+    jScrollPane4.setViewportView(jPanel1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(panel_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panel_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
-                .addGap(43, 43, 43))
-        );
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1410, Short.MAX_VALUE)
+            .addContainerGap())
+        .addComponent(panel_inicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addComponent(panel_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+            .addGap(43, 43, 43))
+    );
 
-        pack();
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -764,13 +860,12 @@ public class DetallesViaje extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     public static javax.swing.JTextField localidadDestino_text;
     public static javax.swing.JTextField localidad_text;
     private javax.swing.JPanel mercancias_panel;
-    private javax.swing.JTextArea mercancias_text;
     public static javax.swing.JTextField municipioDestino_text;
     public static javax.swing.JTextField municipio_text;
     public static javax.swing.JTextField numExtDes_text;
@@ -779,20 +874,21 @@ public class DetallesViaje extends javax.swing.JFrame {
     public static javax.swing.JTextField pais_text;
     private javax.swing.JPanel panelMercancias;
     private javax.swing.JPanel panel_inicio;
-    private javax.swing.JTextField pesoBruto_text;
-    private javax.swing.JTextField pesoNeto_text;
+    public static javax.swing.JTextField pesoBruto_text;
+    public static javax.swing.JTextField pesoNeto_text;
     public static javax.swing.JTextField rfcDestino_text;
-    private javax.swing.JTextField rfcUbi_text;
+    public static javax.swing.JTextField rfcUbi_text;
+    public static javax.swing.JTable tbl_mercancias;
     public static javax.swing.JTextField tipoDestino_text;
     public static javax.swing.JTextField tipoUbi_text;
     public static javax.swing.JLabel tituloJson;
     public static javax.swing.JTextField totalDist_text;
-    private javax.swing.JTextField totalMercan_text;
+    public static javax.swing.JTextField totalMercan_text;
     public static javax.swing.JTextField traspInter_text;
     private javax.swing.JPanel ubicacionDestino_panel;
     private javax.swing.JPanel ubicacionOrigen_panel;
     private javax.swing.JPanel ubicaciones_panel;
-    private javax.swing.JTextField unidadPeso_text;
+    public static javax.swing.JTextField unidadPeso_text;
     public static javax.swing.JTextField usoCFDI_text;
     public static javax.swing.JTextField version_text;
     // End of variables declaration//GEN-END:variables

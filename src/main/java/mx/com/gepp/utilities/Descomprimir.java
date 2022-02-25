@@ -42,6 +42,12 @@ public class Descomprimir {
         this.archivo_ZIP = archivoZip;
         this.ruta_archivo = rutaSalida;
         
+        //Borramos datos de la carpeta anterior
+       // File carpeta = new File(rutaSalida);
+        //File[] files = carpeta.listFiles();
+        //for (File f : files) f.delete();
+        
+        
         byte[] buffer = new byte[1024];
         try {
             File folder = new File(this.ruta_archivo);
@@ -54,7 +60,7 @@ public class Descomprimir {
             while (ze != null) {
                 String nombreArchivo = ze.getName();
                 File archivoNuevo = new File(rutaSalida + File.separator + nombreArchivo);
-                System.out.println("archivo descomprimido : " + archivoNuevo.getName());
+              //  System.out.println("archivo descomprimido : " + archivoNuevo.getName());
                 new File(archivoNuevo.getParent()).mkdirs();
                 FileOutputStream fos = new FileOutputStream(archivoNuevo);
                 int len;

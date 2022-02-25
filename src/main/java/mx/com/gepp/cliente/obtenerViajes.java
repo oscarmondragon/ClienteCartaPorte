@@ -49,12 +49,16 @@ import java.util.zip.ZipEntry;
 //import static javafx.scene.input.KeyCode.T;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 //import jdk.nashorn.internal.parser.JSONParser;
 
 import mx.com.gepp.beans.TripsResponse;
 import mx.com.gepp.beans.RenderTabla;
+import static mx.com.gepp.cliente.DetallesViaje.nombreJson;
 
 import mx.com.gepp.utilities.Comprimir;
 import mx.com.gepp.utilities.Encriptador;
@@ -73,20 +77,24 @@ import org.slf4j.LoggerFactory;
  */
 public class obtenerViajes extends javax.swing.JFrame {
 
+    TableModel tm;
+    static TableRowSorter<TableModel> tr;
+
     //obtener dia de hoy
 //    SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
 //    Calendar calendar = Calendar.getInstance();
 //    Date dateObj = calendar.getTime();
 //    String formattedDate = dtf.format(dateObj);
     //botones de tabla ver viajes
-    JButton botonVer = new JButton("Ver JSON");
-    JButton botonCargar = new JButton("Cargar");
+    static JButton botonVer = new JButton("Ver JSON");
+    static JButton botonCargar = new JButton("Cargar");
 
     //Nombre de carpeta y zip
     // String nombreZip = "viajes_" + formattedDate + ".zip";
     //String nombreCarpeta = "viajes_" + formattedDate;
     String nombreZip = "viajes.zip";
     String nombreCarpeta = "viajes";
+    Descomprimir descompresorArchivo = new Descomprimir();
 
     public static int columna, fila;
 
@@ -94,15 +102,32 @@ public class obtenerViajes extends javax.swing.JFrame {
         initComponents();
         botonVer.setName("btnVer");
         botonCargar.setName("btnCargar");
-        Descomprimir descompresorArchivo = new Descomprimir();
         // String nombreZip = "C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip";
         // String nombreCarpeta = "C:\\\\ProgramaGEPP/viajes/viajes_" + formattedDate;
 
-        descompresorArchivo.unZip(nombreZip, nombreCarpeta);
-        MostrarTabla(nombreCarpeta);
+        //Cargar constantes
+        //Asignar valores a constantes desde el archivo JSON
+        try {
+
+            Object ob = new JSONParser().parse(new FileReader("constantes.json"));
+
+            JSONObject constantes = (JSONObject) ob;
+            // System.out.println(constantes);
+            Constantes.asignarConstantes(constantes);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ParseException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Descomprimir archivo de viajes y mostrar tabla al iniciar programa
+        
+         descompresorArchivo.unZip(nombreZip, nombreCarpeta);
+         MostrarTabla(nombreCarpeta);
     }
 
-    public void MostrarTabla(String nombreCarpeta) {
+    public static void MostrarTabla(String nombreCarpeta) {
 
         DefaultTableModel modeloViajes = new DefaultTableModel() {
             @Override
@@ -110,14 +135,15 @@ public class obtenerViajes extends javax.swing.JFrame {
                 return false;
             }
         };
+        
         String[] columnas = {"FolioGEPP", "Fecha Generación", "Estado", "Ver datos", "Cargar documentos"};
 
         modeloViajes.setColumnIdentifiers(columnas);
-        this.tablaViajes.setDefaultRenderer(Object.class, new RenderTabla());
+        obtenerViajes.tablaViajes.setDefaultRenderer(Object.class, new RenderTabla());
 
         tablaViajes.setModel(modeloViajes);
 
-        this.tablaViajes.setRowHeight(40);
+        obtenerViajes.tablaViajes.setRowHeight(40);
 
         Object[] datos = new Object[5];
 
@@ -127,8 +153,10 @@ public class obtenerViajes extends javax.swing.JFrame {
             System.out.println("No hay elementos dentro de la carpeta actual");
             return;
         } else {
+            JSONParser parser = new JSONParser();
+
             for (String listado1 : listado) {
-                JSONParser parser = new JSONParser();
+
                 try {
                     JSONArray a = (JSONArray) parser.parse(new FileReader(nombreCarpeta + "/" + listado1));
                     JSONObject cabecera = (JSONObject) a.get(0);
@@ -152,7 +180,7 @@ public class obtenerViajes extends javax.swing.JFrame {
                         while (entrada.hasNext()) { //mientras no se llegue al final del fichero
                             linea = entrada.nextLine();  //se lee una línea
                             if (linea.contains(folioGEPP)) {   //si la línea contiene el texto buscado se muestra por pantalla         
-                                System.out.println("Linea " + numeroDeLinea + ": " + linea);
+                                //System.out.println("Linea " + numeroDeLinea + ": " + linea);
                                 contiene = true;
                                 datos[2] = "Enviado";
                             }
@@ -160,12 +188,12 @@ public class obtenerViajes extends javax.swing.JFrame {
                         }
                         if (!contiene) { //si el archivo no contienen el texto se muestra un mensaje indicándolo
                             datos[2] = "Pendiente";
-                            System.out.println(folioGEPP + " no se ha encontrado en el archivo");
+                            // System.out.println(folioGEPP + " no se ha encontrado en el archivo");
                         }
                     } catch (FileNotFoundException e) {
                         System.out.println(e.toString());
                     } catch (NullPointerException e) {
-                        System.out.println(e.toString() + "No ha seleccionado ningún archivo");
+                        //System.out.println(e.toString() + "No ha seleccionado ningún archivo");
                     } catch (Exception e) {
                         System.out.println(e.toString());
                     } finally {
@@ -191,6 +219,10 @@ public class obtenerViajes extends javax.swing.JFrame {
             }
         }
 
+        //Hacemos que la tabla se pueda ordenar
+        tr = new TableRowSorter<>(modeloViajes);
+        tablaViajes.setRowSorter(tr);
+
     }
 
     /**
@@ -204,30 +236,43 @@ public class obtenerViajes extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         jLabel2 = new javax.swing.JLabel();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
         panelEncabezado = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelBotones = new javax.swing.JPanel();
-        btn_consultarViajes = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        btn_actualizarViajes = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaViajes = new javax.swing.JTable();
+        buscar_txt = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuConsultar = new javax.swing.JMenu();
         menuDescargar = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        menuEditarConstantes = new javax.swing.JMenuItem();
+        smenuEditar = new javax.swing.JMenu();
+        menuSalir = new javax.swing.JMenuItem();
+        submenuSalir = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
         jLabel2.setText("jLabel2");
 
+        jMenu2.setText("File");
+        jMenuBar2.add(jMenu2);
+
+        jMenu4.setText("Edit");
+        jMenuBar2.add(jMenu4);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 862));
 
         panelEncabezado.setBackground(new java.awt.Color(204, 204, 204));
         panelEncabezado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("CONSULTA DE VIAJES DISPONIBLES");
 
         javax.swing.GroupLayout panelEncabezadoLayout = new javax.swing.GroupLayout(panelEncabezado);
@@ -235,7 +280,7 @@ public class obtenerViajes extends javax.swing.JFrame {
         panelEncabezadoLayout.setHorizontalGroup(
             panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEncabezadoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(189, 189, 189)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -244,44 +289,20 @@ public class obtenerViajes extends javax.swing.JFrame {
             .addGroup(panelEncabezadoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        btn_consultarViajes.setText("Actualizar Tabla");
-        btn_consultarViajes.addActionListener(new java.awt.event.ActionListener() {
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_actualizarViajes.setText("Actualizar Tabla");
+        btn_actualizarViajes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_consultarViajesActionPerformed(evt);
+                btn_actualizarViajesActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Prueba abrir json");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
-        panelBotones.setLayout(panelBotonesLayout);
-        panelBotonesLayout.setHorizontalGroup(
-            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBotonesLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(btn_consultarViajes)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        panelBotonesLayout.setVerticalGroup(
-            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBotonesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_consultarViajes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(2, 2, 2))
-        );
-
+        tablaViajes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tablaViajes.setFont(new java.awt.Font("Cantarell", 0, 16)); // NOI18N
         tablaViajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -290,6 +311,8 @@ public class obtenerViajes extends javax.swing.JFrame {
 
             }
         ));
+        tablaViajes.setCellSelectionEnabled(true);
+        tablaViajes.setColumnSelectionAllowed(true);
         tablaViajes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaViajesMouseClicked(evt);
@@ -297,20 +320,71 @@ public class obtenerViajes extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaViajes);
 
+        buscar_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscar_txtActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Filtro:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buscar_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_actualizarViajes)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btn_actualizarViajes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 19, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(buscar_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
+        panelBotones.setLayout(panelBotonesLayout);
+        panelBotonesLayout.setHorizontalGroup(
+            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelBotonesLayout.setVerticalGroup(
+            panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 42, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addGap(0, 872, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 45, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         menuConsultar.setText("Consultar");
@@ -325,17 +399,30 @@ public class obtenerViajes extends javax.swing.JFrame {
 
         jMenuBar1.add(menuConsultar);
 
-        jMenu3.setText("Editar");
+        smenuEditar.setText("Opciones");
 
-        menuEditarConstantes.setText("Constantes");
-        menuEditarConstantes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuEditarConstantesActionPerformed(evt);
+        menuSalir.setText("Editar constantes");
+        menuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSalirMouseClicked(evt);
             }
         });
-        jMenu3.add(menuEditarConstantes);
+        menuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSalirActionPerformed(evt);
+            }
+        });
+        smenuEditar.add(menuSalir);
 
-        jMenuBar1.add(jMenu3);
+        submenuSalir.setText("Salir");
+        submenuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuSalirActionPerformed(evt);
+            }
+        });
+        smenuEditar.add(submenuSalir);
+
+        jMenuBar1.add(smenuEditar);
 
         setJMenuBar(jMenuBar1);
 
@@ -351,9 +438,9 @@ public class obtenerViajes extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -361,7 +448,7 @@ public class obtenerViajes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_consultarViajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultarViajesActionPerformed
+    private void btn_actualizarViajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarViajesActionPerformed
         // TODO add your handling code here:
         botonVer.setName("btnVer");
         botonCargar.setName("btnCargar");
@@ -369,153 +456,11 @@ public class obtenerViajes extends javax.swing.JFrame {
         // String nombreZip = "C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip";
         // String nombreCarpeta = "C:\\\\ProgramaGEPP/viajes/viajes_" + formattedDate;
 
+        //Borrar carpeta anterior para evitar duplicados
         descompresorArchivo.unZip(nombreZip, nombreCarpeta);
         MostrarTabla(nombreCarpeta);
-    }//GEN-LAST:event_btn_consultarViajesActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-
-        JSONParser parser = new JSONParser();
-        try {
-            JSONArray a = (JSONArray) parser.parse(new FileReader("prueba.json"));
-
-            JSONObject cabecera = (JSONObject) a.get(0);
-
-            String folioGEPP = (String) cabecera.get("FolioGEPP");
-            String fechaGeneracion = (String) cabecera.get("FechaGeneracion");
-            String usoCfdi = (String) cabecera.get("UsoCFDI");
-
-            JSONObject documentosGepp = (JSONObject) cabecera.get("DocumentosGEPP");
-            JSONArray docsGepp = (JSONArray) documentosGepp.get("DocsGEPP");
-
-            JSONArray ubicacionesGepp = (JSONArray) cabecera.get("UbicacionesGEPP");
-
-            System.out.println(folioGEPP);
-            System.out.println(fechaGeneracion);
-            System.out.println(usoCfdi);
-
-            if (docsGepp == null) {
-
-            } else {
-                Iterator<String> iterator = docsGepp.iterator();
-                while (iterator.hasNext()) {
-                    System.out.println(iterator.next());
-                }
-
-            }
-
-            if (ubicacionesGepp == null) {
-
-            } else {
-                Iterator<String> iteratorUbicaciones = ubicacionesGepp.iterator();
-                while (iteratorUbicaciones.hasNext()) {
-                    System.out.println(iteratorUbicaciones.next());
-                }
-            }
-
-            JSONObject carta = (JSONObject) a.get(1);
-
-            JSONObject cartaPorte = (JSONObject) carta.get("CartaPorte");
-
-            String version = (String) cartaPorte.get("Version");
-            String transpInternac = (String) cartaPorte.get("TranspInternac");
-            Long totalDistRec = (Long) cartaPorte.get("TotalDistRec");
-
-            System.out.println(version);
-            System.out.println(transpInternac);
-            System.out.println(totalDistRec);
-
-            JSONObject ubicaciones = (JSONObject) cartaPorte.get("Ubicaciones");
-            JSONArray ubicacionesArray = (JSONArray) ubicaciones.get("Ubicacion");
-
-            //UBICACION origen
-            JSONObject origen = (JSONObject) ubicacionesArray.get(0);
-
-            String tipoUbicacion = (String) origen.get("TipoUbicacion");
-            String idUbicacion = (String) origen.get("IDUbicacion");
-            String rfcRemitenteDestinatario = (String) origen.get("RFCRemitenteDestinatario");
-            String fechaHoraSalidaLlegada = (String) origen.get("FechaHoraSalidaLlegada");
-            JSONObject domicilioOrigen = (JSONObject) origen.get("Domicilio");
-
-            //UBICACION destino
-            JSONObject destino = (JSONObject) ubicacionesArray.get(1);
-            String tipoUbicacionDestino = (String) destino.get("TipoUbicacion");
-            String idUbicacionDestino = (String) destino.get("IDUbicacion");
-            String rfcRemitenteDestinatarioDestino = (String) destino.get("RFCRemitenteDestinatario");
-            String fechaHoraSalidaLlegadaDestino = (String) destino.get("FechaHoraSalidaLlegada");
-            Long distanciaDestino = (Long) destino.get("DistanciaRecorrida");
-
-            JSONObject domicilioDestino = (JSONObject) destino.get("Domicilio");
-
-            System.out.println(tipoUbicacion);
-            System.out.println(idUbicacion);
-
-            System.out.println(rfcRemitenteDestinatario);
-
-            System.out.println(fechaHoraSalidaLlegada);
-
-            System.out.println(domicilioOrigen.get("Estado"));
-            System.out.println(domicilioOrigen.get("Pais"));
-            System.out.println(domicilioOrigen.get("CodigoPostal"));
-
-            System.out.println(tipoUbicacionDestino);
-            System.out.println(idUbicacionDestino);
-
-            System.out.println(rfcRemitenteDestinatarioDestino);
-
-            System.out.println(fechaHoraSalidaLlegadaDestino);
-            System.out.println(distanciaDestino);
-
-            System.out.println(domicilioDestino.get("Estado"));
-            System.out.println(domicilioDestino.get("Pais"));
-            System.out.println(domicilioDestino.get("CodigoPostal"));
-
-            //mercancias
-            System.out.println("MERCANCIAS");
-
-            JSONObject mercancias = (JSONObject) cartaPorte.get("Mercancias");
-            String pesoBrutoTotal = (String) mercancias.get("PesoBrutoTotal");
-            String unidadPeso = (String) mercancias.get("UnidadPeso");
-            String pesoNetoTotal = (String) mercancias.get("PesoNetoTotal");
-            Long numTotalMercancias = (Long) mercancias.get("NumTotalMercancias");
-
-            System.out.println(pesoBrutoTotal);
-
-            System.out.println(unidadPeso);
-
-            System.out.println(pesoNetoTotal);
-            System.out.println(numTotalMercancias);
-
-            JSONArray mercanciasArray = (JSONArray) mercancias.get("Mercancia");
-
-            for (int i = 0; i < mercanciasArray.size(); i++) {
-                JSONObject mercanciaObjeto = (JSONObject) mercanciasArray.get(i);
-                String bienesTransp = mercanciaObjeto.get("BienesTransp").toString();
-                String descripcion = mercanciaObjeto.get("Descripcion").toString();
-                String cantidad = mercanciaObjeto.get("Cantidad").toString();
-                String claveUnidad = mercanciaObjeto.get("ClaveUnidad").toString();
-                String unidad = mercanciaObjeto.get("Unidad").toString();
-                String pesoEnKg = mercanciaObjeto.get("PesoEnKg").toString();
-
-                System.out.println("Mercancia NUm: " + (i + 1));
-                System.out.println(bienesTransp);
-                System.out.println(descripcion);
-                System.out.println(cantidad);
-                System.out.println(claveUnidad);
-                System.out.println(unidad);
-                System.out.println(pesoEnKg);
-
-            }
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
+        JOptionPane.showMessageDialog(null, "Se actualizó la tabla.");
+    }//GEN-LAST:event_btn_actualizarViajesActionPerformed
 
     private void tablaViajesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaViajesMouseClicked
         // TODO add your handling code here:
@@ -528,7 +473,7 @@ public class obtenerViajes extends javax.swing.JFrame {
                 ((JButton) objeto).doClick();
                 JButton botones = (JButton) objeto;
 
-                String datosFila[] = new String[3];
+                String datosFila[] = new String[5];
                 int filaSeleccionada = tablaViajes.getSelectedRow();
                 datosFila[0] = tablaViajes.getValueAt(filaSeleccionada, 0).toString();
 
@@ -544,7 +489,8 @@ public class obtenerViajes extends javax.swing.JFrame {
                         File carpeta = new File(nombreCarpeta);
                         String[] listado = carpeta.list();
                         DetallesViaje.tituloJson.setText(datosFila[0]);
-                        verDetalles(nombreCarpeta + "/" + listado[filaSeleccionada]);
+                        verDetalles(nombreCarpeta + "/" + datosFila[0] + ".json");
+                        System.out.println(listado[filaSeleccionada]);
 
                     }
 
@@ -563,7 +509,9 @@ public class obtenerViajes extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaViajesMouseClicked
 
     private void menuDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDescargarActionPerformed
-        // TODO add your handling code here:      
+        // TODO add your handling code here:     
+
+        //Nombres de los botones de la tabla principal
         botonVer.setName("btnVer");
         botonCargar.setName("btnCargar");
 
@@ -607,8 +555,8 @@ public class obtenerViajes extends javax.swing.JFrame {
                     fos.close();
                     System.out.println("Archivo creado exitosamente.");
                     JOptionPane.showMessageDialog(null, "Descarga completada.");
-                    //Mostra en la
-                    MostrarTabla(nombreCarpeta);
+
+                    // MostrarTabla(nombreCarpeta);
                 } catch (Exception e) {
                     System.out.println("Ocurrió un error al grabar el archivo.");
                     JOptionPane.showMessageDialog(null, "Erro al crear el archivo ZIP");
@@ -629,44 +577,201 @@ public class obtenerViajes extends javax.swing.JFrame {
         } else {
             System.out.println("No hay archivo zipBase64 para trabajar.");
         }
+        //Eliminamos los archivos de la carpeta de viajes si existe para evitar duplicados
+        File carpeta = new File("viajes");
+        System.out.println("car:" + nombreCarpeta);
+        File[] files = carpeta.listFiles();
+        if (carpeta.exists()) {
+            for (File f : files) {
+                f.delete();
+            }
+        }
+        //Descomprimimos nuevo zip descargado y mostramos tabla
+         descompresorArchivo.unZip(nombreZip, nombreCarpeta);
+         
+         //Cambiamos nombres de los archivos json
+         
+         
+        String[] listado = carpeta.list();
+        JSONParser parser = new JSONParser();
+        File[] archivos = carpeta.listFiles();
+
+        if (archivos == null || archivos.length == 0) {
+            System.out.println("No hay elementos dentro de la carpeta actual");
+            return;
+        } else {
+            
+            for (int i = 0; i < archivos.length; i++) {
+                try {
+                    JSONArray a = (JSONArray) parser.parse(new FileReader(carpeta + "/" + archivos[i].getName()));
+                    JSONObject cabecera = (JSONObject) a.get(0);
+                    String folioGEPP = (String) cabecera.get("FolioGEPP");
+                    String nvo = archivos[i].getParent() + "/" + folioGEPP + ".json";
+                    File archivo = new File(nvo);
+
+                 boolean correcto = archivos[i].renameTo(archivo);
+                if(correcto == true){
+                    System.out.println("Se cambio");
+                } else {
+                    System.out.println("Error");
+                }
+                }
+                catch (IOException | ParseException ex) {
+                    Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+          MostrarTabla(nombreCarpeta);
     }//GEN-LAST:event_menuDescargarActionPerformed
 
-    private void menuEditarConstantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarConstantesActionPerformed
+    private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
+        //Mostrar ventana
+        EditarConstantes vistaConstantes = new EditarConstantes();
+        vistaConstantes.setLocationRelativeTo(null);
+        vistaConstantes.setVisible(true);
+
+        //Leer archivo constantes y escribir en formulario
+        try {
+            // TODO add your handling code here:
+            Object ob = new JSONParser().parse(new FileReader("constantes.json"));
+
+            JSONObject constantes = (JSONObject) ob;
+
+            EditarConstantes.url_text.setText(constantes.get("url").toString());
+            EditarConstantes.usuario_text.setText(constantes.get("user").toString());
+            EditarConstantes.password_text.setText(constantes.get("password").toString());
+            EditarConstantes.numProveedor_text.setText(constantes.get("numeroProveedor").toString());
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_menuSalirActionPerformed
+
+    private void menuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSalirMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_menuEditarConstantesActionPerformed
+
+    }//GEN-LAST:event_menuSalirMouseClicked
+
+    private void buscar_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_txtActionPerformed
+        // TODO add your handling code here:
+        String filtro = buscar_txt.getText();
+        if (!filtro.equals("")) {
+            tr.setRowFilter(RowFilter.regexFilter(filtro));
+        } else {
+            tr.setRowFilter(null);
+        }
+    }//GEN-LAST:event_buscar_txtActionPerformed
+
+    private void submenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuSalirActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta seguro de cerrar el programa?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        switch (respuesta) {
+            case JOptionPane.YES_OPTION:
+
+                System.exit(0);
+
+                break;
+            case JOptionPane.NO_OPTION:
+                break;
+            case JOptionPane.CLOSED_OPTION:
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_submenuSalirActionPerformed
 
     public static void verDetalles(String rutaJson) {
 
         JSONParser parser = new JSONParser();
+
         try {
+
+            //Declaramos como vacias todas las variables
+            //cabecera
+            String folioGEPP = "";
+            String fechaGeneracion = "";
+            String usoCfdi = "";
+            String version = "";
+            String transpInternac = "";
+            Long totalDistRec = null;
+            //Ubicaciones origen
+            String tipoUbicacion = "";
+            String idUbicacion = "";
+            String rfcRemitenteDestinatario = "";
+            String fechaHoraSalidaLlegada = "";
+            Long distanciaRecorridaOrigen = null;
+            String calleOrigen = "";
+            String numeroExteriorOrigen = "";
+            String coloniaOrigen = "";
+            String localidadOrigen = "";
+            String municipioOrigen = "";
+            String estadoOrigen = "";
+            String paisOrigen = "";
+            String cpOrigen = "";
+            //Ubicaciones destino
+            String tipoUbicacionDestino = "";
+            String idUbicacionDestino = "";
+            String rfcRemitenteDestinatarioDestino = "";
+            String fechaHoraSalidaLlegadaDestino = "";
+            Long distanciaDestino = null;
+            String calleDestino = "";
+            String numeroExteriorDestino = "";
+            String coloniaDestino = "";
+            String localidadDestino = "";
+            String municipioDestino = "";
+            String estadoDestino = "";
+            String paisDestino = "";
+            String cpDestino = "";
+            //MERCANCIAS
+            String pesoBrutoTotal = "";
+            String unidadPeso = "";
+            String pesoNetoTotal = "";
+            Long numTotalMercancias = null;
+
+            //Creamos el arreglo de JSON con la ruta recibida
             JSONArray a = (JSONArray) parser.parse(new FileReader(rutaJson));
-
+            //EL Json Array esta compuesto por 2: Cabecera y Carta Porte
+            //Creamos el objeto de la cabecera
             JSONObject cabecera = (JSONObject) a.get(0);
+            //asignamos valores de la cabecera solo si no son null
+            if (cabecera.get("FolioGEPP").toString() != null) {
+                folioGEPP = (String) cabecera.get("FolioGEPP");
+            }
 
-            String folioGEPP = (String) cabecera.get("FolioGEPP");
-            String fechaGeneracion = (String) cabecera.get("FechaGeneracion");
-            String usoCfdi = (String) cabecera.get("UsoCFDI");
+            if (cabecera.get("FechaGeneracion").toString() != null) {
+                fechaGeneracion = (String) cabecera.get("FechaGeneracion");
+            }
 
+            if (cabecera.get("UsoCFDI").toString() != null) {
+                usoCfdi = (String) cabecera.get("UsoCFDI");
+            }
+
+            //Los DocumentosGepp vienen en un objeto json
             JSONObject documentosGepp = (JSONObject) cabecera.get("DocumentosGEPP");
+            //los documentos estan en un arreglo, creamos el arreglo
             JSONArray docsGepp = (JSONArray) documentosGepp.get("DocsGEPP");
 
+            //EL objeto esta compuesto por dos arreglos: ubicacion origen y ubicacion destino
             JSONArray ubicacionesGepp = (JSONArray) cabecera.get("UbicacionesGEPP");
 
-            System.out.println(folioGEPP);
+            //Enviamos cabecera a vista DetallesViaje
             DetallesViaje.folioGEPP_text.setText(folioGEPP);
             DetallesViaje.fechaGen_text.setText(fechaGeneracion);
             DetallesViaje.usoCFDI_text.setText(usoCfdi);
 
-            System.out.println(fechaGeneracion);
-            System.out.println(usoCfdi);
-            //   DetallesViaje.vistaDatos.append("DocumentosGEPP:");
-
+            //Comprobamos si hay documentos
             if (docsGepp == null) {
 
             } else {
-
                 for (Object string : docsGepp) {
-                    // System.out.println(string);
+                    // Enviamos docs a vista DetallesViaje
                     DetallesViaje.docsGEPP_text.append(string.toString());
                 }
 
@@ -680,126 +785,261 @@ public class obtenerViajes extends javax.swing.JFrame {
                     System.out.println(iteratorUbicaciones.next());
                 }
             }
-
+            //Obtenemos el objeto Json para Carta porte del arreglo que viene en el archivo .json
             JSONObject carta = (JSONObject) a.get(1);
-
+            //Creamos objeto CartaPorte
             JSONObject cartaPorte = (JSONObject) carta.get("CartaPorte");
 
-            String version = (String) cartaPorte.get("Version");
-            String transpInternac = (String) cartaPorte.get("TranspInternac");
-            Long totalDistRec = (Long) cartaPorte.get("TotalDistRec");
-
-            System.out.println(version);
-            System.out.println(transpInternac);
-            System.out.println(totalDistRec);
-
+            //Escribimos valores faltantes en cabecera
+            if (cartaPorte.get("Version").toString() != null) {
+                version = (String) cartaPorte.get("Version");
+            }
+            if (cartaPorte.get("TranspInternac").toString() != null) {
+                transpInternac = (String) cartaPorte.get("TranspInternac");
+            }
+            if ((Long) cartaPorte.get("TotalDistRec") != null) {
+                totalDistRec = (Long) cartaPorte.get("TotalDistRec");
+            }
+            //Enviamos datos a vista DetallesViaje
             DetallesViaje.version_text.setText(version);
             DetallesViaje.traspInter_text.setText(transpInternac);
-            DetallesViaje.totalDist_text.setText(totalDistRec.toString());
+            if (totalDistRec == null) {
+                DetallesViaje.totalDist_text.setText("");
+            } else {
+                DetallesViaje.totalDist_text.setText(totalDistRec.toString());
 
+            }
+
+            //Creamos el objeto y el arreglo para las ubicaciones
+            //EL objeto esta compuesto por dos arreglos: ubicacion origen y ubicacion destino
             JSONObject ubicaciones = (JSONObject) cartaPorte.get("Ubicaciones");
             JSONArray ubicacionesArray = (JSONArray) ubicaciones.get("Ubicacion");
 
             //UBICACION origen
             JSONObject origen = (JSONObject) ubicacionesArray.get(0);
 
-            String tipoUbicacion = (String) origen.get("TipoUbicacion");
-            String idUbicacion = (String) origen.get("IDUbicacion");
-            String rfcRemitenteDestinatario = (String) origen.get("RFCRemitenteDestinatario");
-            String fechaHoraSalidaLlegada = (String) origen.get("FechaHoraSalidaLlegada");
+            if ((String) origen.get("TipoUbicacion") != null) {
+                tipoUbicacion = (String) origen.get("TipoUbicacion");
+            }
+            if ((String) origen.get("IDUbicacion") != null) {
+                idUbicacion = (String) origen.get("IDUbicacion");
+            }
+            if ((String) origen.get("RFCRemitenteDestinatario") != null) {
+                rfcRemitenteDestinatario = (String) origen.get("RFCRemitenteDestinatario");
+            }
+            if ((String) origen.get("FechaHoraSalidaLlegada") != null) {
+                fechaHoraSalidaLlegada = (String) origen.get("FechaHoraSalidaLlegada");
+            }
+
+            if ((Long) origen.get("DistanciaRecorrida") != null) {
+                distanciaRecorridaOrigen = (Long) origen.get("DistanciaRecorrida");
+            }
+
+            //objeto con el domicilio origen
             JSONObject domicilioOrigen = (JSONObject) origen.get("Domicilio");
+
+            if ((String) domicilioOrigen.get("Calle") != null) {
+                calleOrigen = (String) domicilioOrigen.get("Calle");
+            }
+            if ((String) domicilioOrigen.get("NumeroExterior") != null) {
+                numeroExteriorOrigen = (String) domicilioOrigen.get("NumeroExterior");
+            }
+            if ((String) domicilioOrigen.get("Colonia") != null) {
+                coloniaOrigen = (String) domicilioOrigen.get("Colonia");
+            }
+            if ((String) domicilioOrigen.get("Localidad") != null) {
+                localidadOrigen = (String) domicilioOrigen.get("Localidad");
+            }
+            if ((String) domicilioOrigen.get("Municipio") != null) {
+                municipioOrigen = (String) domicilioOrigen.get("Municipio");
+            }
+            if ((String) domicilioOrigen.get("Estado") != null) {
+                estadoOrigen = (String) domicilioOrigen.get("Estado");
+            }
+            if ((String) domicilioOrigen.get("Pais") != null) {
+                paisOrigen = (String) domicilioOrigen.get("Pais");
+            }
+            if ((String) domicilioOrigen.get("CodigoPostal") != null) {
+                cpOrigen = (String) domicilioOrigen.get("CodigoPostal");
+            }
 
             //UBICACION destino
             JSONObject destino = (JSONObject) ubicacionesArray.get(1);
-            String tipoUbicacionDestino = (String) destino.get("TipoUbicacion");
-            String idUbicacionDestino = (String) destino.get("IDUbicacion");
-            String rfcRemitenteDestinatarioDestino = (String) destino.get("RFCRemitenteDestinatario");
-            String fechaHoraSalidaLlegadaDestino = (String) destino.get("FechaHoraSalidaLlegada");
-            Long distanciaDestino = (Long) destino.get("DistanciaRecorrida");
+            if ((String) destino.get("TipoUbicacion") != null) {
+                tipoUbicacionDestino = (String) destino.get("TipoUbicacion");
+            }
+            if ((String) destino.get("IDUbicacion") != null) {
+                idUbicacionDestino = (String) destino.get("IDUbicacion");
+            }
+            if ((String) destino.get("RFCRemitenteDestinatario") != null) {
+                rfcRemitenteDestinatarioDestino = (String) destino.get("RFCRemitenteDestinatario");
+            }
+            if ((String) destino.get("FechaHoraSalidaLlegada") != null) {
+                fechaHoraSalidaLlegadaDestino = (String) destino.get("FechaHoraSalidaLlegada");
+            }
+            if ((Long) destino.get("DistanciaRecorrida") != null) {
+                distanciaDestino = (Long) destino.get("DistanciaRecorrida");
+            }
 
-            String estadoOrigen = domicilioOrigen.get("Estado").toString();
-            String paisOrigen = domicilioOrigen.get("Pais").toString();
-            String cpOrigen = domicilioOrigen.get("CodigoPostal").toString();
-
+            //objeto con el domicilio DESTINO
             JSONObject domicilioDestino = (JSONObject) destino.get("Domicilio");
 
-            System.out.println(tipoUbicacion);
+            if ((String) domicilioDestino.get("Calle") != null) {
+                calleDestino = (String) domicilioDestino.get("Calle");
+            }
+            if ((String) domicilioDestino.get("NumeroExterior") != null) {
+                numeroExteriorDestino = (String) domicilioDestino.get("NumeroExterior");
+            }
+            if ((String) domicilioDestino.get("Colonia") != null) {
+                coloniaDestino = (String) domicilioDestino.get("Colonia");
+            }
+            if ((String) domicilioDestino.get("Localidad") != null) {
+                localidadDestino = (String) domicilioDestino.get("Localidad");
+            }
+            if ((String) domicilioDestino.get("Municipio") != null) {
+                municipioDestino = (String) domicilioDestino.get("Municipio");
+            }
+            if ((String) domicilioDestino.get("Estado") != null) {
+                estadoDestino = (String) domicilioDestino.get("Estado");
+            }
+            if ((String) domicilioDestino.get("Pais") != null) {
+                paisDestino = (String) domicilioDestino.get("Pais");
+            }
+            if ((String) domicilioDestino.get("CodigoPostal") != null) {
+                cpDestino = (String) domicilioDestino.get("CodigoPostal");
+            }
 
-            System.out.println(idUbicacion);
-
-            System.out.println(rfcRemitenteDestinatario);
-
-            System.out.println(fechaHoraSalidaLlegada);
-
-            System.out.println(domicilioOrigen.get("Estado"));
-            System.out.println(domicilioOrigen.get("Pais"));
-            System.out.println(domicilioOrigen.get("CodigoPostal"));
-
+            //Enviar datos de ubicacion origen a vista detalles 
             DetallesViaje.tipoUbi_text.setText(tipoUbicacion);
             DetallesViaje.idUbi_text.setText(idUbicacion);
-            DetallesViaje.idUbi_text.setText(rfcRemitenteDestinatario);
+            DetallesViaje.rfcUbi_text.setText(rfcRemitenteDestinatario);
             DetallesViaje.fechaHora_text.setText(fechaHoraSalidaLlegada);
+            if (distanciaRecorridaOrigen == null) {
+                DetallesViaje.distanciaRec_text.setText("");
+            } else {
+                DetallesViaje.distanciaRec_text.setText(distanciaRecorridaOrigen.toString());
 
+            }
+
+            DetallesViaje.calle_text.setText(calleOrigen);
+            DetallesViaje.numExt_text.setText(numeroExteriorOrigen);
+            DetallesViaje.colonia_text.setText(coloniaOrigen);
+            DetallesViaje.localidad_text.setText(localidadOrigen);
+            DetallesViaje.municipio_text.setText(municipioOrigen);
             DetallesViaje.estado_text.setText(estadoOrigen);
             DetallesViaje.pais_text.setText(paisOrigen);
             DetallesViaje.cp_text.setText(cpOrigen);
+            //Enviar datos de ubicacion destino a  vista detalles 
+            DetallesViaje.tipoDestino_text.setText(tipoUbicacionDestino);
+            DetallesViaje.idDestino_text.setText(idUbicacionDestino);
+            DetallesViaje.rfcDestino_text.setText(rfcRemitenteDestinatarioDestino);
+            DetallesViaje.fechaHoraDestino_text.setText(fechaHoraSalidaLlegadaDestino);
 
-            DetallesViaje.estado_text.setText(estadoOrigen);
+            if (distanciaDestino == null) {
+                DetallesViaje.distaRecDestino_text.setText("");
+            } else {
+                DetallesViaje.distaRecDestino_text.setText(distanciaDestino.toString());
 
-            System.out.println(tipoUbicacionDestino);
-            System.out.println(idUbicacionDestino);
+            }
 
-            System.out.println(rfcRemitenteDestinatarioDestino);
+            DetallesViaje.calleDestino_text.setText(calleDestino);
+            DetallesViaje.numExtDes_text.setText(numeroExteriorDestino);
+            DetallesViaje.coloniaDestino_text.setText(coloniaDestino);
+            DetallesViaje.localidadDestino_text.setText(localidadDestino);
+            DetallesViaje.municipioDestino_text.setText(municipioDestino);
+            DetallesViaje.estadoDestino_text.setText(estadoDestino);
+            DetallesViaje.paisDestino_text.setText(paisDestino);
+            DetallesViaje.cpDestino_text.setText(cpDestino);
 
-            System.out.println(fechaHoraSalidaLlegadaDestino);
-            System.out.println(distanciaDestino);
-
-            System.out.println(domicilioDestino.get("Estado"));
-            System.out.println(domicilioDestino.get("Pais"));
-            System.out.println(domicilioDestino.get("CodigoPostal"));
-
-            //mercancias
-            System.out.println("MERCANCIAS");
-
+            //MERCANCIAS
+            // System.out.println("MERCANCIAS");
             JSONObject mercancias = (JSONObject) cartaPorte.get("Mercancias");
-            String pesoBrutoTotal = (String) mercancias.get("PesoBrutoTotal");
-            String unidadPeso = (String) mercancias.get("UnidadPeso");
-            String pesoNetoTotal = (String) mercancias.get("PesoNetoTotal");
-            Long numTotalMercancias = (Long) mercancias.get("NumTotalMercancias");
+            if ((String) mercancias.get("PesoBrutoTotal") != null) {
+                pesoBrutoTotal = (String) mercancias.get("PesoBrutoTotal");
+            }
+            if ((String) mercancias.get("UnidadPeso") != null) {
+                unidadPeso = (String) mercancias.get("UnidadPeso");
+            }
+            if ((String) mercancias.get("PesoNetoTotal") != null) {
+                pesoNetoTotal = (String) mercancias.get("PesoNetoTotal");
+            }
+            if ((Long) mercancias.get("NumTotalMercancias") != null) {
+                numTotalMercancias = (Long) mercancias.get("NumTotalMercancias");
+            }
 
-            System.out.println(pesoBrutoTotal);
+            //Enviar datos generales de mercancias a vista DetallesViaje
+            DetallesViaje.pesoBruto_text.setText(pesoBrutoTotal);
+            DetallesViaje.unidadPeso_text.setText(unidadPeso);
+            DetallesViaje.unidadPeso_text.setText(unidadPeso);
+            DetallesViaje.pesoNeto_text.setText(pesoNetoTotal);
+            DetallesViaje.totalMercan_text.setText(numTotalMercancias.toString());
 
-            System.out.println(unidadPeso);
-
-            System.out.println(pesoNetoTotal);
-            System.out.println(numTotalMercancias);
-
+            //DATOS ESPECIFICOS POR MERCANCIA
             JSONArray mercanciasArray = (JSONArray) mercancias.get("Mercancia");
 
-            for (int i = 0; i < mercanciasArray.size(); i++) {
-                JSONObject mercanciaObjeto = (JSONObject) mercanciasArray.get(i);
-                String bienesTransp = mercanciaObjeto.get("BienesTransp").toString();
-                String descripcion = mercanciaObjeto.get("Descripcion").toString();
-                String cantidad = mercanciaObjeto.get("Cantidad").toString();
-                String claveUnidad = mercanciaObjeto.get("ClaveUnidad").toString();
-                String unidad = mercanciaObjeto.get("Unidad").toString();
-                String pesoEnKg = mercanciaObjeto.get("PesoEnKg").toString();
+            //Inicializamos tabla Mercancias
+            DefaultTableModel model = (DefaultTableModel) DetallesViaje.tbl_mercancias.getModel();
 
-                System.out.println("Mercancia NUm: " + (i + 1));
-                System.out.println(bienesTransp);
-                System.out.println(descripcion);
-                System.out.println(cantidad);
-                System.out.println(claveUnidad);
-                System.out.println(unidad);
-                System.out.println(pesoEnKg);
+            for (Object string : mercanciasArray) {
+
+                //DEclaramos variables default por si no vienen en el json
+                JSONObject mercanciaObjeto = (JSONObject) string;
+                String bienesTransp = "";
+                String descripcion = "";
+                String cantidad = "";
+                String claveUnidad = "";
+                String unidad = "";
+                String materialPeligroso = "";
+                String pesoEnKg = "";
+                String valorMercancia = "";
+                String moneda = "";
+                String fraccionArancelaria = "";
+                String uUIDComercioExt = "";
+
+                //Asignamos solo los valores diferentes a null
+                if (mercanciaObjeto.get("BienesTransp") != null) {
+                    bienesTransp = mercanciaObjeto.get("BienesTransp").toString();
+                }
+                if (mercanciaObjeto.get("Descripcion") != null) {
+                    descripcion = mercanciaObjeto.get("Descripcion").toString();
+                }
+                if (mercanciaObjeto.get("Cantidad") != null) {
+                    cantidad = mercanciaObjeto.get("Cantidad").toString();
+                }
+                if (mercanciaObjeto.get("ClaveUnidad") != null) {
+                    claveUnidad = mercanciaObjeto.get("ClaveUnidad").toString();
+                }
+                if (mercanciaObjeto.get("Unidad") != null) {
+                    unidad = mercanciaObjeto.get("Unidad").toString();
+                }
+                if (mercanciaObjeto.get("MaterialPeligroso") != null) {
+                    materialPeligroso = mercanciaObjeto.get("MaterialPeligroso").toString();
+                }
+                if (mercanciaObjeto.get("PesoEnKg") != null) {
+                    pesoEnKg = mercanciaObjeto.get("PesoEnKg").toString();
+                }
+                if (mercanciaObjeto.get("ValorMercancia") != null) {
+                    valorMercancia = mercanciaObjeto.get("ValorMercancia").toString();
+                }
+                if (mercanciaObjeto.get("Moneda") != null) {
+                    moneda = mercanciaObjeto.get("Moneda").toString();
+                }
+                if (mercanciaObjeto.get("FraccionArancelaria") != null) {
+                    fraccionArancelaria = mercanciaObjeto.get("FraccionArancelaria").toString();
+                }
+                if (mercanciaObjeto.get("UUIDComercioExt") != null) {
+                    uUIDComercioExt = mercanciaObjeto.get("UUIDComercioExt").toString();
+                }
+
+                //Insertar valores en tabla
+                model.addRow(new Object[]{bienesTransp, descripcion, cantidad, claveUnidad,
+                    unidad, materialPeligroso, pesoEnKg, valorMercancia, moneda, fraccionArancelaria, uUIDComercioExt});
 
             }
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } catch (IOException | ParseException ex) {
             Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -845,20 +1085,26 @@ public class obtenerViajes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_consultarViajes;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btn_actualizarViajes;
+    private javax.swing.JTextField buscar_txt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenu menuConsultar;
     private javax.swing.JMenuItem menuDescargar;
-    private javax.swing.JMenuItem menuEditarConstantes;
+    private javax.swing.JMenuItem menuSalir;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelEncabezado;
+    private javax.swing.JMenu smenuEditar;
+    private javax.swing.JMenuItem submenuSalir;
     public static javax.swing.JTable tablaViajes;
     // End of variables declaration//GEN-END:variables
 }

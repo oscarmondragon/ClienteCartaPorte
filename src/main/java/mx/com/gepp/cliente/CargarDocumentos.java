@@ -5,6 +5,12 @@
  */
 package mx.com.gepp.cliente;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 import java.awt.Component;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -28,6 +34,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import mx.com.gepp.beans.RecepCartaPorteGepp;
+import mx.com.gepp.beans.ReceptionResponse;
 import mx.com.gepp.cliente.CargarDocumentos;
 import mx.com.gepp.utilities.Comprimir;
 import mx.com.gepp.utilities.Constantes;
@@ -53,7 +61,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
         archivosSeleccionados = new ArrayList<>();
         txt_usuario.setText(Constantes.USER_GEPP);
         txt_proveedor.setText(Constantes.NUMERO_PROVEEDOR);
-        txt_password.setText(Constantes.USER_PASS_GEPP);
+
     }
 
     /**
@@ -66,40 +74,36 @@ public class CargarDocumentos extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        text_idViaje = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        panelContenido = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txt_usuario = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txt_password = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txt_proveedor = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txt_url = new javax.swing.JTextField();
-        btn_selecionarArchivos = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        btn_selecionarArchivos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_archivos = new javax.swing.JTable();
-        btn_enviar = new javax.swing.JButton();
         btn_regresar = new javax.swing.JButton();
+        btn_enviar = new javax.swing.JButton();
+        panelEncabezado = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        text_idViaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        text_idViaje.setText("Identificador del Viaje");
+        panelContenido.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
-        jLabel1.setText("Cargar documentos de carta porte");
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
 
         jLabel2.setText("Usuario");
 
         txt_usuario.setEditable(false);
-
-        jLabel3.setText("Contraseña");
-
-        txt_password.setEditable(false);
 
         jLabel4.setText("Numero Proveedor");
 
@@ -107,14 +111,14 @@ public class CargarDocumentos extends javax.swing.JFrame {
 
         jLabel5.setText("URL de archivos");
 
+        jLabel6.setText("Cargar archivos");
+
         btn_selecionarArchivos.setText("Seleccionar");
         btn_selecionarArchivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_selecionarArchivosActionPerformed(evt);
             }
         });
-
-        jLabel6.setText("Cargar archivos");
 
         tbl_archivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -146,6 +150,13 @@ public class CargarDocumentos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_archivos);
 
+        btn_regresar.setText("Regresar");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
+
         btn_enviar.setText("Enviar");
         btn_enviar.setEnabled(false);
         btn_enviar.addActionListener(new java.awt.event.ActionListener() {
@@ -154,97 +165,133 @@ public class CargarDocumentos extends javax.swing.JFrame {
             }
         });
 
-        btn_regresar.setText("Regresar");
-        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_regresarActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_url)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_selecionarArchivos)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_regresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(68, 68, 68)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5))
+                        .addContainerGap(93, Short.MAX_VALUE))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_url, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(btn_selecionarArchivos))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_regresar)
+                    .addComponent(btn_enviar))
+                .addContainerGap())
+        );
 
-        jLabel7.setText("Folio GEPP:");
+        javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);
+        panelContenido.setLayout(panelContenidoLayout);
+        panelContenidoLayout.setHorizontalGroup(
+            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenidoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelContenidoLayout.setVerticalGroup(
+            panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenidoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(37, 37, 37)
-                                .addComponent(btn_selecionarArchivos))
-                            .addComponent(jLabel5))
-                        .addGap(0, 307, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(txt_url)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(94, 94, 94)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_regresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_enviar)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(text_idViaje)
-                                .addGap(9, 9, 9))
-                            .addComponent(jLabel1))
-                        .addGap(139, 139, 139))))
+                .addContainerGap()
+                .addComponent(panelContenido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelContenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71))
+        );
+
+        panelEncabezado.setBackground(java.awt.SystemColor.activeCaptionBorder);
+        panelEncabezado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
+        jLabel1.setText("Cargar documentos de carta porte");
+
+        jLabel7.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
+        jLabel7.setText("Folio GEPP:");
+
+        text_idViaje.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
+        text_idViaje.setForeground(new java.awt.Color(0, 102, 204));
+        text_idViaje.setText("Identificador del Viaje");
+
+        javax.swing.GroupLayout panelEncabezadoLayout = new javax.swing.GroupLayout(panelEncabezado);
+        panelEncabezado.setLayout(panelEncabezadoLayout);
+        panelEncabezadoLayout.setHorizontalGroup(
+            panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEncabezadoLayout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addGroup(panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEncabezadoLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(text_idViaje))
+                    .addComponent(jLabel1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelEncabezadoLayout.setVerticalGroup(
+            panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEncabezadoLayout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(text_idViaje)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_url, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(btn_selecionarArchivos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_enviar)
-                    .addComponent(btn_regresar))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(text_idViaje))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,14 +299,20 @@ public class CargarDocumentos extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, Short.MAX_VALUE))
+                .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -267,27 +320,35 @@ public class CargarDocumentos extends javax.swing.JFrame {
 
     private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
         // TODO add your handling code here:
+        String nombreCarpeta = "viajes";
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta seguro de enviarlo?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        int response = JOptionPane.showConfirmDialog(this, "¿Esta seguro de enviarlo?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-        switch (response) {
+        switch (respuesta) {
             case JOptionPane.YES_OPTION:
                 Encriptador encoder = new Encriptador();
                 String passUser = Constantes.USER_PASS_GEPP;
-
+                String urlEncriptada = null;
+                String urlRestService = Constantes.URL_REST_SERVICE;
+                String url = txt_url.getText();
                 FileWriter fichero = null;
                 PrintWriter pw = null;
+
                 //Conversion de archivo zip a Base64
                 Comprimir zip = new Comprimir();
-                String nombreZip = "C:\\\\ProgramaGEPP/CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
-                //String nombreZip = "CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+                //  String nombreZip = "C:\\\\ProgramaGEPP/CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+                String nombreZip = "CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
                 zip.comprimir(archivosSeleccionados, nombreZip);
-                // convert the zip file to the base64 encoded string
-                //String encodedData = convertZipFileToBaseEncodeString();
-                //System.out.println("encodedData > " + encodedData);
+
+                //Encriptacion de URL
+                try {
+                    urlEncriptada = new String(encoder.encriptar(url, passUser));
+                } catch (Exception e) {
+                    System.out.println("Ocurrió un error al encriptar el archivo.");
+                }
                 //>Integramos el archivo
                 String encodedBase64 = null;
                 String archivoEncriptado = null;
+                //Conversion de archivo zip a Base64
                 try {
                     File originalFile = new File(nombreZip);
                     try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
@@ -306,9 +367,55 @@ public class CargarDocumentos extends javax.swing.JFrame {
                     System.out.println("Ocurrió un error al encriptar el archivo.");
                 }   //Escribir folioGepp en archivo de texto
 
+                //Encriptacion de archivo
+                try {
+                    archivoEncriptado = new String(encoder.encriptar(encodedBase64, passUser));
+                } catch (Exception e) {
+                    System.out.println("Ocurrió un error al encriptar el archivo.");
+                }
+                //Creamos objeto para envio
+                RecepCartaPorteGepp cartaPorte = new RecepCartaPorteGepp(Constantes.USER_GEPP,
+                        Constantes.NUMERO_PROVEEDOR,
+                        "12",
+                        "00",
+                        "SIN ERROR",
+                        urlEncriptada,
+                        archivoEncriptado
+                );
+
+                System.out.println("usuarioGEPP: " + cartaPorte.getUsuarioGEPP());
+                System.out.println("numProveedor: " + cartaPorte.getNumProveedor());
+                System.out.println("numViaje: " + cartaPorte.getNumViaje());
+                System.out.println("codigoError: " + cartaPorte.getCodigoError());
+                System.out.println("mensajeError: " + cartaPorte.getMensajeError());
+                System.out.println("urlDocumentos: " + cartaPorte.getUrlDocumentos());
+                System.out.println("zipBase64: " + cartaPorte.getZipBase64());
+                System.out.println("");
+                
+                //Invocacion WS
+//		ClientConfig clientConfig = new DefaultClientConfig();
+//		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+//		Client client = Client.create(clientConfig);
+//        
+//		WebResource webResource = client.resource(urlRestService);
+//		
+//		ClientResponse response = webResource.path("/recepcionCartaPorte")
+//				                             .type("application/json")
+//				                             .post(ClientResponse.class, cartaPorte);
+//		
+//		System.out.println("Estatus respuesta: " + response.getStatus());
+//		System.out.println("");
+//		
+//		ReceptionResponse output = response.getEntity(ReceptionResponse.class);
+//		
+//		System.out.println("Código Error: " + output.getCodigoError());
+//		System.out.println("Mensaje Error: " + output.getMensajeError());
+                
+                //Registrar folio en archivo txt de folios enviados
                 try {
                     fichero = new FileWriter("foliosGEPP.txt", true);
                     pw = new PrintWriter(fichero);
+                    pw.print("");
                     pw.println(text_idViaje.getText());
 
                 } catch (Exception e) {
@@ -325,11 +432,15 @@ public class CargarDocumentos extends javax.swing.JFrame {
                     }
                 }
 
-                JOptionPane.showMessageDialog(null, "Se ha enviado.");
+                JOptionPane.showMessageDialog(null, "Envio completado.");
                 archivosSeleccionados.clear();
+                //Actualizamos el estado de los viajes enviados
+               // obtenerViajes viajes = new obtenerViajes();
+               //obtenerViajes.setVisible(true);
+                  obtenerViajes.MostrarTabla(nombreCarpeta);
+               
                 this.dispose();
                 break;
-
             case JOptionPane.NO_OPTION:
                 break;
             case JOptionPane.CLOSED_OPTION:
@@ -337,7 +448,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
             default:
                 break;
         }
-
+         
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void tbl_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_archivosMouseClicked
@@ -360,7 +471,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
 
     private void btn_selecionarArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarArchivosActionPerformed
 
-        JFileChooser selectorArchivos = new JFileChooser("./");
+        JFileChooser selectorArchivos = new JFileChooser("../../");
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("Archivos de texto", "pdf", "xml");
         selectorArchivos.setFileFilter(fnef);
 
@@ -438,16 +549,17 @@ public class CargarDocumentos extends javax.swing.JFrame {
     private javax.swing.JButton btn_selecionarArchivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     public static javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelContenido;
+    private javax.swing.JPanel panelEncabezado;
     private javax.swing.JTable tbl_archivos;
     public static javax.swing.JLabel text_idViaje;
-    private javax.swing.JTextField txt_password;
     private javax.swing.JTextField txt_proveedor;
     private javax.swing.JTextField txt_url;
     private javax.swing.JTextField txt_usuario;
