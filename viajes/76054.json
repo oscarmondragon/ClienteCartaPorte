@@ -1,0 +1,58 @@
+[
+        {
+            
+            "FolioGEPP":"76054",
+            "FechaGeneracion":"2022-02-09T14:31:02",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["T2100005580_M"]},"UbicacionesGEPP":["DE:T23:PLANTA IZCALLI BEPUSA","OR:T21:PLANTA IZTACALCO BEPUSA"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":36,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR107401"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-09T14:41:02"
+            ,"Domicilio":{
+            "Estado":"DIF","Pais":"MEX","CodigoPostal":"08800"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE107601"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-02-09T15:53:02"
+            ,"DistanciaRecorrida": 36
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54730"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "282.36",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "282.36",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"240.36",
+            "ClaveUnidad":"KGM",
+            "Unidad":"Kilogramo"
+            ,"PesoEnKg":"240.36"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"12",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"42"
+            
+            
+            
+            
+        }]}
+            }
+        }]

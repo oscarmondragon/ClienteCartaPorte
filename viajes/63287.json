@@ -1,0 +1,69 @@
+[
+        {
+            
+            "FolioGEPP":"63287",
+            "FechaGeneracion":"2022-01-30T00:12:14",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100089829_M"]},"UbicacionesGEPP":["DE:S79:PLANTA MORELIA BEPUSA","OR:641:PROPLASA BODEGA CENTRAL"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":283,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-30T00:22:14"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE308901"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-30T04:12:38"
+            ,"DistanciaRecorrida": 283
+            ,"Domicilio":{
+            "Estado":"MIC","Pais":"MEX","CodigoPostal":"58190"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "18561.538",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "18561.538",
+            "NumTotalMercancias":3,
+            "Mercancia":[{
+            "BienesTransp":"31141701",
+            "Descripcion":"Moldeados plásticos por inyección de aire",
+            "Cantidad":"232704",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"4723.891"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"56",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"1288"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"595256",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"12549.647"
+            
+            
+            
+            
+        }]}
+            }
+        }]

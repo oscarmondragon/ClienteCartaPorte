@@ -1,0 +1,56 @@
+[
+        {
+            
+            "FolioGEPP":"33867",
+            "FechaGeneracion":"2022-01-09T14:04:27",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100089093_M"]}},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":283,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-01-09T14:14:27"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE308901"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-01-09T18:04:51"
+            ,"DistanciaRecorrida": 283
+            ,"Domicilio":{
+            "Estado":"MIC","Pais":"MEX","CodigoPostal":"58195"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "18480.207",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "18480.207",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"833336",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"17192.207"
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"56",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad",
+            "PesoEnKg":"1288"
+            
+            
+            
+        }]}
+            }
+        }]

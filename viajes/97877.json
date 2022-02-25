@@ -1,0 +1,58 @@
+[
+        {
+            "OC":"297378",
+            "FolioGEPP":"97877",
+            "FechaGeneracion":"2022-02-25T13:56:09",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64500042658_M"]},"UbicacionesGEPP":["DE:S88:PLANTA URUAPAN BEPUSA","OR:645:BODEGA PROPLASA MAQUILA"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":382,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021901"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-25T14:06:08"
+            ,"Domicilio":{
+            "Estado":"QUE","Pais":"MEX","CodigoPostal":"76120"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE311501"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-02-25T19:06:05"
+            ,"DistanciaRecorrida": 382
+            ,"Domicilio":{
+            "Estado":"MIC","Pais":"MEX","CodigoPostal":"60170"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "18761.295",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "18761.295",
+            "NumTotalMercancias":2,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"898616",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"17473.295"
+            
+            
+            
+            
+        },{
+            "BienesTransp":"24112701",
+            "Descripcion":"Pallets de madera",
+            "Cantidad":"56",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"1288"
+            
+            
+            
+            
+        }]}
+            }
+        }]

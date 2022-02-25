@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import java.util.zip.ZipEntry;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -55,26 +56,27 @@ public class Descomprimir {
                 folder.mkdir();
             }
 
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(archivoZip));
-            ZipEntry ze = zis.getNextEntry();
-            while (ze != null) {
-                String nombreArchivo = ze.getName();
-                File archivoNuevo = new File(rutaSalida + File.separator + nombreArchivo);
-              //  System.out.println("archivo descomprimido : " + archivoNuevo.getName());
-                new File(archivoNuevo.getParent()).mkdirs();
-                FileOutputStream fos = new FileOutputStream(archivoNuevo);
-                int len;
-                while ((len = zis.read(buffer)) > 0) {
-                    fos.write(buffer, 0, len);
+            try (ZipInputStream zis = new ZipInputStream(new FileInputStream(archivoZip))) {
+                ZipEntry ze = zis.getNextEntry();
+                while (ze != null) {
+                    String nombreArchivo = ze.getName();
+                    File archivoNuevo = new File(rutaSalida + File.separator + nombreArchivo);
+                    //  System.out.println("archivo descomprimido : " + archivoNuevo.getName());
+                    new File(archivoNuevo.getParent()).mkdirs();
+                    FileOutputStream fos = new FileOutputStream(archivoNuevo);
+                    int len;
+                    while ((len = zis.read(buffer)) > 0) {
+                        fos.write(buffer, 0, len);
+                    }
+                    fos.close();
+                    ze = zis.getNextEntry();
                 }
-                fos.close();
-                ze = zis.getNextEntry();
+                zis.closeEntry();
             }
-            zis.closeEntry();
-            zis.close();
             System.out.println("Listo se ha descomprimido el ZIP");
         } catch (IOException ex) {
-            ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Para usar el programa descarga los viajes.");
+
         }
     }
 }
