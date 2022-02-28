@@ -75,7 +75,7 @@ public class Descomprimir {
             }
             System.out.println("Listo se ha descomprimido el ZIP");
         } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Para usar el programa descarga los viajes.");
+                    JOptionPane.showMessageDialog(null, "Para usar el programa dirigite al menu Consultar->Descargar viajes.");
 
         }
     }

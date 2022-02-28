@@ -215,8 +215,8 @@ public class CargarDocumentos extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(btn_selecionarArchivos))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_regresar)
                     .addComponent(btn_enviar))
@@ -235,9 +235,8 @@ public class CargarDocumentos extends javax.swing.JFrame {
         panelContenidoLayout.setVerticalGroup(
             panelContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContenidoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -253,7 +252,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelContenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                .addGap(144, 144, 144))
         );
 
         panelEncabezado.setBackground(java.awt.SystemColor.activeCaptionBorder);
@@ -311,8 +310,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -335,8 +333,9 @@ public class CargarDocumentos extends javax.swing.JFrame {
 
                 //Conversion de archivo zip a Base64
                 Comprimir zip = new Comprimir();
+                String folioGepp = text_idViaje.getText();
                 //  String nombreZip = "C:\\\\ProgramaGEPP/CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
-                String nombreZip = "CartasPorteEnviadas/" + text_idViaje.getText() + ".zip";
+                String nombreZip = "CartasPorteEnviadas/" + folioGepp + ".zip";
                 zip.comprimir(archivosSeleccionados, nombreZip);
 
                 //Encriptacion de URL
@@ -351,7 +350,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
                 //Conversion de archivo zip a Base64
                 try {
                     File originalFile = new File(nombreZip);
-                    try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
+                    try ( FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
                         byte[] bytes = new byte[(int) originalFile.length()];
                         fileInputStreamReader.read(bytes);
                         encodedBase64 = new String(Base64.getEncoder().encode(bytes));
@@ -391,35 +390,39 @@ public class CargarDocumentos extends javax.swing.JFrame {
                 System.out.println("urlDocumentos: " + cartaPorte.getUrlDocumentos());
                 System.out.println("zipBase64: " + cartaPorte.getZipBase64());
                 System.out.println("");
-                
+
                 //Invocacion WS
-//		ClientConfig clientConfig = new DefaultClientConfig();
-//		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-//		Client client = Client.create(clientConfig);
-//        
-//		WebResource webResource = client.resource(urlRestService);
-//		
-//		ClientResponse response = webResource.path("/recepcionCartaPorte")
-//				                             .type("application/json")
-//				                             .post(ClientResponse.class, cartaPorte);
-//		
-//		System.out.println("Estatus respuesta: " + response.getStatus());
-//		System.out.println("");
-//		
-//		ReceptionResponse output = response.getEntity(ReceptionResponse.class);
-//		
-//		System.out.println("Código Error: " + output.getCodigoError());
-//		System.out.println("Mensaje Error: " + output.getMensajeError());
+                ClientConfig clientConfig = new DefaultClientConfig();
+                clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+                Client client = Client.create(clientConfig);
+
+                WebResource webResource = client.resource(urlRestService);
+
+                ClientResponse response = webResource.path("/recepcionCartaPorte")
+                        .type("application/json")
+                        .post(ClientResponse.class, cartaPorte);
+
+                System.out.println("Estatus respuesta: " + response.getStatus());
+                System.out.println("");
+
+                ReceptionResponse output = response.getEntity(ReceptionResponse.class);
+
+                System.out.println("Código Error: " + output.getCodigoError());
+                System.out.println("Mensaje Error: " + output.getMensajeError());
                 
-                //Registrar folio en archivo txt de folios enviados
+                if("00".equals(output.getCodigoError())){
+                    
+                    JOptionPane.showMessageDialog(null,"¡Envio exitoso!\n" + "Estatus respuesta: " + response.getStatus() +
+                            "\nError: " + output.getCodigoError()
+                        + "\nMensaje:\n" + output.getMensajeError());
+                    //Registrar folio en archivo txt de folios enviados
                 try {
                     fichero = new FileWriter("foliosGEPP.txt", true);
                     pw = new PrintWriter(fichero);
                     pw.print("");
                     pw.println(text_idViaje.getText());
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (IOException e) {
                 } finally {
                     try {
                         // Nuevamente aprovechamos el finally para 
@@ -427,20 +430,27 @@ public class CargarDocumentos extends javax.swing.JFrame {
                         if (null != fichero) {
                             fichero.close();
                         }
-                    } catch (Exception e2) {
-                        e2.printStackTrace();
+                    } catch (IOException e2) {
                     }
                 }
 
-                JOptionPane.showMessageDialog(null, "Envio completado.");
+              //  JOptionPane.showMessageDialog(null, "Envio completado.");
                 archivosSeleccionados.clear();
                 //Actualizamos el estado de los viajes enviados
-               // obtenerViajes viajes = new obtenerViajes();
-               //obtenerViajes.setVisible(true);
-                  obtenerViajes.MostrarTabla(nombreCarpeta);
-               
+                // obtenerViajes viajes = new obtenerViajes();
+                //obtenerViajes.setVisible(true);
+                obtenerViajes.MostrarTabla(nombreCarpeta);
+
                 this.dispose();
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null,"¡Ocurrio un error!\nEstatus respuesta: " + response.getStatus() + 
+                            "\nError: " + output.getCodigoError()
+                        + "\nMensaje:\n" + output.getMensajeError());
+                }
+                
                 break;
+
             case JOptionPane.NO_OPTION:
                 break;
             case JOptionPane.CLOSED_OPTION:
@@ -448,7 +458,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
             default:
                 break;
         }
-         
+
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void tbl_archivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_archivosMouseClicked
