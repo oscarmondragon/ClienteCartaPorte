@@ -31,7 +31,6 @@ import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-
 //import static javafx.scene.input.KeyCode.T;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -40,7 +39,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 //import jdk.nashorn.internal.parser.JSONParser;
-
 import mx.com.gepp.beans.TripsResponse;
 import mx.com.gepp.beans.RenderTabla;
 
@@ -61,31 +59,42 @@ public class obtenerViajes extends javax.swing.JFrame {
     TableModel tm;
     static TableRowSorter<TableModel> tr;
 
-    //obtener dia de hoy
-//    SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
-//    Calendar calendar = Calendar.getInstance();
-//    Date dateObj = calendar.getTime();
-//    String formattedDate = dtf.format(dateObj);
     //botones de tabla ver viajes
     static JButton botonVer = new JButton("Ver JSON");
     static JButton botonCargar = new JButton("Cargar");
 
     //Nombre de carpeta y zip
-    // String nombreZip = "viajes_" + formattedDate + ".zip";
-    //String nombreCarpeta = "viajes_" + formattedDate;
     String nombreZip = "viajes.zip";
     String nombreCarpeta = "viajes";
+    //nombre de la instancia para descomprimir zips
     Descomprimir descompresorArchivo = new Descomprimir();
-
+    //variables para tabla
     public static int columna, fila;
-
+    //carpeta para cartas porte si no existe
+    File carpetaCartas = new File("CartasPorteEnviadas");
+    //archivo para guargar folios
+    File foliosGepp = new File("foliosGEPP.txt");
+    
     public obtenerViajes() {
         initComponents();
         botonVer.setName("btnVer");
         botonCargar.setName("btnCargar");
         // String nombreZip = "C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip";
         // String nombreCarpeta = "C:\\\\ProgramaGEPP/viajes/viajes_" + formattedDate;
-
+       
+        //creamos la carpeta si no existe
+        if(!carpetaCartas.exists()){
+            carpetaCartas.mkdir();
+        }
+        if(!foliosGepp.exists()){
+            try {
+                foliosGepp.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    
         //Cargar constantes
         //Asignar valores a constantes desde el archivo JSON
         try {
@@ -98,24 +107,26 @@ public class obtenerViajes extends javax.swing.JFrame {
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se encontro el archivo constantes.json.\nDirigite al menu Opciones->Editar constantes para crearlo.");
+
         } catch (IOException | ParseException ex) {
             Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //Eliminamos los archivos de la carpeta de viajes si existe para evitar duplicados
         File carpeta = new File("viajes");
-        System.out.println("car:" + nombreCarpeta);
+        // System.out.println("car:" + nombreCarpeta);
         File[] files = carpeta.listFiles();
         if (carpeta.exists()) {
             for (File f : files) {
                 f.delete();
-                System.out.println("Eliminados");
+                //System.out.println("Eliminados");
             }
         }
         // Descomprimir archivo de viajes y mostrar tabla al iniciar programa
-           descompresorArchivo.unZip(nombreZip, nombreCarpeta);
-           
-           //Cambiamos nombres de los archivos json
+        descompresorArchivo.unZip(nombreZip, nombreCarpeta);
+
+        //Cambiamos nombres de los archivos json
         String[] listado = carpeta.list();
         JSONParser parser = new JSONParser();
         File[] archivos = carpeta.listFiles();
@@ -129,26 +140,26 @@ public class obtenerViajes extends javax.swing.JFrame {
                 try {
                     FileReader leerFolio = new FileReader(carpeta + "/" + archivo1.getName());
                     JSONArray a = (JSONArray) parser.parse(leerFolio);
-                    System.out.println(carpeta + "/" + archivo1.getName());
+                    // System.out.println(carpeta + "/" + archivo1.getName());
                     JSONObject cabecera = (JSONObject) a.get(0);
                     String folioGEPP = (String) cabecera.get("FolioGEPP");
                     leerFolio.close();
                     String nvo = archivo1.getParent() + "/" + folioGEPP + ".json";
-                    System.out.println("nuevo:" + nvo);
+                    // System.out.println("nuevo:" + nvo);
                     File archivo = new File(nvo);
                     boolean correcto = archivo1.renameTo(archivo);
                     if (correcto == true) {
-                        System.out.println("Se cambio");
+                        //  System.out.println("Se cambio");
                     } else {
-                        System.out.println("Error");
+                        System.out.println("Error al cambiar nombre de archivos");
                     }
                 } catch (IOException | ParseException ex) {
                     Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
-        
-          MostrarTabla(nombreCarpeta);
+        //mostramos la tabla
+        MostrarTabla(nombreCarpeta);
     }
 
     public static void MostrarTabla(String nombreCarpeta) {
@@ -159,7 +170,6 @@ public class obtenerViajes extends javax.swing.JFrame {
                 return false;
             }
         };
-       
 
         String[] columnas = {"FolioGEPP", "Fecha Generación", "Estado", "Ver datos", "Cargar documentos"};
 
@@ -183,8 +193,8 @@ public class obtenerViajes extends javax.swing.JFrame {
             for (String listado1 : listado) {
 
                 try {
-                    
-                    FileReader lectorJson= new FileReader(nombreCarpeta + "/" + listado1);
+
+                    FileReader lectorJson = new FileReader(nombreCarpeta + "/" + listado1);
                     JSONArray a = (JSONArray) parser.parse(lectorJson);
                     JSONObject cabecera = (JSONObject) a.get(0);
                     String folioGEPP = (String) cabecera.get("FolioGEPP");
@@ -280,6 +290,7 @@ public class obtenerViajes extends javax.swing.JFrame {
         smenuEditar = new javax.swing.JMenu();
         menuSalir = new javax.swing.JMenuItem();
         submenuSalir = new javax.swing.JMenuItem();
+        submenu_acerca = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -435,6 +446,14 @@ public class obtenerViajes extends javax.swing.JFrame {
         });
         smenuEditar.add(submenuSalir);
 
+        submenu_acerca.setText("Acerca de");
+        submenu_acerca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenu_acercaActionPerformed(evt);
+            }
+        });
+        smenuEditar.add(submenu_acerca);
+
         jMenuBar1.add(smenuEditar);
 
         setJMenuBar(jMenuBar1);
@@ -479,6 +498,7 @@ public class obtenerViajes extends javax.swing.JFrame {
                 if (botones.getName().equals("btnVer")) {
                     // JOptionPane.showMessageDialog(null, "se preisono ver");
                     //Obtenemos el nombre del json de la primera columna de la tabla
+
                     DetallesViaje datos = new DetallesViaje();
                     datos.setLocationRelativeTo(null);
                     datos.setVisible(true);
@@ -494,7 +514,11 @@ public class obtenerViajes extends javax.swing.JFrame {
                     }
 
                 } else if (botones.getName().equals("btnCargar")) {
+                    //Reiniciamos filtro de busqueda
+                    buscar_txt.setText("");
+                    tr.setRowFilter(null);
                     //JOptionPane.showMessageDialog(null, "se preisono cargar");
+                    //Abrimos la vista pasandole el idGepp
                     CargarDocumentos cargar = new CargarDocumentos();
                     cargar.setLocationRelativeTo(null);
                     cargar.setVisible(true);
@@ -514,6 +538,7 @@ public class obtenerViajes extends javax.swing.JFrame {
         botonVer.setName("btnVer");
         botonCargar.setName("btnCargar");
 
+        //Asignamos valores para consultar Web Service
         String urlRestService = Constantes.URL_REST_SERVICE;
         String passUser = Constantes.USER_PASS_GEPP;
 
@@ -527,92 +552,107 @@ public class obtenerViajes extends javax.swing.JFrame {
                 .queryParam("numProveedor", Constantes.NUMERO_PROVEEDOR)
                 .get(ClientResponse.class);
 
-        System.out.println("Estatus respuesta: " + response.getStatus());
+        int status = response.getStatus();
+
+        System.out.println("Estatus respuesta: " + status);
         System.out.println("");
 
         TripsResponse output = response.getEntity(TripsResponse.class);
 
+        String codigoError = output.getCodigoError();
+        String mensajeError = output.getMensajeError();
+
         // dato1.setText("Código Error: " + output.getCodigoError() + "\nMensaje Error: " + output.getMensajeError() + "\nzipBase64: " + output.getZipBase64());
-        System.out.println("Código Error: " + output.getCodigoError());
-        System.out.println("Mensaje Error: " + output.getMensajeError());
+        System.out.println("Código Error: " + codigoError);
+        System.out.println("Mensaje Error: " + mensajeError);
         System.out.println("zipBase64: " + output.getZipBase64());
 
-        if (output.getZipBase64() != null) {
-            try {
-                //Desencriptacion de archivo
-                String archivoDesencriptado = (new Encriptador()).desencriptar(output.getZipBase64(), passUser);
+        if (status == 200 & "00".equals(codigoError)) {
 
-                //Obtener los bytes desde base 64
-                byte[] bytes = Base64.getDecoder().decode(archivoDesencriptado);
-
-                //Escribir archivo
+            if (output.getZipBase64() != null) {
                 try {
-                    //FileOutputStream fos = new FileOutputStream("C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip");
-                    FileOutputStream fos = new FileOutputStream("viajes.zip");
+                    //Desencriptacion de archivo
+                    String archivoDesencriptado = (new Encriptador()).desencriptar(output.getZipBase64(), passUser);
 
-                    fos.write(bytes);
-                    fos.close();
-                    System.out.println("Archivo creado exitosamente.");
-                    JOptionPane.showMessageDialog(null, "Descarga completada.");
+                    //Obtener los bytes desde base 64
+                    byte[] bytes = Base64.getDecoder().decode(archivoDesencriptado);
 
-                    // MostrarTabla(nombreCarpeta);
-                } catch (Exception e) {
-                    System.out.println("Ocurrió un error al grabar el archivo.");
-                    JOptionPane.showMessageDialog(null, "Erro al crear el archivo ZIP");
-                }
-            } catch (UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
-                Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.out.println("No hay archivo zipBase64 para trabajar.");
-        }
-        //Eliminamos los archivos de la carpeta de viajes si existe para evitar duplicados
-        File carpeta = new File("viajes");
-        System.out.println("car:" + nombreCarpeta);
-        File[] files = carpeta.listFiles();
-        if (carpeta.exists()) {
-            for (File f : files) {
-                f.delete();
-                System.out.println("Eliminados");
-            }
-        }
-        //Descomprimimos nuevo zip descargado y mostramos tabla
-        descompresorArchivo.unZip(nombreZip, nombreCarpeta);
+                    //Escribir archivo
+                    try {
+                        //FileOutputStream fos = new FileOutputStream("C:\\\\ProgramaGEPP/ZIPs/viajes_" + formattedDate + ".zip");
+                        FileOutputStream fos = new FileOutputStream("viajes.zip");
 
-        //Cambiamos nombres de los archivos json
-        String[] listado = carpeta.list();
-        JSONParser parser = new JSONParser();
-        File[] archivos = carpeta.listFiles();
+                        fos.write(bytes);
+                        fos.close();
+                        System.out.println("Archivo creado exitosamente.");
+                        JOptionPane.showMessageDialog(null, "Descarga completada.");
 
-        if (archivos == null || archivos.length == 0) {
-            System.out.println("No hay elementos dentro de la carpeta actual");
-            return;
-        } else {
-
-            for (File archivo1 : archivos) {
-                try {
-                    FileReader leerFolio = new FileReader(carpeta + "/" + archivo1.getName());
-                    JSONArray a = (JSONArray) parser.parse(leerFolio);
-                    System.out.println(carpeta + "/" + archivo1.getName());
-                    JSONObject cabecera = (JSONObject) a.get(0);
-                    String folioGEPP = (String) cabecera.get("FolioGEPP");
-                    leerFolio.close();
-                    String nvo = archivo1.getParent() + "/" + folioGEPP + ".json";
-                    System.out.println("nuevo:" + nvo);
-                    File archivo = new File(nvo);
-                    boolean correcto = archivo1.renameTo(archivo);
-                    if (correcto == true) {
-                        System.out.println("Se cambio");
-                    } else {
-                        System.out.println("Error");
+                        // MostrarTabla(nombreCarpeta);
+                    } catch (Exception e) {
+                        System.out.println("Ocurrió un error al grabar el archivo.");
+                        JOptionPane.showMessageDialog(null, "Erro al crear el archivo ZIP");
                     }
-                } catch (IOException | ParseException ex) {
+                } catch (UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
                     Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Ocurrio un error al desencriptar el archivo.\n Verifica que el usuario y contraseña sean correctos.");
+
+                }
+            } else {
+                System.out.println("No hay archivo zipBase64 para trabajar.");
+                JOptionPane.showMessageDialog(null, "No hay archivo zipBase64 para trabajar.");
+            }
+            //Eliminamos los archivos de la carpeta de viajes si existe para evitar duplicados
+            File carpeta = new File("viajes");
+            //  System.out.println("car:" + nombreCarpeta);
+            File[] files = carpeta.listFiles();
+            if (carpeta.exists()) {
+                for (File f : files) {
+                    f.delete();
+                    //  System.out.println("Eliminados");
                 }
             }
-        }
+            //Descomprimimos nuevo zip descargado y mostramos tabla
+            descompresorArchivo.unZip(nombreZip, nombreCarpeta);
 
-        MostrarTabla(nombreCarpeta);
+            //Cambiamos nombres de los archivos json
+            String[] listado = carpeta.list();
+            JSONParser parser = new JSONParser();
+            File[] archivos = carpeta.listFiles();
+
+            if (archivos == null || archivos.length == 0) {
+                System.out.println("No hay elementos dentro de la carpeta actual");
+                return;
+            } else {
+
+                for (File archivo1 : archivos) {
+                    try {
+                        FileReader leerFolio = new FileReader(carpeta + "/" + archivo1.getName());
+                        JSONArray a = (JSONArray) parser.parse(leerFolio);
+                        // System.out.println(carpeta + "/" + archivo1.getName());
+                        JSONObject cabecera = (JSONObject) a.get(0);
+                        String folioGEPP = (String) cabecera.get("FolioGEPP");
+                        leerFolio.close();
+                        String nvo = archivo1.getParent() + "/" + folioGEPP + ".json";
+                        // System.out.println("nuevo:" + nvo);
+                        File archivo = new File(nvo);
+                        boolean correcto = archivo1.renameTo(archivo);
+                        if (correcto == true) {
+                            //    System.out.println("Se cambio");
+                        } else {
+                            System.out.println("Error al cambiar nombre de archivos");
+                        }
+                    } catch (IOException | ParseException ex) {
+                        Logger.getLogger(obtenerViajes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+
+            MostrarTabla(nombreCarpeta);
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Hubo un error!\n" + "Estatus respuesta: " + status
+                    + "\nError: " + codigoError
+                    + "\nMensaje:\n" + mensajeError);
+        }
     }//GEN-LAST:event_menuDescargarActionPerformed
 
     private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
@@ -677,6 +717,13 @@ public class obtenerViajes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submenuSalirActionPerformed
 
+    private void submenu_acercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenu_acercaActionPerformed
+        // TODO add your handling code here:
+        Acerca vistaAcerca = new Acerca();
+        vistaAcerca.setLocationRelativeTo(null);
+        vistaAcerca.setVisible(true);
+    }//GEN-LAST:event_submenu_acercaActionPerformed
+
     public static void verDetalles(String rutaJson) {
 
         JSONParser parser = new JSONParser();
@@ -732,25 +779,25 @@ public class obtenerViajes extends javax.swing.JFrame {
             //Creamos el objeto de la cabecera
             JSONObject cabecera = (JSONObject) a.get(0);
             //asignamos valores de la cabecera solo si no son null
-            
-               //Enviamos cabecera a vista DetallesViaje
-             oc = (String) cabecera.get("OC");
-             
-             if (oc != null) {
+
+            //Enviamos cabecera a vista DetallesViaje
+            oc = (String) cabecera.get("OC");
+
+            if (oc != null) {
                 DetallesViaje.oc_text.setText(oc);
             }
-             folioGEPP = cabecera.get("FolioGEPP").toString();
+            folioGEPP = cabecera.get("FolioGEPP").toString();
             if (folioGEPP != null) {
-                 DetallesViaje.folioGEPP_text.setText(folioGEPP);
+                DetallesViaje.folioGEPP_text.setText(folioGEPP);
             }
             fechaGeneracion = cabecera.get("FechaGeneracion").toString();
-            
+
             if (fechaGeneracion != null) {
                 DetallesViaje.fechaGen_text.setText(fechaGeneracion);
             }
             usoCfdi = cabecera.get("UsoCFDI").toString();
             if (usoCfdi != null) {
-                 DetallesViaje.usoCFDI_text.setText(usoCfdi);
+                DetallesViaje.usoCFDI_text.setText(usoCfdi);
             }
 
             //Los DocumentosGepp vienen en un objeto json
@@ -761,12 +808,7 @@ public class obtenerViajes extends javax.swing.JFrame {
             //EL objeto esta compuesto por dos arreglos: ubicacion origen y ubicacion destino
             JSONArray ubicacionesGepp = (JSONArray) cabecera.get("UbicacionesGEPP");
 
-         
-           // DetallesViaje.oc_text.setText(oc);
-           
-           
-          
-
+            // DetallesViaje.oc_text.setText(oc);
             //Comprobamos si hay documentos
             if (docsGepp == null) {
 
@@ -778,13 +820,11 @@ public class obtenerViajes extends javax.swing.JFrame {
 
             }
             //asignar valores a campos de ubicacionesGepp
-            if(ubicacionesGepp != null ){
-                  DetallesViaje.OR_text.setText(ubicacionesGepp.get(1).toString());
-            
-             DetallesViaje.DE_text.setText(ubicacionesGepp.get(0).toString());
-            }
-          
+            if (ubicacionesGepp != null) {
+                DetallesViaje.OR_text.setText(ubicacionesGepp.get(1).toString());
 
+                DetallesViaje.DE_text.setText(ubicacionesGepp.get(0).toString());
+            }
 
 //            if (ubicacionesGepp == null) {
 //
@@ -1115,6 +1155,7 @@ public class obtenerViajes extends javax.swing.JFrame {
     private javax.swing.JPanel panelEncabezado;
     private javax.swing.JMenu smenuEditar;
     private javax.swing.JMenuItem submenuSalir;
+    private javax.swing.JMenuItem submenu_acerca;
     public static javax.swing.JTable tablaViajes;
     // End of variables declaration//GEN-END:variables
 }

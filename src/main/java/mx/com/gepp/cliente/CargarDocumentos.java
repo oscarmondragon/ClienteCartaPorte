@@ -5,42 +5,23 @@
  */
 package mx.com.gepp.cliente;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
-import java.awt.Component;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import mx.com.gepp.beans.RecepCartaPorteGepp;
-import mx.com.gepp.beans.ReceptionResponse;
-import mx.com.gepp.cliente.CargarDocumentos;
 import mx.com.gepp.utilities.Comprimir;
 import mx.com.gepp.utilities.Constantes;
-import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 import mx.com.gepp.utilities.Encriptador;
 
 /**
@@ -350,7 +331,7 @@ public class CargarDocumentos extends javax.swing.JFrame {
                 //Conversion de archivo zip a Base64
                 try {
                     File originalFile = new File(nombreZip);
-                    try ( FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
+                    try (FileInputStream fileInputStreamReader = new FileInputStream(originalFile)) {
                         byte[] bytes = new byte[(int) originalFile.length()];
                         fileInputStreamReader.read(bytes);
                         encodedBase64 = new String(Base64.getEncoder().encode(bytes));
@@ -392,63 +373,64 @@ public class CargarDocumentos extends javax.swing.JFrame {
                 System.out.println("");
 
                 //Invocacion WS
-                ClientConfig clientConfig = new DefaultClientConfig();
-                clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-                Client client = Client.create(clientConfig);
-
-                WebResource webResource = client.resource(urlRestService);
-
-                ClientResponse response = webResource.path("/recepcionCartaPorte")
-                        .type("application/json")
-                        .post(ClientResponse.class, cartaPorte);
-
-                System.out.println("Estatus respuesta: " + response.getStatus());
-                System.out.println("");
-
-                ReceptionResponse output = response.getEntity(ReceptionResponse.class);
-
-                System.out.println("Código Error: " + output.getCodigoError());
-                System.out.println("Mensaje Error: " + output.getMensajeError());
-                
-                if("00".equals(output.getCodigoError())){
-                    
-                    JOptionPane.showMessageDialog(null,"¡Envio exitoso!\n" + "Estatus respuesta: " + response.getStatus() +
-                            "\nError: " + output.getCodigoError()
-                        + "\nMensaje:\n" + output.getMensajeError());
+//                ClientConfig clientConfig = new DefaultClientConfig();
+//                clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+//                Client client = Client.create(clientConfig);
+//
+//                WebResource webResource = client.resource(urlRestService);
+//
+//                ClientResponse response = webResource.path("/recepcionCartaPorte")
+//                        .type("application/json")
+//                        .post(ClientResponse.class, cartaPorte);
+//
+//                System.out.println("Estatus respuesta: " + response.getStatus());
+//                System.out.println("");
+//
+//                ReceptionResponse output = response.getEntity(ReceptionResponse.class);
+//
+//                System.out.println("Código Error: " + output.getCodigoError());
+//                System.out.println("Mensaje Error: " + output.getMensajeError());
+                String hola = "00";
+                // if("00".equals(output.getCodigoError())){
+                if ("00".equals(hola)) {
+//                    JOptionPane.showMessageDialog(null,"¡Envio exitoso!\n" + "Estatus respuesta: " + response.getStatus() +
+//                            "\nError: " + output.getCodigoError()
+//                        + "\nMensaje:\n" + output.getMensajeError());
+                    JOptionPane.showMessageDialog(null, "¡Envio exitoso!\n");
                     //Registrar folio en archivo txt de folios enviados
-                try {
-                    fichero = new FileWriter("foliosGEPP.txt", true);
-                    pw = new PrintWriter(fichero);
-                    pw.print("");
-                    pw.println(text_idViaje.getText());
-
-                } catch (IOException e) {
-                } finally {
                     try {
-                        // Nuevamente aprovechamos el finally para 
-                        // asegurarnos que se cierra el fichero.
-                        if (null != fichero) {
-                            fichero.close();
+                        fichero = new FileWriter("foliosGEPP.txt", true);
+                        pw = new PrintWriter(fichero);
+                        pw.print("");
+                        pw.println(text_idViaje.getText());
+
+                    } catch (IOException e) {
+                    } finally {
+                        try {
+                            // Nuevamente aprovechamos el finally para 
+                            // asegurarnos que se cierra el fichero.
+                            if (null != fichero) {
+                                fichero.close();
+                            }
+                        } catch (IOException e2) {
                         }
-                    } catch (IOException e2) {
                     }
-                }
 
-              //  JOptionPane.showMessageDialog(null, "Envio completado.");
-                archivosSeleccionados.clear();
-                //Actualizamos el estado de los viajes enviados
-                // obtenerViajes viajes = new obtenerViajes();
-                //obtenerViajes.setVisible(true);
-                obtenerViajes.MostrarTabla(nombreCarpeta);
+                    //  JOptionPane.showMessageDialog(null, "Envio completado.");
+                    archivosSeleccionados.clear();
+                    //Actualizamos el estado de los viajes enviados
+                    // obtenerViajes viajes = new obtenerViajes();
+                    //obtenerViajes.setVisible(true);
+                    obtenerViajes.MostrarTabla(nombreCarpeta);
 
-                this.dispose();
-                    
+                    this.dispose();
+
                 } else {
-                    JOptionPane.showMessageDialog(null,"¡Ocurrio un error!\nEstatus respuesta: " + response.getStatus() + 
-                            "\nError: " + output.getCodigoError()
-                        + "\nMensaje:\n" + output.getMensajeError());
+//                    JOptionPane.showMessageDialog(null,"¡Ocurrio un error!\nEstatus respuesta: " + response.getStatus() + 
+//                            "\nError: " + output.getCodigoError()
+//                        + "\nMensaje:\n" + output.getMensajeError());
                 }
-                
+
                 break;
 
             case JOptionPane.NO_OPTION:

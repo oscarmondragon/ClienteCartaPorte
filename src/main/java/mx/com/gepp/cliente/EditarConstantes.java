@@ -5,11 +5,14 @@
  */
 package mx.com.gepp.cliente;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static mx.com.gepp.cliente.CargarDocumentos.text_idViaje;
 import mx.com.gepp.utilities.Constantes;
 import org.json.simple.JSONObject;
 
@@ -217,28 +220,37 @@ public class EditarConstantes extends javax.swing.JFrame {
                 FileWriter fichero = null;
                 PrintWriter pw = null;
                 File archivo = new File("constantes.json");
-
+                //obtenemos valores del formulario
                 String url = this.url_text.getText();
                 String usuario = this.usuario_text.getText();
                 String password = this.password_text.getText();
                 String numeroProveedor = this.numProveedor_text.getText();
-
+                //creamos onjeto json para asignar valores
                 JSONObject jsonConstantes = new JSONObject();
                 jsonConstantes.put("url", url);
                 jsonConstantes.put("user", usuario);
                 jsonConstantes.put("password", password);
                 jsonConstantes.put("numeroProveedor", numeroProveedor);
 
-                //System.out.println(jsonConstantes.toString());
-                //Escribir constantes en archivo .json
+                //eliminamos contenido del archivo constantes.json
                 try {
-                    archivo.delete();
+                    //System.out.println(jsonConstantes.toString());
+
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));
+                    bw.write("");
+                    bw.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(EditarConstantes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                //Escribir constantes nuevas en archivo .json
+                try {
+
                     fichero = new FileWriter("constantes.json", true);
                     pw = new PrintWriter(fichero);
                     pw.println(jsonConstantes);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (IOException e) {
                 } finally {
                     try {
                         // Nuevamente aprovechamos el finally para 
@@ -246,14 +258,12 @@ public class EditarConstantes extends javax.swing.JFrame {
                         if (null != fichero) {
                             fichero.close();
                         }
-                    } catch (Exception e2) {
-                        e2.printStackTrace();
+                    } catch (IOException e2) {
                     }
                 }
-               // asignarConstantes.asignarConstantes(jsonConstantes);
+                Constantes.asignarConstantes(jsonConstantes);
                 this.dispose();
                 break;
-
             case JOptionPane.NO_OPTION:
                 break;
             case JOptionPane.CLOSED_OPTION:

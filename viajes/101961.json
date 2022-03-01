@@ -1,0 +1,47 @@
+[
+        {
+            
+            "FolioGEPP":"101961",
+            "FechaGeneracion":"2022-02-28T21:23:06",
+            "UsoCFDI": "03-Gastos","DocumentosGEPP":{"DocsGEPP":["64100090418_M"]},"UbicacionesGEPP":["DE:S88:PLANTA URUAPAN BEPUSA","OR:641:PROPLASA BODEGA CENTRAL"]},{"CartaPorte":{
+            "Version":"2.0",
+            "TranspInternac":"No",
+            "TotalDistRec":382,"Ubicaciones":{
+            "Ubicacion":[
+        {
+            "TipoUbicacion":"Origen",
+            "IDUbicacion":"OR021903"
+            
+            ,"RFCRemitenteDestinatario":"BPU7901018D4"
+            ,"FechaHoraSalidaLlegada":"2022-02-28T21:33:06"
+            ,"Domicilio":{
+            "Estado":"MEX","Pais":"MEX","CodigoPostal":"54918"}
+        },{
+            "TipoUbicacion":"Destino",
+            "IDUbicacion":"DE311501"
+            
+            ,"RFCRemitenteDestinatario":"XAXX010101000","FechaHoraSalidaLlegada":"2022-03-01T02:35:30"
+            ,"DistanciaRecorrida": 382
+            ,"Domicilio":{
+            "Estado":"MIC","Pais":"MEX","CodigoPostal":"60170"}
+        }
+            ]
+        },"Mercancias":{
+            "PesoBrutoTotal": "16.844",
+            "UnidadPeso": "KGM",
+            "PesoNetoTotal": "16.844",
+            "NumTotalMercancias":1,
+            "Mercancia":[{
+            "BienesTransp":"14101500",
+            "Descripcion":"Materias primas",
+            "Cantidad":"1",
+            "ClaveUnidad":"XUN",
+            "Unidad":"Unidad"
+            ,"PesoEnKg":"16.844"
+            
+            
+            
+            
+        }]}
+            }
+        }]

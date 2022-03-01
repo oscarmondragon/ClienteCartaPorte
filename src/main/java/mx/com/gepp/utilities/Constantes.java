@@ -1,15 +1,6 @@
 package mx.com.gepp.utilities;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import mx.com.gepp.cliente.EditarConstantes;
-import mx.com.gepp.cliente.obtenerViajes;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class Constantes {
 
